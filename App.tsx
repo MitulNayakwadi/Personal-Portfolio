@@ -526,7 +526,7 @@ const App: React.FC = () => {
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-14 items-start">
             {/* Left Column: Portrait Profile Image */}
-            <div className="lg:col-span-5 flex justify-center pt-16">
+            <div className="lg:col-span-5 flex justify-center pt-0">
               <div className="relative w-full max-w-[400px] lg:max-w-full flex flex-col items-center">
                 
                 {/* Grey Translucent Liquid Glass Speech Bubble Tooltip */}
