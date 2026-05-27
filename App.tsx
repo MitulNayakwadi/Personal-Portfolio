@@ -492,26 +492,32 @@ const App: React.FC = () => {
             transition={{ delay: 0.9, duration: 0.8 }}
             className="flex items-center gap-6"
           >
-            <a 
-              href="https://github.com/MitulNayakwadi" 
-              target="_blank" 
-              rel="noopener noreferrer" 
+            <a
+              href="https://github.com/MitulNayakwadi"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open GitHub profile"
+              title="GitHub — Mitul Nayakwadi"
               className="p-3 rounded-full bg-white/5 border border-white/10 text-gray-400 hover:text-red-500 hover:border-red-500/50 hover:bg-white/10 transition-all duration-300 hover:scale-110 shadow-lg"
               data-hover="true"
             >
               <Github className="w-5 h-5" />
             </a>
-            <a 
-              href="https://linkedin.com/in/mitul-nayakwadi-6a3218319" 
-              target="_blank" 
-              rel="noopener noreferrer" 
+            <a
+              href="https://linkedin.com/in/mitul-nayakwadi-6a3218319"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open LinkedIn profile"
+              title="LinkedIn — Mitul Nayakwadi"
               className="p-3 rounded-full bg-white/5 border border-white/10 text-gray-400 hover:text-red-500 hover:border-red-500/50 hover:bg-white/10 transition-all duration-300 hover:scale-110 shadow-lg"
               data-hover="true"
             >
               <Linkedin className="w-5 h-5" />
             </a>
-            <a 
-              href="mailto:mitulnayakwadi@gmail.com" 
+            <a
+              href="mailto:mitulnayakwadi@gmail.com"
+              aria-label="Send email to Mitul Nayakwadi"
+              title="Email — mitulnayakwadi@gmail.com"
               className="p-3 rounded-full bg-white/5 border border-white/10 text-gray-400 hover:text-red-500 hover:border-red-500/50 hover:bg-white/10 transition-all duration-300 hover:scale-110 shadow-lg"
               data-hover="true"
             >
@@ -1251,7 +1257,9 @@ const App: React.FC = () => {
             >
               {/* Close Button */}
               <button
+                type="button"
                 onClick={() => setSelectedProject(null)}
+                aria-label="Close project details"
                 className="absolute top-4 right-4 z-20 p-2 rounded-full bg-black/50 text-white hover:bg-white hover:text-black transition-colors border border-white/10"
                 data-hover="true"
               >
@@ -1260,7 +1268,9 @@ const App: React.FC = () => {
 
               {/* Navigation Buttons */}
               <button
+                type="button"
                 onClick={(e) => { e.stopPropagation(); navigateProject('prev'); }}
+                aria-label="Previous project"
                 className="absolute left-4 bottom-4 translate-y-0 md:top-1/2 md:bottom-auto md:-translate-y-1/2 z-20 p-3 rounded-full bg-black/50 text-white hover:bg-white hover:text-black transition-colors border border-white/10 backdrop-blur-sm"
                 data-hover="true"
               >
@@ -1268,7 +1278,9 @@ const App: React.FC = () => {
               </button>
 
               <button
+                type="button"
                 onClick={(e) => { e.stopPropagation(); navigateProject('next'); }}
+                aria-label="Next project"
                 className="absolute right-4 bottom-4 translate-y-0 md:top-1/2 md:bottom-auto md:-translate-y-1/2 z-20 p-3 rounded-full bg-black/50 text-white hover:bg-white hover:text-black transition-colors border border-white/10 backdrop-blur-sm md:right-8"
                 data-hover="true"
               >

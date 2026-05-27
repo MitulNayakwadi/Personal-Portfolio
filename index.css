@@ -1,0 +1,37 @@
+/* Default cursor — claw hand */
+* {
+  cursor: url('/cursor-default.png') 16 16, auto;
+}
+
+/* Pointer cursor — red crystal (on hover) */
+a,
+button,
+[role="button"],
+input[type="submit"],
+input[type="button"] {
+  cursor: url('/cursor-pointer.png') 16 16, pointer;
+}
+
+/* Hide the Native Cursor (Optional but Recommended) */
+* {
+  cursor: none !important;
+}
+
+/* Custom Cursor Styles */
+.custom-cursor {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  width: 40px;
+  height: 40px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.custom-cursor.default {
+  background-image: url('/cursor-default.png');
+}
+
+.custom-cursor.pointer {
+  background-image: url('/cursor-pointer.png');
+}
