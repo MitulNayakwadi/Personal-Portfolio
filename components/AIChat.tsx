@@ -29,12 +29,10 @@ const renderMessageText = (text: string) => {
 const GothicTopCrystalSVG: React.FC = () => {
   return (
     <svg
-      width="64"
-      height="96"
       viewBox="0 0 120 180"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="drop-shadow-[0_0_18px_rgba(239,68,68,0.75)] hover:drop-shadow-[0_0_28px_rgba(239,68,68,0.95)] filter contrast-125 transition-all duration-300"
+      className="w-11 h-16 md:w-12 md:h-18 object-contain drop-shadow-[0_0_15px_rgba(239,68,68,0.7)] hover:drop-shadow-[0_0_25px_rgba(239,68,68,0.95)] transition-all duration-300 select-none filter contrast-125"
     >
       <defs>
         {/* Crystal Red Gradient */}
@@ -588,7 +586,7 @@ const AIChat: React.FC = () => {
                   src="/scroll-to-top.png" 
                   alt="Scroll to top"
                   onError={() => setImageError(true)}
-                  className="w-14 h-20 md:w-16 md:h-24 object-contain drop-shadow-[0_0_15px_rgba(239,68,68,0.7)] hover:drop-shadow-[0_0_25px_rgba(239,68,68,0.95)] transition-all duration-300 select-none"
+                  className="w-11 h-16 md:w-12 md:h-18 object-contain drop-shadow-[0_0_15px_rgba(239,68,68,0.7)] hover:drop-shadow-[0_0_25px_rgba(239,68,68,0.95)] transition-all duration-300 select-none"
                   referrerPolicy="no-referrer"
                 />
               ) : (
