@@ -17,6 +17,7 @@ import ProjectCard from './components/ArtistCard';
 import AIChat from './components/AIChat';
 import { Project } from './types';
 import FrameImage from './Frame.png';
+import FallbackPortrait from './mee.jpeg';
 
 declare global {
   interface Window {
@@ -155,6 +156,7 @@ const App: React.FC = () => {
   const [hireMeClicked, setHireMeClicked] = useState(false);
   const [introCompleted, setIntroCompleted] = useState(false);
   const [showNameOnImage, setShowNameOnImage] = useState(false);
+  const [portraitImageError, setPortraitImageError] = useState(false);
   
   // Timer for the page-load glitch intro screen
   useEffect(() => {
@@ -578,9 +580,10 @@ const App: React.FC = () => {
 
                   <div className="absolute inset-[13%_11%_16%_11%] z-10 overflow-hidden rounded-[18px] shadow-[0_0_30px_rgba(0,0,0,0.35)]">
                     <img
-                      src="https://lh3.googleusercontent.com/d/183xxd7j9O2q4JyNhMnjGoHJy7C0yPeF6"
+                      src={portraitImageError ? FallbackPortrait : "https://lh3.googleusercontent.com/d/183xxd7j9O2q4JyNhMnjGoHJy7C0yPeF6"}
                       alt="Mitul Nayakwadi Profile Portrait"
                       referrerPolicy="no-referrer"
+                      onError={() => setPortraitImageError(true)}
                       className="w-full h-full object-cover grayscale transition-all duration-700 ease-out group-hover:grayscale-0 group-hover:scale-100 saturate-[1.05]"
                     />
                   </div>
