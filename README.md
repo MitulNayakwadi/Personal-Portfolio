@@ -25,6 +25,20 @@ I am a Computer Science & Engineering student passionate about Artificial Intell
 
 ---
 
+### 🧩 UI Components Used
+
+* **CustomCursor:** Replaces the native cursor with a custom pointer and click ripple effect.
+* **ScrollHUD:** Top scroll progress bar with smooth motion syncing to page scroll.
+* **AIChat:** Interactive assistant widget with toggle states and a built-in scroll‑to‑top action.
+* **ProjectCard (ArtistCard):** Magnetic hover project cards with parallax image motion.
+* **FluidBackground:** Animated starfield and glowing blob background layer.
+* **ScrambleText:** Cyberpunk-style text scramble animation for the hero name.
+* **GlitchText (GradientText):** Gradient/glitch text styling used across headings and labels.
+* **ParticleNameCanvas:** Canvas-driven particle text effect for the hero name.
+* **FramedImage:** Ornate frame overlay with hover‑fit image behavior (About Me portrait).
+
+---
+
 ### 🚀 Portfolio & Projects
 
 #### 🍜 **Uppal Street Food Guide**
