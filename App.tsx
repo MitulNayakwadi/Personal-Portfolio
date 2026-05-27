@@ -11,7 +11,6 @@ import Lenis from 'lenis';
 import FluidBackground from './components/FluidBackground';
 import GradientText from './components/GlitchText';
 import ScrambleText from './components/ScrambleText';
-import ParticleNameCanvas from './components/ParticleNameCanvas';
 import CustomCursor from './components/CustomCursor';
 import ScrollHUD from './components/ScrollHUD';
 import ProjectCard from './components/ArtistCard';
@@ -443,22 +442,25 @@ const App: React.FC = () => {
       </AnimatePresence>
 
       {/* HERO SECTION */}
-      <header id="hero" className="relative h-[100svh] min-h-[600px] flex flex-col items-center justify-center overflow-hidden px-4 pt-32">
+      <header id="hero" className="relative h-[95svh] min-h-[500px] md:min-h-[620px] flex flex-col items-center justify-center overflow-hidden px-4 pt-24 md:pt-28">
         <motion.div 
           style={{ y, opacity }}
-          className="z-10 text-center flex flex-col items-center w-full max-w-6xl pb-16 md:pb-24"
+          className="z-10 text-center flex flex-col items-center w-full max-w-6xl pb-10 md:pb-16"
         >
-          {/* Main Title - Animated Popup with White and Red Particles Combined */}
+          {/* Main Title - Animated Popup */}
           <motion.div 
-            initial={{ scale: 0.95, opacity: 0 }}
+            initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ 
               duration: 0.8,
               delay: 0.4
             }}
-            className="relative w-full flex justify-center items-center mb-4 group hover:scale-[1.01] transition-transform duration-500"
+            className="relative w-full flex justify-center items-center mb-4"
           >
-            <ParticleNameCanvas className="w-full" />
+            <ScrambleText 
+              text="MITUL NAYAKWADI" 
+              className="text-[25px] sm:text-6xl md:text-7xl lg:text-8xl leading-[1.1] font-heading tracking-tight text-white uppercase" 
+            />
           </motion.div>
           
           <motion.div
@@ -520,7 +522,7 @@ const App: React.FC = () => {
       </header>
 
       {/* ABOUT ME SECTION (2nd section) */}
-      <section id="about" className="relative z-10 min-h-[100svh] flex flex-col justify-center py-24 md:py-32 border-b border-white/10 overflow-hidden bg-black/40 font-sans">
+      <section id="about" className="relative z-10 min-h-[85svh] flex flex-col justify-center py-14 md:py-20 border-b border-white/10 overflow-hidden bg-black/40 font-sans">
         <div className="absolute top-1/2 left-[-15%] w-[50vw] h-[50vw] bg-red-900/10 rounded-full blur-[120px] pointer-events-none" />
         <div className="max-w-7xl mx-auto px-4 md:px-6 relative">
           
@@ -576,14 +578,14 @@ const App: React.FC = () => {
               </h2>
               <div className="w-16 h-1 bg-gradient-to-r from-red-600 to-rose-500 mb-6 rounded-full" />
               
-              <p className="text-gray-100 text-lg md:text-xl font-light leading-relaxed mb-8">
+              <p className="text-gray-100 text-lg md:text-xl font-light leading-relaxed mb-6">
                 I am <strong className="text-white font-semibold">Mitul Nayakwadi</strong>, a B.E CSE student at Matrusri Engineering College passionate about AI, web development, and building innovative tech projects. I enjoy solving real-world problems through code, participating in hackathons, and exploring modern technologies where creativity meets logic and innovation.
               </p>
 
               {/* Interests block */}
-              <div className="mb-8">
-                <h3 className="text-lg md:text-xl font-bold font-heading text-red-500 uppercase tracking-wider mb-4">Interests</h3>
-                <div className="flex flex-wrap gap-2 md:gap-3">
+              <div className="mb-6">
+                <h3 className="text-lg font-bold font-heading text-red-500 uppercase tracking-wider mb-3">Interests</h3>
+                <div className="flex flex-wrap gap-2 md:gap-2.5">
                   {[
                     { label: 'Movies & Series', icon: Tv },
                     { label: 'Table Tennis (Game)', icon: Trophy },
@@ -592,7 +594,7 @@ const App: React.FC = () => {
                   ].map((interest, idx) => (
                     <span 
                       key={idx} 
-                      className="inline-flex items-center gap-3 px-5 py-3 rounded-full text-sm font-semibold text-white/90 bg-white/5 border border-white/10 hover:border-red-500/30 hover:bg-white/10 transition-colors cursor-default animate-fade-in"
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs md:text-sm font-semibold text-white/90 bg-white/5 border border-white/10 hover:border-red-500/30 hover:bg-white/10 transition-colors cursor-default animate-fade-in"
                     >
                       <interest.icon className="w-4 h-4 text-red-500" />
                       <span>{interest.label}</span>
@@ -602,7 +604,7 @@ const App: React.FC = () => {
               </div>
 
               {/* Personal Details Card */}
-              <div className="bg-gradient-to-b from-white/[0.03] to-transparent border border-white/10 rounded-2xl p-6 md:p-8 hover:border-red-500/25 transition-all duration-300 relative overflow-hidden mb-6">
+              <div className="bg-gradient-to-b from-white/[0.03] to-transparent border border-white/10 rounded-2xl p-5 md:p-6 hover:border-red-500/25 transition-all duration-300 relative overflow-hidden mb-4">
                 <h3 className="text-md uppercase font-mono font-bold text-white tracking-widest border-b border-white/10 pb-3 mb-6">
                   Personal Details
                 </h3>
@@ -632,10 +634,10 @@ const App: React.FC = () => {
       </section>
 
       {/* EXPERIENCE & MEMBERSHIPS SECTION (Separated and Styled as a Timeline) */}
-      <section id="experience" className="relative z-10 min-h-[100svh] flex flex-col justify-center py-24 md:py-32 border-b border-white/10 overflow-hidden bg-black/50 font-sans">
+      <section id="experience" className="relative z-10 min-h-[75svh] flex flex-col justify-center py-14 md:py-20 border-b border-white/10 overflow-hidden bg-black/50 font-sans">
         <div className="absolute top-1/2 right-[-15%] w-[50vw] h-[50vw] bg-red-900/5 rounded-full blur-[120px] pointer-events-none" />
         <div className="max-w-6xl mx-auto px-4 md:px-6 relative">
-          <div className="text-center mb-16">
+          <div className="text-center mb-10">
             <h2 className="text-3xl md:text-5xl font-heading font-black uppercase leading-none tracking-tight text-white animate-fade-in">
               Experience & <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-rose-500 font-bold">Memberships</span>
             </h2>
@@ -675,7 +677,7 @@ const App: React.FC = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-100px' }}
                   transition={{ duration: 0.8, delay: idx * 0.15 }}
-                  className={`relative mb-12 md:mb-16 last:mb-0 flex flex-col md:flex-row items-stretch ${
+                  className={`relative mb-8 md:mb-10 last:mb-0 flex flex-col md:flex-row items-stretch ${
                     item.align === 'left' ? 'md:justify-start' : 'md:justify-end'
                   }`}
                 >
@@ -734,12 +736,12 @@ const App: React.FC = () => {
       </div>
 
       {/* EDUCATION TIMELINE SECTION (3rd section) */}
-      <section id="education" className="relative z-10 min-h-[100svh] flex flex-col justify-center py-24 md:py-32 bg-gradient-to-b from-black/20 to-black/40 border-b border-white/10 overflow-hidden">
+      <section id="education" className="relative z-10 min-h-[75svh] flex flex-col justify-center py-14 md:py-20 bg-gradient-to-b from-black/20 to-black/40 border-b border-white/10 overflow-hidden">
         <div className="absolute top-1/2 left-[-15%] w-[50vw] h-[50vw] bg-red-800/10 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute bottom-[-15%] right-[-15%] w-[40vw] h-[40vw] bg-red-600/5 rounded-full blur-[100px] pointer-events-none" />
         
         <div className="max-w-6xl mx-auto px-4 md:px-6 relative">
-          <div className="text-center mb-16">
+          <div className="text-center mb-10">
             <motion.h2 
               initial={{ opacity: 0, y: -20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -790,7 +792,7 @@ const App: React.FC = () => {
               <motion.div 
                 key={idx}
                 variants={timelineItemVariants}
-                className={`relative mb-12 md:mb-16 last:mb-0 flex flex-col md:flex-row items-stretch ${
+                className={`relative mb-8 md:mb-10 last:mb-0 flex flex-col md:flex-row items-stretch ${
                   item.align === 'left' ? 'md:justify-start' : 'md:justify-end'
                 }`}
               >
@@ -839,7 +841,7 @@ const App: React.FC = () => {
       </section>
 
       {/* SKILLS SECTION */}
-      <section id="skills" className="relative z-10 min-h-[100svh] flex flex-col justify-center py-24 md:py-32 bg-black/20 backdrop-blur-sm border-b border-white/10 overflow-hidden">
+      <section id="skills" className="relative z-10 min-h-[85svh] flex flex-col justify-center py-14 md:py-20 bg-black/20 backdrop-blur-sm border-b border-white/10 overflow-hidden">
         <div className="absolute top-1/2 right-[-20%] w-[50vw] h-[50vw] bg-red-600/10 rounded-full blur-[100px] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 md:px-6 relative">
@@ -859,7 +861,7 @@ const App: React.FC = () => {
               </motion.h2>
               <motion.p 
                 variants={textEntranceVariants}
-                className="text-xs md:text-sm text-gray-400 mb-6 font-light leading-relaxed max-w-sm"
+                className="text-xs md:text-sm text-gray-400 mb-4 font-light leading-relaxed max-w-sm"
               >
                 Combining solid engineering foundations with modern tech stacks to build intelligent, responsive, and impactful solutions.
               </motion.p>
@@ -892,22 +894,22 @@ const App: React.FC = () => {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: '-100px' }}
-              className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-6"
+              className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-4"
             >
                <motion.div 
                  variants={skillCardVariants}
-                 className="bg-gradient-to-br from-[#0a0a0a] to-[#1a1a1a] p-6 md:p-8 rounded-2xl border border-white/10 flex flex-col justify-between min-h-[200px] shadow-lg shadow-red-500/5"
+                 className="bg-gradient-to-br from-[#0a0a0a] to-[#1a1a1a] p-5 md:p-6 rounded-xl border border-white/10 flex flex-col justify-between min-h-[150px] md:min-h-[170px] shadow-lg shadow-red-500/5"
                >
                   <h3 className="text-lg font-bold text-white mb-2 font-heading">Focus Area</h3>
                   <div>
                     <p className="text-red-500 font-mono text-[10px] uppercase tracking-wider mb-1">Intelligent Cloud Systems</p>
-                    <p className="text-sm md:text-base text-gray-300">Bridging scalable cloud infrastructure with advanced machine learning capabilities.</p>
+                    <p className="text-xs md:text-sm text-gray-300">Bridging scalable cloud infrastructure with advanced machine learning capabilities.</p>
                   </div>
                </motion.div>
                
                <motion.div 
                  variants={skillCardVariants}
-                 className="bg-gradient-to-br from-[#1a1a1a] to-[#0a0a0a] p-6 md:p-8 rounded-2xl border border-white/10 flex flex-col justify-between min-h-[200px] shadow-lg shadow-red-500/5 font-sans"
+                 className="bg-gradient-to-br from-[#1a1a1a] to-[#0a0a0a] p-5 md:p-6 rounded-xl border border-white/10 flex flex-col justify-between min-h-[150px] md:min-h-[170px] shadow-lg shadow-red-500/5 font-sans"
                >
                   <h3 className="text-lg font-bold text-white mb-4 font-heading">Future Pursuits</h3>
                   <div className="flex flex-wrap gap-2">
@@ -916,18 +918,148 @@ const App: React.FC = () => {
                     ))}
                   </div>
                </motion.div>
+
+               {/* IN Technical Mastery: Summary of Certified Industry Strengths */}
+               <motion.div 
+                 variants={skillCardVariants}
+                 className="bg-gradient-to-br from-[#0c0c0c] to-[#121212] p-5 md:p-6 rounded-xl border border-white/10 hover:border-red-500/35 transition-all duration-300 flex flex-col justify-between min-h-[130px] shadow-lg shadow-red-500/5 md:col-span-2 cursor-default group"
+               >
+                 <div className="flex justify-between items-start">
+                   <div>
+                     <p className="text-red-500 font-mono text-[10px] uppercase tracking-wider mb-1">LinkedIn Verified</p>
+                     <h3 className="text-lg font-bold text-white mb-2 font-heading">Certified Industry Strengths</h3>
+                   </div>
+                   <div className="p-2 rounded-xl bg-red-500/10 border border-red-500/20 group-hover:border-red-500/40 transition-colors">
+                     <Award className="w-5 h-5 text-red-500" />
+                   </div>
+                 </div>
+                 <div className="flex flex-wrap gap-x-6 gap-y-2.5 mt-4 text-xs md:text-sm text-gray-400 font-medium font-sans">
+                   <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 bg-red-500 rounded-full"></span> Generative AI (Google Cloud)</span>
+                   <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 bg-red-500 rounded-full"></span> Machine Learning (Kaggle)</span>
+                   <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 bg-red-500 rounded-full"></span> AI Foundations (DeepLearning.AI)</span>
+                   <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 bg-red-500 rounded-full"></span> Python Engineering (HackerRank)</span>
+                   <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 bg-red-500 rounded-full"></span> Computer Vision (OpenCV & Mediapipe)</span>
+                 </div>
+               </motion.div>
             </motion.div>
+          </div>
+
+          {/* BELOW Technical Mastery: Detailed Certifications Showcase */}
+          <div className="mt-10 pt-10 border-t border-white/10 relative z-20">
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+              <div>
+                <span className="text-red-500 font-mono text-xs uppercase tracking-widest block mb-1">Accredited Pedigree</span>
+                <h3 className="text-2xl md:text-3xl font-black uppercase font-heading text-white">
+                  PROFESSIONAL CERTIFICATIONS
+                </h3>
+              </div>
+              <a 
+                href="https://www.linkedin.com/in/mitul-nayakwadi-6a3218319" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="group inline-flex items-center gap-2 text-xs text-gray-400 hover:text-white hover:border-red-500/50 transition-all bg-white/5 border border-white/10 px-4 py-2 rounded-full cursor-pointer hover:bg-white/10"
+                data-hover="true"
+              >
+                <Linkedin className="w-4 h-4 text-[#0a66c2]" />
+                <span>Verify on LinkedIn</span>
+                <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </a>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[
+                {
+                  title: 'Generative AI Fundamentals',
+                  issuer: 'Google Cloud Training',
+                  date: 'Issued 2024',
+                  skills: ['Large Language Models', 'Image Generation', 'Prompt Design'],
+                  icon: Globe,
+                  link: 'https://www.linkedin.com/in/mitul-nayakwadi-6a3218319/details/certifications/'
+                },
+                {
+                  title: 'Intro to Machine Learning',
+                  issuer: 'Kaggle',
+                  date: 'Issued 2023',
+                  skills: ['Supervised Learning', 'Model Evaluation', 'Random Forests'],
+                  icon: Brain,
+                  link: 'https://www.linkedin.com/in/mitul-nayakwadi-6a3218319/details/certifications/'
+                },
+                {
+                  title: 'AI For Everyone',
+                  issuer: 'DeepLearning.AI',
+                  date: 'Issued 2024',
+                  skills: ['AI Strategy', 'Ethics & Bias', 'Project Management'],
+                  icon: Award,
+                  link: 'https://www.linkedin.com/in/mitul-nayakwadi-6a3218319/details/certifications/'
+                },
+                {
+                  title: 'Python (Basic) Certification',
+                  issuer: 'HackerRank',
+                  date: 'Issued 2023',
+                  skills: ['OOP Principles', 'Data Structures', 'Algorithmic Scripting'],
+                  icon: Code,
+                  link: 'https://www.linkedin.com/in/mitul-nayakwadi-6a3218319/details/certifications/'
+                },
+                {
+                  title: 'Programming in Java',
+                  issuer: 'NPTEL (SWAYAM)',
+                  date: 'Issued 2024',
+                  skills: ['Core Java', 'Multi-Threading', 'Exception Handling'],
+                  icon: Trophy,
+                  link: 'https://www.linkedin.com/in/mitul-nayakwadi-6a3218319/details/certifications/'
+                }
+              ].map((cert, index) => (
+                <motion.div
+                  key={cert.title}
+                  variants={skillCardVariants}
+                  className="group relative bg-[#0a0a0a] hover:bg-[#121212] p-6 rounded-2xl border border-white/10 hover:border-red-500/40 hover:shadow-lg hover:shadow-red-500/5 transition-all duration-300 flex flex-col justify-between"
+                >
+                  <div>
+                    <div className="flex justify-between items-start mb-4 font-sans">
+                      <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 group-hover:border-red-500/30 group-hover:bg-red-500/5 transition-all">
+                        <cert.icon className="w-5 h-5 text-red-500" />
+                      </div>
+                      <span className="text-[10px] font-mono text-gray-500 tracking-wider uppercase">{cert.date}</span>
+                    </div>
+
+                    <h4 className="text-base font-bold text-white group-hover:text-red-400 transition-colors mb-1 font-heading">
+                      {cert.title}
+                    </h4>
+                    <p className="text-xs text-red-400 font-mono font-semibold mb-3 tracking-wide">{cert.issuer}</p>
+                    
+                    <div className="flex flex-wrap gap-1.5 mb-6 font-sans">
+                      {cert.skills.map(skill => (
+                        <span key={skill} className="px-2 py-0.5 bg-white/5 rounded text-[10px] text-gray-400 border border-white/5">
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <a
+                    href={cert.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full flex items-center justify-center gap-2 py-2 px-4 rounded-xl bg-white/5 hover:bg-red-600/10 border border-white/10 hover:border-red-500/30 text-xs text-gray-300 hover:text-white transition-all cursor-pointer font-medium font-mono uppercase tracking-wider"
+                    data-hover="true"
+                  >
+                    <span>View Certificate</span>
+                    <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                  </a>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
       {/* SELECTED WORKS SECTION (Timeline-Based for high visibility) */}
-      <section id="projects" className="relative z-10 min-h-[100svh] flex flex-col justify-center py-24 md:py-32 bg-black/40 border-b border-white/10 overflow-hidden">
+      <section id="projects" className="relative z-10 min-h-[80svh] flex flex-col justify-center py-14 md:py-20 bg-black/40 border-b border-white/10 overflow-hidden">
         <div className="absolute top-1/4 left-[-10%] w-[45vw] h-[45vw] bg-red-900/10 rounded-full blur-[130px] pointer-events-none" />
         <div className="absolute bottom-1/4 right-[-10%] w-[45vw] h-[45vw] bg-rose-900/5 rounded-full blur-[130px] pointer-events-none" />
         
         <div className="max-w-6xl mx-auto px-4 md:px-6 relative">
-          <div className="text-center mb-16">
+          <div className="text-center mb-10">
             <h2 className="text-3xl md:text-5xl font-heading font-black uppercase leading-none tracking-tight text-white animate-fade-in">
               Selected <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-rose-500 font-bold">Works</span>
             </h2>
@@ -947,7 +1079,7 @@ const App: React.FC = () => {
                 <motion.div 
                   key={project.id}
                   variants={projectCardVariants}
-                  className={`relative mb-12 md:mb-16 last:mb-0 flex flex-col md:flex-row items-stretch ${
+                  className={`relative mb-8 md:mb-10 last:mb-0 flex flex-col md:flex-row items-stretch ${
                     align === 'left' ? 'md:justify-start' : 'md:justify-end'
                   }`}
                 >
@@ -1028,9 +1160,9 @@ const App: React.FC = () => {
       </section>
 
       {/* CONTACT SECTION */}
-      <section id="contact" className="relative z-10 min-h-[100svh] flex flex-col justify-center py-24 md:py-32 px-4 md:px-6 bg-black/30 backdrop-blur-lg">
+      <section id="contact" className="relative z-10 min-h-[75svh] flex flex-col justify-center py-14 md:py-20 px-4 md:px-6 bg-black/30 backdrop-blur-lg">
         <div className="max-w-5xl mx-auto text-center">
-          <div className="mb-10">
+          <div className="mb-8">
              <h2 className="text-3xl md:text-5xl font-heading font-black text-white mb-3 uppercase tracking-tight">
                LET'S BUILD <span className="text-red-500">TOGETHER</span>
              </h2>
@@ -1043,45 +1175,45 @@ const App: React.FC = () => {
              </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             <a 
               href="mailto:mitulnayakwadi@gmail.com"
-              className="group p-8 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all flex flex-col items-center gap-4"
+              className="group p-5 md:p-6 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all flex flex-col items-center gap-4"
               data-hover="true"
             >
-              <div className="w-16 h-16 rounded-full bg-red-600/20 flex items-center justify-center text-red-500 mb-2 group-hover:scale-110 transition-transform">
-                <Mail className="w-8 h-8" />
+              <div className="w-14 h-14 rounded-full bg-red-600/20 flex items-center justify-center text-red-500 mb-2 group-hover:scale-110 transition-transform">
+                <Mail className="w-7 h-7" />
               </div>
-              <h3 className="text-xl font-bold">Email Me</h3>
-              <p className="text-sm text-gray-400">mitulnayakwadi@gmail.com</p>
+              <h3 className="text-lg font-bold">Email Me</h3>
+              <p className="text-xs text-gray-400">mitulnayakwadi@gmail.com</p>
             </a>
 
             <a 
               href="https://github.com/MitulNayakwadi"
               target="_blank"
               rel="noopener noreferrer"
-              className="group p-8 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all flex flex-col items-center gap-4"
+              className="group p-5 md:p-6 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all flex flex-col items-center gap-4"
               data-hover="true"
             >
-              <div className="w-16 h-16 rounded-full bg-red-600/10 flex items-center justify-center text-red-500 mb-2 group-hover:scale-110 transition-transform">
-                <Github className="w-8 h-8" />
+              <div className="w-14 h-14 rounded-full bg-red-600/10 flex items-center justify-center text-red-500 mb-2 group-hover:scale-110 transition-transform">
+                <Github className="w-7 h-7" />
               </div>
-              <h3 className="text-xl font-bold">GitHub</h3>
-              <p className="text-sm text-gray-400">@MitulNayakwadi</p>
+              <h3 className="text-lg font-bold">GitHub</h3>
+              <p className="text-xs text-gray-400">@MitulNayakwadi</p>
             </a>
 
             <a 
               href="https://linkedin.com/in/mitul-nayakwadi-6a3218319"
               target="_blank"
               rel="noopener noreferrer"
-              className="group p-8 rounded-2xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all flex flex-col items-center gap-4"
+              className="group p-5 md:p-6 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all flex flex-col items-center gap-4"
               data-hover="true"
             >
-              <div className="w-16 h-16 rounded-full bg-[#0a66c2]/20 flex items-center justify-center text-[#0a66c2] mb-2 group-hover:scale-110 transition-transform">
-                <Linkedin className="w-8 h-8" />
+              <div className="w-14 h-14 rounded-full bg-[#0a66c2]/20 flex items-center justify-center text-[#0a66c2] mb-2 group-hover:scale-110 transition-transform">
+                <Linkedin className="w-7 h-7" />
               </div>
-              <h3 className="text-xl font-bold">LinkedIn</h3>
-              <p className="text-sm text-gray-400">Connect Professionally</p>
+              <h3 className="text-lg font-bold">LinkedIn</h3>
+              <p className="text-xs text-gray-400">Connect Professionally</p>
             </a>
           </div>
         </div>
