@@ -4,8 +4,29 @@ export default function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
   const [isClicking, setIsClicking] = useState(false);
   const clickEffectRef = useRef<HTMLDivElement>(null);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   useEffect(() => {
+    // Detect if device is touch-based (mobile/tablet)
+    const checkTouchDevice = () => {
+      const hasTouch = () => {
+        return (
+          (typeof window !== 'undefined' &&
+            ('ontouchstart' in window ||
+              navigator.maxTouchPoints > 0 ||
+              (navigator as any).msMaxTouchPoints > 0)) ||
+          window.matchMedia('(hover: none) and (pointer: coarse)').matches
+        );
+      };
+      
+      setIsTouchDevice(hasTouch());
+    };
+
+    checkTouchDevice();
+
+    // If touch device, don't set up cursor listeners
+    if (isTouchDevice) return;
+
     // Hotspot offset: tip of the finger for the pointer image.
     const pointerHotspot = { x: 6, y: 2 };
 
@@ -46,7 +67,10 @@ export default function CustomCursor() {
       window.removeEventListener("mousedown", handleMouseDown);
       window.removeEventListener("mouseup", handleMouseUp);
     };
-  }, []);
+  }, [isTouchDevice]);
+
+  // Don't render cursor on touch devices
+  if (isTouchDevice) return null;
 
   return (
     <>
