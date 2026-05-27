@@ -16,6 +16,7 @@ import ScrollHUD from './components/ScrollHUD';
 import ProjectCard from './components/ArtistCard';
 import AIChat from './components/AIChat';
 import { Project } from './types';
+import FrameImage from './Frame.png';
 
 declare global {
   interface Window {
@@ -562,17 +563,25 @@ const App: React.FC = () => {
                   )}
                 </AnimatePresence>
 
-                <div 
+                <div
                   onClick={() => setShowNameOnImage(!showNameOnImage)}
-                  className="relative w-full aspect-[3/4] rounded-3xl overflow-hidden border-2 border-white/20 hover:border-red-500/80 shadow-[0_0_30px_rgba(239,68,68,0.15)] hover:shadow-[0_0_40px_rgba(239,68,68,0.3)] group cursor-pointer transition-all duration-500 ease-in-out animate-fade-in bg-black select-none"
+                  className="relative w-full aspect-[3/4] overflow-hidden group cursor-pointer transition-all duration-500 ease-in-out animate-fade-in select-none"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent z-10 transition-opacity duration-300 group-hover:opacity-30" />
-                  <img 
-                    src="https://lh3.googleusercontent.com/d/183xxd7j9O2q4JyNhMnjGoHJy7C0yPeF6" 
-                    alt="Mitul Nayakwadi Profile Portrait" 
-                    referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover grayscale transition-all duration-700 ease-out group-hover:grayscale-0 group-hover:scale-110 saturate-[1.05]"
+                  <img
+                    src={FrameImage}
+                    alt="Decorative frame"
+                    aria-hidden="true"
+                    className="absolute inset-0 z-20 h-full w-full object-contain pointer-events-none opacity-0 transition-opacity duration-300 ease-out group-hover:opacity-100 drop-shadow-[0_0_18px_rgba(239,68,68,0.18)]"
                   />
+
+                  <div className="absolute inset-[13%_11%_16%_11%] z-10 overflow-hidden rounded-[18px] shadow-[0_0_30px_rgba(0,0,0,0.35)]">
+                    <img
+                      src="https://lh3.googleusercontent.com/d/183xxd7j9O2q4JyNhMnjGoHJy7C0yPeF6"
+                      alt="Mitul Nayakwadi Profile Portrait"
+                      referrerPolicy="no-referrer"
+                      className="w-full h-full object-cover grayscale transition-all duration-700 ease-out group-hover:grayscale-0 group-hover:scale-100 saturate-[1.05]"
+                    />
+                  </div>
                 </div>
               </div>
             </div>

@@ -2,36 +2,61 @@ import { useEffect, useRef, useState } from "react";
 
 export default function CustomCursor() {
   const cursorRef = useRef<HTMLDivElement>(null);
-  const [isPointer, setIsPointer] = useState(false);
+  const [isClicking, setIsClicking] = useState(false);
+  const clickEffectRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Hotspot offset: where the "active point" of the cursor image is, relative to top-left
-    const defaultHotspot = { x: 20, y: 20 }; // centered hotspot for default cursor image
-    const pointerHotspot = { x: 6, y: 2 }; // tip of the finger for pointer image (tweak as needed)
+    // Hotspot offset: tip of the finger for the pointer image.
+    const pointerHotspot = { x: 6, y: 2 };
 
     const move = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      const pointer =
-        window.getComputedStyle(target).cursor === "pointer" ||
-        ["A", "BUTTON"].includes(target.tagName);
-
-      setIsPointer(pointer);
-
       if (!cursorRef.current) return;
 
-      const hotspot = pointer ? pointerHotspot : defaultHotspot;
       // Position the cursor so the image hotspot aligns with the actual pointer
-      cursorRef.current.style.left = `${e.clientX - hotspot.x}px`;
-      cursorRef.current.style.top = `${e.clientY - hotspot.y}px`;
+      cursorRef.current.style.left = `${e.clientX - pointerHotspot.x}px`;
+      cursorRef.current.style.top = `${e.clientY - pointerHotspot.y}px`;
     };
+
+    const handleMouseDown = (e: MouseEvent) => {
+      setIsClicking(true);
+      
+      // Create click effect at cursor position
+      if (clickEffectRef.current) {
+        const clickDiv = document.createElement('div');
+        clickDiv.className = 'cursor-click-effect';
+        clickDiv.style.left = `${e.clientX}px`;
+        clickDiv.style.top = `${e.clientY}px`;
+        clickEffectRef.current.appendChild(clickDiv);
+        
+        // Remove after animation
+        setTimeout(() => clickDiv.remove(), 600);
+      }
+    };
+
+    const handleMouseUp = () => {
+      setIsClicking(false);
+    };
+
     window.addEventListener("mousemove", move);
-    return () => window.removeEventListener("mousemove", move);
+    window.addEventListener("mousedown", handleMouseDown);
+    window.addEventListener("mouseup", handleMouseUp);
+    
+    return () => {
+      window.removeEventListener("mousemove", move);
+      window.removeEventListener("mousedown", handleMouseDown);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
   }, []);
 
   return (
-    <div
-      ref={cursorRef}
-      className={`custom-cursor ${isPointer ? "pointer" : "default"}`}
-    />
+    <>
+      <div
+        ref={cursorRef}
+        className={`custom-cursor pointer transition-transform ${
+          isClicking ? "scale-75" : "scale-100"
+        }`}
+      />
+      <div ref={clickEffectRef} className="cursor-click-effects" />
+    </>
   );
 }
