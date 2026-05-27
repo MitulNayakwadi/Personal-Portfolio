@@ -522,7 +522,7 @@ const App: React.FC = () => {
       </header>
 
       {/* ABOUT ME SECTION (2nd section) */}
-      <section id="about" className="relative z-10 min-h-[85svh] flex flex-col justify-center py-14 md:py-20 border-b border-white/10 overflow-hidden bg-black/40 font-sans">
+      <section id="about" className="relative z-10 min-h-[85svh] flex flex-col justify-center py-14 md:py-20 overflow-hidden bg-gradient-to-b from-transparent via-[#050505]/45 to-transparent font-sans">
         <div className="absolute top-1/2 left-[-15%] w-[50vw] h-[50vw] bg-red-900/10 rounded-full blur-[120px] pointer-events-none" />
         <div className="max-w-7xl mx-auto px-4 md:px-6 relative">
           
@@ -634,7 +634,7 @@ const App: React.FC = () => {
       </section>
 
       {/* EXPERIENCE & MEMBERSHIPS SECTION (Separated and Styled as a Timeline) */}
-      <section id="experience" className="relative z-10 min-h-[75svh] flex flex-col justify-center py-14 md:py-20 border-b border-white/10 overflow-hidden bg-black/50 font-sans">
+      <section id="experience" className="relative z-10 min-h-[75svh] flex flex-col justify-center py-14 md:py-20 overflow-hidden bg-gradient-to-b from-transparent via-[#050505]/55 to-transparent font-sans">
         <div className="absolute top-1/2 right-[-15%] w-[50vw] h-[50vw] bg-red-900/5 rounded-full blur-[120px] pointer-events-none" />
         <div className="max-w-6xl mx-auto px-4 md:px-6 relative">
           <div className="text-center mb-10">
@@ -736,7 +736,7 @@ const App: React.FC = () => {
       </div>
 
       {/* EDUCATION TIMELINE SECTION (3rd section) */}
-      <section id="education" className="relative z-10 min-h-[75svh] flex flex-col justify-center py-14 md:py-20 bg-gradient-to-b from-black/20 to-black/40 border-b border-white/10 overflow-hidden">
+      <section id="education" className="relative z-10 min-h-[75svh] flex flex-col justify-center py-14 md:py-20 bg-gradient-to-b from-transparent via-[#050505]/45 to-transparent overflow-hidden">
         <div className="absolute top-1/2 left-[-15%] w-[50vw] h-[50vw] bg-red-800/10 rounded-full blur-[120px] pointer-events-none" />
         <div className="absolute bottom-[-15%] right-[-15%] w-[40vw] h-[40vw] bg-red-600/5 rounded-full blur-[100px] pointer-events-none" />
         
@@ -841,7 +841,7 @@ const App: React.FC = () => {
       </section>
 
       {/* SKILLS SECTION */}
-      <section id="skills" className="relative z-10 min-h-[85svh] flex flex-col justify-center py-14 md:py-20 bg-black/20 backdrop-blur-sm border-b border-white/10 overflow-hidden">
+      <section id="skills" className="relative z-10 min-h-[85svh] flex flex-col justify-center py-14 md:py-20 bg-gradient-to-b from-transparent via-[#050505]/35 to-transparent overflow-hidden backdrop-blur-sm">
         <div className="absolute top-1/2 right-[-20%] w-[50vw] h-[50vw] bg-red-600/10 rounded-full blur-[100px] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 md:px-6 relative">
@@ -1054,7 +1054,7 @@ const App: React.FC = () => {
       </section>
 
       {/* SELECTED WORKS SECTION (Timeline-Based for high visibility) */}
-      <section id="projects" className="relative z-10 min-h-[80svh] flex flex-col justify-center py-14 md:py-20 bg-black/40 border-b border-white/10 overflow-hidden">
+      <section id="projects" className="relative z-10 min-h-[80svh] flex flex-col justify-center py-14 md:py-20 bg-gradient-to-b from-transparent via-[#050505]/45 to-transparent overflow-hidden">
         <div className="absolute top-1/4 left-[-10%] w-[45vw] h-[45vw] bg-red-900/10 rounded-full blur-[130px] pointer-events-none" />
         <div className="absolute bottom-1/4 right-[-10%] w-[45vw] h-[45vw] bg-rose-900/5 rounded-full blur-[130px] pointer-events-none" />
         
@@ -1160,7 +1160,7 @@ const App: React.FC = () => {
       </section>
 
       {/* CONTACT SECTION */}
-      <section id="contact" className="relative z-10 min-h-[75svh] flex flex-col justify-center py-14 md:py-20 px-4 md:px-6 bg-black/30 backdrop-blur-lg">
+      <section id="contact" className="relative z-10 min-h-[75svh] flex flex-col justify-center py-14 md:py-20 px-4 md:px-6 bg-gradient-to-b from-transparent via-[#050505]/35 to-transparent backdrop-blur-lg">
         <div className="max-w-5xl mx-auto text-center">
           <div className="mb-8">
              <h2 className="text-3xl md:text-5xl font-heading font-black text-white mb-3 uppercase tracking-tight">
@@ -1219,7 +1219,7 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      <footer className="relative z-10 border-t border-white/10 py-12 bg-black/80 backdrop-blur-xl">
+      <footer className="relative z-10 py-12 bg-gradient-to-b from-transparent to-[#0a0a0a] backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex flex-col md:flex-row gap-4 items-center">
              <div className="font-heading text-xl font-bold tracking-tighter text-white">MITUL NAYAKWADI</div>
