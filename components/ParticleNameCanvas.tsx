@@ -22,7 +22,7 @@ interface ParticleNameCanvasProps {
 export const ParticleNameCanvas: React.FC<ParticleNameCanvasProps> = ({ className }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const [assembled, setAsassembled] = useState(false);
+  const [assembled, setAssembled] = useState(false);
   const [triggerState, setTriggerState] = useState<'combining' | 'scattered'>('combining');
   const particlesRef = useRef<Particle[]>([]);
   const mouseRef = useRef<{ x: number; y: number; active: boolean }>({ x: 0, y: 0, active: false });

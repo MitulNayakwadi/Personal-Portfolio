@@ -6,7 +6,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { Globe, Zap, Menu, X, Calendar, Code, Layout, Brain, ChevronLeft, ChevronRight, Github, Linkedin, Mail, ExternalLink, GraduationCap, MapPin, Music, Tv, Palette, Trophy, Award, ArrowUpRight } from 'lucide-react';
+import { Globe, Menu, X, Code, Layout, Brain, ChevronLeft, ChevronRight, Github, Linkedin, Mail, ExternalLink, GraduationCap, MapPin, Music, Tv, Palette, Trophy, Award, ArrowUpRight } from 'lucide-react';
 import Lenis from 'lenis';
 import FluidBackground from './components/FluidBackground';
 import GradientText from './components/GlitchText';
@@ -25,6 +25,8 @@ declare global {
 }
 
 // Portfolio Data
+const NAVIGATION_ITEMS = ['About', 'Experience', 'Education', 'Skills', 'Projects', 'Contact'];
+
 const PROJECTS: Project[] = [
   { 
     id: '5', 
@@ -358,7 +360,7 @@ const App: React.FC = () => {
         
         {/* Desktop Menu - Highly interactive with active indicator & highlights */}
         <div className="hidden md:flex gap-6 lg:gap-8 text-sm font-bold tracking-widest uppercase">
-          {['About', 'Experience', 'Education', 'Skills', 'Projects', 'Contact'].map((item) => {
+          {NAVIGATION_ITEMS.map((item) => {
             const isActive = activeSection === item.toLowerCase();
             return (
               <button 
@@ -413,7 +415,7 @@ const App: React.FC = () => {
             exit={{ opacity: 0, y: -20 }}
             className="fixed inset-0 z-30 bg-[#0a0a0a]/95 backdrop-blur-xl flex flex-col items-center justify-center gap-8 md:hidden"
           >
-            {['About', 'Experience', 'Education', 'Skills', 'Projects', 'Contact'].map((item) => {
+            {NAVIGATION_ITEMS.map((item) => {
               const isActive = activeSection === item.toLowerCase();
               return (
                 <button
@@ -872,7 +874,7 @@ const App: React.FC = () => {
                 variants={textEntranceVariants}
                 className="text-2xl md:text-3xl font-heading font-black mb-4 leading-tight uppercase text-white"
               >
-                Technical <br/> <GradientText text="MASTERY" variant="red-mastery" className="text-3xl md:text-4xl animate-none" />
+                Technical <br/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-rose-500 font-bold">TIMELINE</span>
               </motion.h2>
               <motion.p 
                 variants={textEntranceVariants}
@@ -963,9 +965,8 @@ const App: React.FC = () => {
           <div className="mt-10 pt-10 border-t border-white/10 relative z-20">
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
               <div>
-                <span className="text-red-500 font-mono text-xs uppercase tracking-widest block mb-1">Accredited Pedigree</span>
                 <h3 className="text-2xl md:text-3xl font-black uppercase font-heading text-white">
-                  PROFESSIONAL CERTIFICATIONS
+                  PROFESSIONAL <br/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-rose-500 font-bold">CERTIFICATIONS</span>
                 </h3>
               </div>
               <a 
