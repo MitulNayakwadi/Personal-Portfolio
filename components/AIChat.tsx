@@ -421,8 +421,12 @@ const AIChat: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Show scroll-to-top after scrolling past the first section (e.g., 400px of scroll or more)
-      if (window.scrollY > 400) {
+      const scrollPosition = window.scrollY + window.innerHeight;
+      const pageHeight = document.documentElement.scrollHeight;
+      const nearBottom = scrollPosition >= pageHeight - 16;
+
+      // Only show the scroll-to-top button when the user has reached the end of the site.
+      if (nearBottom) {
         setShowScrollTop(true);
         // Automatically close the assistant chat when scrolling down to give space to the scroll-to-top button
         setIsOpen(false);
