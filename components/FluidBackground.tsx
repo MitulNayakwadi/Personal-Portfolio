@@ -10,6 +10,7 @@ import { motion } from 'framer-motion';
 
 interface FluidBackgroundProps {
   reducedMotion?: boolean;
+  isDarkMode?: boolean;
 }
 
 const StarField: React.FC<{ reducedMotion?: boolean }> = ({ reducedMotion }) => {
@@ -60,15 +61,15 @@ const StarField: React.FC<{ reducedMotion?: boolean }> = ({ reducedMotion }) => 
   );
 };
 
-const FluidBackground: React.FC<FluidBackgroundProps> = ({ reducedMotion = false }) => {
+const FluidBackground: React.FC<FluidBackgroundProps> = ({ reducedMotion = false, isDarkMode = false }) => {
   return (
-    <div className="fixed inset-0 -z-10 overflow-hidden bg-gradient-to-b from-[#020000] via-[#0d0101] to-[#000000]">
+    <div className={`fixed inset-0 -z-10 overflow-hidden transition-colors duration-1000 ${isDarkMode ? 'bg-black' : 'bg-gradient-to-b from-[#020000] via-[#0d0101] to-[#000000]'}`}>
       
       <StarField reducedMotion={reducedMotion} />
 
       {/* Blob 1: Deep Crimson Red */}
       <motion.div
-        className={`absolute top-[-10%] left-[-10%] rounded-full mix-blend-screen filter will-change-transform ${reducedMotion ? 'w-[70vw] h-[70vw] bg-[#bd0306] blur-[72px] opacity-22' : 'w-[90vw] h-[90vw] bg-[#bd0306] blur-[100px] opacity-35'}`}
+        className={`absolute top-[-10%] left-[-10%] rounded-full mix-blend-screen filter will-change-transform transition-opacity duration-1000 ${reducedMotion ? 'w-[70vw] h-[70vw] bg-[#bd0306] blur-[72px] opacity-22' : 'w-[90vw] h-[90vw] bg-[#bd0306] blur-[100px] opacity-35'}`}
         animate={{
           x: reducedMotion ? [0, 20, -10, 0] : [0, 50, -25, 0],
           y: reducedMotion ? [0, -10, 10, 0] : [0, -25, 25, 0],
@@ -78,12 +79,12 @@ const FluidBackground: React.FC<FluidBackgroundProps> = ({ reducedMotion = false
           repeat: Infinity,
           ease: "linear"
         }}
-        style={{ transform: 'translateZ(0)' }}
+        style={{ transform: 'translateZ(0)', opacity: isDarkMode ? 0 : undefined }}
       />
 
       {/* Blob 2: Dark Wine Burgundy */}
       <motion.div
-        className={`absolute top-[20%] right-[-20%] rounded-full mix-blend-screen filter will-change-transform ${reducedMotion ? 'w-[80vw] h-[64vw] bg-[#610103] blur-[72px] opacity-20' : 'w-[100vw] h-[80vw] bg-[#610103] blur-[100px] opacity-35'}`}
+        className={`absolute top-[20%] right-[-20%] rounded-full mix-blend-screen filter will-change-transform transition-opacity duration-1000 ${reducedMotion ? 'w-[80vw] h-[64vw] bg-[#610103] blur-[72px] opacity-20' : 'w-[100vw] h-[80vw] bg-[#610103] blur-[100px] opacity-35'}`}
         animate={{
           x: reducedMotion ? [0, -20, 10, 0] : [0, -50, 25, 0],
           y: reducedMotion ? [0, 20, -10, 0] : [0, 50, -25, 0],
@@ -93,12 +94,12 @@ const FluidBackground: React.FC<FluidBackgroundProps> = ({ reducedMotion = false
           repeat: Infinity,
           ease: "easeInOut"
         }}
-        style={{ transform: 'translateZ(0)' }}
+        style={{ transform: 'translateZ(0)', opacity: isDarkMode ? 0 : undefined }}
       />
 
       {/* Blob 3: Vivid Fire Red */}
       <motion.div
-        className={`absolute bottom-[-20%] left-[20%] rounded-full mix-blend-screen filter will-change-transform ${reducedMotion ? 'w-[64vw] h-[64vw] bg-[#990407] blur-[72px] opacity-18' : 'w-[80vw] h-[80vw] bg-[#990407] blur-[100px] opacity-30'}`}
+        className={`absolute bottom-[-20%] left-[20%] rounded-full mix-blend-screen filter will-change-transform transition-opacity duration-1000 ${reducedMotion ? 'w-[64vw] h-[64vw] bg-[#990407] blur-[72px] opacity-18' : 'w-[80vw] h-[80vw] bg-[#990407] blur-[100px] opacity-30'}`}
         animate={{
           x: reducedMotion ? [0, 25, -25, 0] : [0, 75, -75, 0],
           y: reducedMotion ? [0, -20, 20, 0] : [0, -50, 50, 0],
@@ -108,7 +109,7 @@ const FluidBackground: React.FC<FluidBackgroundProps> = ({ reducedMotion = false
           repeat: Infinity,
           ease: "easeInOut"
         }}
-        style={{ transform: 'translateZ(0)' }}
+        style={{ transform: 'translateZ(0)', opacity: isDarkMode ? 0 : undefined }}
       />
 
       {/* Static Grain Overlay */}

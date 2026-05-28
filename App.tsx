@@ -6,7 +6,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { Globe, Menu, X, Code, Layout, Brain, ChevronLeft, ChevronRight, Github, Linkedin, Mail, ExternalLink, GraduationCap, MapPin, Music, Tv, Palette, Trophy, Award, ArrowUpRight } from 'lucide-react';
+import { Globe, Menu, X, Code, Layout, Brain, ChevronLeft, ChevronRight, Github, Linkedin, Mail, ExternalLink, GraduationCap, MapPin, Music, Tv, Palette, Trophy, Award, ArrowUpRight, Download, Briefcase, Sun, Moon } from 'lucide-react';
 import Lenis from 'lenis';
 import FluidBackground from './components/FluidBackground';
 import GradientText from './components/GlitchText';
@@ -157,6 +157,19 @@ const App: React.FC = () => {
   const [introCompleted, setIntroCompleted] = useState(false);
   const [isTouchLike, setIsTouchLike] = useState(false);
   const [showNameOnImage, setShowNameOnImage] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    return localStorage.getItem('theme') === 'dark';
+  });
+
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [isDarkMode]);
 
   const syncActiveSection = () => {
     const sections = ['hero', 'about', 'experience', 'education', 'skills', 'projects', 'contact'];
@@ -353,116 +366,152 @@ const App: React.FC = () => {
         >
           <CustomCursor />
           <ScrollHUD />
-          <FluidBackground reducedMotion={isTouchLike} />
-          <AIChat />
-      
-      {/* Navigation - Fixed at the top with premium glassmorphic background blur that prevents content interruption */}
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-8 py-5 bg-black/60 backdrop-blur-xl border-b border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.8)]">
-        <motion.div 
-          onClick={() => scrollToSection('hero')}
-          className="font-heading text-xl md:text-2xl font-bold tracking-tighter cursor-pointer z-50 font-black relative"
-          animate={{
-            color: ["#ef4444", "#ffffff", "#ef4444"],
-            textShadow: [
-              "0 0 10px rgba(239,68,68,0.7)",
-              "0 0 15px rgba(255,255,255,0.4)",
-              "0 0 10px rgba(239,68,68,0.7)"
-            ]
-          }}
-          transition={{
-            duration: 6,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        >
-          MN.
-        </motion.div>
-        
-        {/* Desktop Menu - Highly interactive with active indicator & highlights */}
-        <div className="hidden md:flex gap-6 lg:gap-8 text-sm font-bold tracking-widest uppercase">
-          {NAVIGATION_ITEMS.map((item) => {
-            const isActive = activeSection === item.toLowerCase();
-            return (
-              <button 
-                key={item} 
-                onClick={() => scrollToSection(item.toLowerCase())}
-                className={`relative py-2 px-1 transition-all duration-300 ${
-                  isActive 
-                    ? 'text-red-500 font-extrabold scale-105' 
-                    : 'text-white/80 hover:text-white hover:scale-105'
-                } cursor-pointer bg-transparent border-none`}
-                data-hover="true"
-              >
-                <span>{item}</span>
-                {isActive && (
-                  <motion.span 
-                    layoutId="navTabIndicator"
-                    className="absolute bottom-0 left-0 right-0 h-[3px] bg-red-500 shadow-[0_0_12px_#ef4444] rounded-full"
-                    transition={{ type: "spring", stiffness: 350, damping: 25 }}
-                  />
-                )}
-              </button>
-            );
-          })}
-        </div>
-        <button 
-          onClick={handleHireMeClick}
-          className={`hidden md:inline-block border px-8 py-3 text-xs font-bold tracking-widest uppercase transition-all duration-300 cursor-pointer bg-transparent shadow-[0_0_15px_rgba(255,255,255,0.03)] ${
-            hireMeClicked
-              ? 'border-emerald-500 text-emerald-400 bg-emerald-500/10 shadow-[0_0_20px_rgba(16,185,129,0.3)] scale-105'
-              : 'border-white/25 hover:border-red-500 hover:bg-red-600/10 hover:text-red-500 text-white'
-          }`}
-          data-hover="true"
-        >
-          {hireMeClicked ? "Great!" : "Hire Me"}
-        </button>
-
-        {/* Mobile Menu Toggle */}
-        <button 
-          className="md:hidden text-white z-50 relative w-10 h-10 flex items-center justify-center"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-        >
-           {mobileMenuOpen ? <X /> : <Menu />}
-        </button>
-      </nav>
-
-      {/* Mobile Menu Overlay */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 z-30 bg-[#0a0a0a]/95 backdrop-blur-xl flex flex-col items-center justify-center gap-8 md:hidden"
-          >
-            {NAVIGATION_ITEMS.map((item) => {
-              const isActive = activeSection === item.toLowerCase();
-              return (
-                <button
-                  key={item}
-                  onClick={() => scrollToSection(item.toLowerCase())}
-                  className={`text-3xl font-heading font-black transition-colors uppercase ${
-                    isActive ? 'text-red-500' : 'text-white hover:text-red-500'
-                  } bg-transparent border-none`}
-                >
-                  {item}
-                </button>
-              );
-            })}
-            
-            <button
-              onClick={handleHireMeClick}
-              className={`mt-4 px-10 py-3 text-sm font-bold tracking-widest uppercase border transition-all duration-300 bg-transparent shrink-0 ${
-                hireMeClicked
-                  ? 'border-emerald-500 text-emerald-400 bg-emerald-500/10 shadow-[0_0_20px_rgba(16,185,129,0.3)] scale-105'
-                  : 'border-white/20 text-white hover:border-red-500 hover:text-red-500'
-              }`}
-            >
-              {hireMeClicked ? "Great!" : "Hire Me"}
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
+           <FluidBackground reducedMotion={isTouchLike} isDarkMode={isDarkMode} />
+           <AIChat />
+       
+       {/* Navigation - Fixed at the top with premium glassmorphic background blur that prevents content interruption */}
+       <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-8 py-5 bg-black/60 backdrop-blur-xl border-b border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.8)]">
+         <motion.div 
+           onClick={() => scrollToSection('hero')}
+           className="font-heading text-xl md:text-2xl font-bold tracking-tighter cursor-pointer z-50 font-black relative"
+           animate={{
+             color: isDarkMode 
+               ? ["#ffffff", "#888888", "#ffffff"] 
+               : ["#ef4444", "#ffffff", "#ef4444"],
+             textShadow: isDarkMode
+               ? [
+                   "0 0 10px rgba(255,255,255,0.5)",
+                   "0 0 15px rgba(255,255,255,0.2)",
+                   "0 0 10px rgba(255,255,255,0.5)"
+                 ]
+               : [
+                   "0 0 10px rgba(239,68,68,0.7)",
+                   "0 0 15px rgba(255,255,255,0.4)",
+                   "0 0 10px rgba(239,68,68,0.7)"
+                 ]
+           }}
+           transition={{
+             duration: 6,
+             repeat: Infinity,
+             ease: "easeInOut"
+           }}
+         >
+           MN.
+         </motion.div>
+         
+         {/* Desktop Menu - Highly interactive with active indicator & highlights */}
+         <div className="hidden md:flex gap-6 lg:gap-8 text-sm font-bold tracking-widest uppercase">
+           {NAVIGATION_ITEMS.map((item) => {
+             const isActive = activeSection === item.toLowerCase();
+             return (
+               <button 
+                 key={item} 
+                 onClick={() => scrollToSection(item.toLowerCase())}
+                 className={`relative py-2 px-1 transition-all duration-300 ${
+                   isActive 
+                     ? (isDarkMode ? 'text-white font-extrabold scale-105' : 'text-red-500 font-extrabold scale-105') 
+                     : 'text-white/80 hover:text-white hover:scale-105'
+                 } cursor-pointer bg-transparent border-none`}
+                 data-hover="true"
+               >
+                 <span>{item}</span>
+                 {isActive && (
+                   <motion.span 
+                     layoutId="navTabIndicator"
+                     className={`absolute bottom-0 left-0 right-0 h-[3px] rounded-full ${
+                       isDarkMode 
+                         ? 'bg-white shadow-[0_0_12px_rgba(255,255,255,0.8)]' 
+                         : 'bg-red-500 shadow-[0_0_12px_#ef4444]'
+                     }`}
+                     transition={{ type: "spring", stiffness: 350, damping: 25 }}
+                   />
+                 )}
+               </button>
+             );
+           })}
+         </div>
+         
+         <div className="hidden md:flex items-center gap-4">
+           <button
+             onClick={() => setIsDarkMode(!isDarkMode)}
+             className="p-2.5 rounded-xl border border-white/10 hover:border-white/30 bg-white/5 text-gray-300 hover:text-white transition-all duration-300 flex items-center justify-center cursor-pointer"
+             title={isDarkMode ? "Switch to Red Theme" : "Switch to Noir Dark Mode"}
+             data-hover="true"
+           >
+             {isDarkMode ? <Sun className="w-4 h-4 text-yellow-400" /> : <Moon className="w-4 h-4 text-indigo-400" />}
+           </button>
+           
+           <button 
+             onClick={handleHireMeClick}
+             className={`border px-8 py-3 text-xs font-bold tracking-widest uppercase transition-all duration-300 cursor-pointer bg-transparent shadow-[0_0_15px_rgba(255,255,255,0.03)] ${
+               hireMeClicked
+                 ? 'border-emerald-500 text-emerald-400 bg-emerald-500/10 shadow-[0_0_20px_rgba(16,185,129,0.3)] scale-105'
+                 : 'border-white/25 hover:border-red-500 hover:bg-red-600/10 hover:text-red-500 dark:hover:border-white dark:hover:bg-black dark:hover:text-white text-white'
+             }`}
+             data-hover="true"
+           >
+             {hireMeClicked ? "Great!" : "Hire Me"}
+           </button>
+         </div>
+ 
+         {/* Mobile Menu Toggle & Theme Switch */}
+         <div className="flex items-center gap-3 md:hidden">
+           <button
+             onClick={() => setIsDarkMode(!isDarkMode)}
+             className="p-2 rounded-xl border border-white/10 bg-white/5 text-gray-300 transition-all flex items-center justify-center cursor-pointer"
+             title={isDarkMode ? "Switch to Red Theme" : "Switch to Noir Dark Mode"}
+           >
+             {isDarkMode ? <Sun className="w-4 h-4 text-yellow-400" /> : <Moon className="w-4 h-4 text-indigo-400" />}
+           </button>
+           
+           <button 
+             className="text-white w-10 h-10 flex items-center justify-center relative z-50"
+             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+           >
+              {mobileMenuOpen ? <X /> : <Menu />}
+           </button>
+         </div>
+       </nav>
+ 
+       {/* Mobile Menu Overlay */}
+       <AnimatePresence>
+         {mobileMenuOpen && (
+           <motion.div
+             initial={{ opacity: 0, y: -20 }}
+             animate={{ opacity: 1, y: 0 }}
+             exit={{ opacity: 0, y: -20 }}
+             className="fixed inset-0 z-30 bg-[#0a0a0a]/95 backdrop-blur-xl flex flex-col items-center justify-center gap-8 md:hidden"
+           >
+             {NAVIGATION_ITEMS.map((item) => {
+               const isActive = activeSection === item.toLowerCase();
+               return (
+                 <button
+                   key={item}
+                   onClick={() => scrollToSection(item.toLowerCase())}
+                   className={`text-3xl font-heading font-black transition-colors uppercase ${
+                     isActive 
+                       ? (isDarkMode ? 'text-white' : 'text-red-500') 
+                       : (isDarkMode ? 'text-white/60 hover:text-white' : 'text-white hover:text-red-500')
+                   } bg-transparent border-none`}
+                 >
+                   {item}
+                 </button>
+               );
+             })}
+             
+             <button
+               onClick={handleHireMeClick}
+               className={`mt-4 px-10 py-3 text-sm font-bold tracking-widest uppercase border transition-all duration-300 bg-transparent shrink-0 ${
+                 hireMeClicked
+                   ? 'border-emerald-500 text-emerald-400 bg-emerald-500/10 shadow-[0_0_20px_rgba(16,185,129,0.3)] scale-105'
+                   : 'border-white/20 text-white hover:border-red-500 hover:text-red-500 dark:hover:border-white dark:hover:bg-black dark:hover:text-white'
+               }`}
+             >
+               {hireMeClicked ? "Great!" : "Hire Me"}
+             </button>
+           </motion.div>
+         )}
+       </AnimatePresence>
 
       {/* HERO SECTION */}
       <header id="hero" className="relative h-[95svh] min-h-[500px] md:min-h-[620px] flex flex-col items-center justify-center overflow-hidden px-4 pt-24 md:pt-28">
@@ -490,7 +539,7 @@ const App: React.FC = () => {
              initial={{ scaleX: 0 }}
              animate={{ scaleX: 1 }}
              transition={{ duration: 1.5, delay: 0.5, ease: "circOut" }}
-             className="w-24 h-0.5 bg-gradient-to-r from-red-600 to-rose-500 mb-6"
+             className="w-24 h-0.5 bg-gradient-to-r from-red-600 to-rose-500 dark:from-gray-500 dark:to-gray-300 transition-all duration-1000 mb-6"
           />
 
           {/* New Subtitles */}
@@ -500,7 +549,7 @@ const App: React.FC = () => {
             transition={{ delay: 0.7, duration: 0.8 }}
             className="mb-6 px-4"
           >
-            <h2 className="text-lg md:text-xl lg:text-2xl font-bold font-heading text-red-500 tracking-wide mb-3 uppercase">
+            <h2 className="text-lg md:text-xl lg:text-2xl font-bold font-heading text-red-500 dark:text-white transition-colors duration-1000 tracking-wide mb-3 uppercase">
               Developer · Problem Solver · Builder
             </h2>
             <p className="text-sm sm:text-base md:text-lg font-normal text-gray-300 max-w-2xl mx-auto leading-relaxed">
@@ -508,11 +557,37 @@ const App: React.FC = () => {
             </p>
           </motion.div>
 
+          {/* Hero Actions / Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.85, duration: 0.8 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 w-full max-w-lg px-4"
+          >
+            <button
+              onClick={() => scrollToSection('projects')}
+              className="w-full sm:w-auto flex items-center justify-center gap-2 border border-red-500 dark:border-white/20 bg-red-650 dark:bg-white/5 hover:bg-red-700 dark:hover:bg-black dark:hover:border-white text-white font-heading font-black text-xs tracking-widest uppercase py-3.5 px-8 transition-all duration-300 hover:scale-105 active:scale-95 shadow-[0_0_15px_rgba(239,68,68,0.25)] hover:shadow-[0_0_30px_rgba(239,68,68,0.55)] dark:shadow-[0_0_15px_rgba(255,255,255,0.05)] dark:hover:shadow-[0_0_25px_rgba(255,255,255,0.15)] cursor-pointer rounded-lg"
+              data-hover="true"
+            >
+              <Briefcase className="w-4 h-4" />
+              <span>View My Work</span>
+            </button>
+            <a
+              href="/Mitul_Nayakwadi_Resume.pdf"
+              download
+              className="w-full sm:w-auto flex items-center justify-center gap-2 border border-white/20 hover:border-red-500/50 dark:hover:border-white bg-white/5 hover:bg-red-650/10 dark:hover:bg-black text-white font-heading font-black text-xs tracking-widest uppercase py-3.5 px-8 transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer backdrop-blur-sm rounded-lg"
+              data-hover="true"
+            >
+              <Download className="w-4 h-4 text-red-500 dark:text-white transition-colors duration-1000" />
+              <span>Download CV</span>
+            </a>
+          </motion.div>
+
           {/* Sleek Hero Social Icon Links */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.9, duration: 0.8 }}
+            transition={{ delay: 1.0, duration: 0.8 }}
             className="flex items-center gap-6"
           >
             <a
@@ -521,7 +596,7 @@ const App: React.FC = () => {
               rel="noopener noreferrer"
               aria-label="Open GitHub profile"
               title="GitHub — Mitul Nayakwadi"
-              className="p-3 rounded-full bg-white/5 border border-white/10 text-gray-400 hover:text-red-500 hover:border-red-500/50 hover:bg-white/10 transition-all duration-300 hover:scale-110 shadow-lg"
+              className="p-3 rounded-full bg-white/5 border border-white/10 text-gray-400 hover:text-red-500 dark:hover:text-white hover:border-red-500/50 dark:hover:border-white/40 hover:bg-white/10 dark:hover:bg-white/5 transition-all duration-300 hover:scale-110 shadow-lg"
               data-hover="true"
             >
               <Github className="w-5 h-5" />
@@ -532,7 +607,7 @@ const App: React.FC = () => {
               rel="noopener noreferrer"
               aria-label="Open LinkedIn profile"
               title="LinkedIn — Mitul Nayakwadi"
-              className="p-3 rounded-full bg-white/5 border border-white/10 text-gray-400 hover:text-red-500 hover:border-red-500/50 hover:bg-white/10 transition-all duration-300 hover:scale-110 shadow-lg"
+              className="p-3 rounded-full bg-white/5 border border-white/10 text-gray-400 hover:text-red-500 dark:hover:text-white hover:border-red-500/50 dark:hover:border-white/40 hover:bg-white/10 dark:hover:bg-white/5 transition-all duration-300 hover:scale-110 shadow-lg"
               data-hover="true"
             >
               <Linkedin className="w-5 h-5" />
@@ -541,7 +616,7 @@ const App: React.FC = () => {
               href="mailto:mitulnayakwadi@gmail.com"
               aria-label="Send email to Mitul Nayakwadi"
               title="Email — mitulnayakwadi@gmail.com"
-              className="p-3 rounded-full bg-white/5 border border-white/10 text-gray-400 hover:text-red-500 hover:border-red-500/50 hover:bg-white/10 transition-all duration-300 hover:scale-110 shadow-lg"
+              className="p-3 rounded-full bg-white/5 border border-white/10 text-gray-400 hover:text-red-500 dark:hover:text-white hover:border-red-500/50 dark:hover:border-white/40 hover:bg-white/10 dark:hover:bg-white/5 transition-all duration-300 hover:scale-110 shadow-lg"
               data-hover="true"
             >
               <Mail className="w-5 h-5" />
@@ -611,9 +686,9 @@ const App: React.FC = () => {
             {/* Right Column: Bio, Interests, Details */}
             <div className="md:col-span-7 flex flex-col justify-start">
               <h2 className="text-3xl md:text-5xl font-heading font-black uppercase leading-none tracking-tight text-white mb-4">
-                ABOUT <span className="text-red-500 font-bold">ME</span>
+                ABOUT <span className="text-red-500 dark:text-white transition-colors duration-1000 font-bold">ME</span>
               </h2>
-              <div className="w-16 h-1 bg-gradient-to-r from-red-600 to-rose-500 mb-6 rounded-full" />
+              <div className="w-16 h-1 bg-gradient-to-r from-red-600 to-rose-500 dark:from-gray-500 dark:to-gray-300 transition-all duration-1000 mb-6 rounded-full" />
               
               <p className="text-gray-100 text-lg md:text-xl font-light leading-relaxed mb-6">
                 I am <strong className="text-white font-semibold">Mitul Nayakwadi</strong>, a B.E CSE student at Matrusri Engineering College passionate about AI, web development, and building innovative tech projects. I enjoy solving real-world problems through code, participating in hackathons, and exploring modern technologies where creativity meets logic and innovation.
@@ -621,7 +696,7 @@ const App: React.FC = () => {
 
               {/* Interests block */}
               <div className="mb-6">
-                <h3 className="text-lg font-bold font-heading text-red-500 uppercase tracking-wider mb-3">Interests</h3>
+                <h3 className="text-lg font-bold font-heading text-red-500 dark:text-white transition-colors duration-1000 uppercase tracking-wider mb-3">Interests</h3>
                 <div className="flex flex-wrap gap-2 md:gap-2.5">
                   {[
                     { label: 'Movies & Series', icon: Tv },
@@ -631,9 +706,9 @@ const App: React.FC = () => {
                   ].map((interest, idx) => (
                     <span 
                       key={idx} 
-                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs md:text-sm font-semibold text-white/90 bg-white/5 border border-white/10 hover:border-red-500/30 hover:bg-white/10 transition-colors cursor-default animate-fade-in"
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs md:text-sm font-semibold text-white/90 bg-white/5 border border-white/10 hover:border-red-500/30 dark:hover:border-white/30 hover:bg-white/10 dark:hover:bg-black transition-colors cursor-default animate-fade-in"
                     >
-                      <interest.icon className="w-4 h-4 text-red-500" />
+                      <interest.icon className="w-4 h-4 text-red-500 dark:text-white transition-colors duration-1000" />
                       <span>{interest.label}</span>
                     </span>
                   ))}
@@ -641,7 +716,7 @@ const App: React.FC = () => {
               </div>
 
               {/* Personal Details Card */}
-              <div className="bg-gradient-to-b from-white/[0.03] to-transparent border border-white/10 rounded-2xl p-5 md:p-6 hover:border-red-500/25 transition-all duration-300 relative overflow-hidden mb-4">
+              <div className="bg-gradient-to-b from-white/[0.03] to-transparent border border-white/10 rounded-2xl p-5 md:p-6 hover:border-red-500/25 dark:hover:border-white/20 transition-all duration-300 relative overflow-hidden mb-4">
                 <h3 className="text-md uppercase font-mono font-bold text-white tracking-widest border-b border-white/10 pb-3 mb-6">
                   Personal Details
                 </h3>
@@ -676,12 +751,12 @@ const App: React.FC = () => {
         <div className="max-w-6xl mx-auto px-4 md:px-6 relative">
           <div className="text-center mb-10">
             <h2 className="text-3xl md:text-5xl font-heading font-black uppercase leading-none tracking-tight text-white animate-fade-in">
-              Experience & <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-rose-500 font-bold">Memberships</span>
+              Experience & <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-rose-500 dark:from-white dark:to-gray-400 font-bold">Memberships</span>
             </h2>
-            <div className="w-16 h-1 bg-gradient-to-r from-red-600 to-rose-500 mx-auto mt-4 rounded-full" />
+            <div className="w-16 h-1 bg-gradient-to-r from-red-600 to-rose-500 dark:from-gray-500 dark:to-gray-300 transition-all duration-1000 mx-auto mt-4 rounded-full" />
           </div>
 
-          <div className="relative border-l border-red-950 md:border-l-0 md:before:absolute md:before:left-1/2 md:before:top-0 md:before:bottom-0 md:before:w-px md:before:bg-gradient-to-b md:before:from-red-900/45 md:before:via-red-600 md:before:to-red-950/45">
+          <div className="relative border-l border-red-950 dark:border-white/10 md:border-l-0 md:before:absolute md:before:left-1/2 md:before:top-0 md:before:bottom-0 md:before:w-px md:before:bg-gradient-to-b md:before:from-red-900/45 md:before:via-red-600 md:before:to-red-950/45 dark:md:before:from-white/10 dark:md:before:via-white/30 dark:md:before:to-white/10 transition-colors duration-1000">
             {[
               {
                 year: 'Internship (May 2026 - Present)',
@@ -719,22 +794,22 @@ const App: React.FC = () => {
                   }`}
                 >
                   {/* Timeline Junction Icon */}
-                  <div className="absolute -left-[20px] md:left-1/2 md:-translate-x-1/2 top-1 w-8 h-8 rounded-full border border-red-500/40 flex items-center justify-center bg-black hover:border-red-500 transition-all z-20 shadow-[0_0_15px_rgba(239,68,68,0.25)]">
-                    <IconComponent className="w-4 h-4 text-red-500" />
+                  <div className="absolute -left-[20px] md:left-1/2 md:-translate-x-1/2 top-1 w-8 h-8 rounded-full border border-red-500/40 dark:border-white/20 flex items-center justify-center bg-black hover:border-red-500 dark:hover:border-white transition-all z-20 shadow-[0_0_15px_rgba(239,68,68,0.25)] dark:shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+                    <IconComponent className="w-4 h-4 text-red-500 dark:text-white transition-colors duration-1000" />
                   </div>
    
                   {/* Content Card container with specific alignment */}
                   <div className={`w-full md:w-[45%] pl-8 md:pl-0 ${
                     item.align === 'left' ? 'md:text-left md:pr-10' : 'md:text-left md:pl-10'
                   }`}>
-                    <div className="p-5 md:p-6 rounded-2xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/10 hover:border-red-500/45 transition-all duration-300 shadow-xl group cursor-default">
-                      <span className="inline-block px-3 py-1 text-xs md:text-sm font-mono font-semibold tracking-wider text-red-400 bg-red-950/40 border border-red-800/40 rounded-full mb-3">
+                    <div className="p-5 md:p-6 rounded-2xl bg-white/[0.03] hover:bg-white/[0.06] dark:hover:bg-black border border-white/10 hover:border-red-500/45 dark:hover:border-white/30 transition-all duration-300 shadow-xl group cursor-default">
+                      <span className="inline-block px-3 py-1 text-xs md:text-sm font-mono font-semibold tracking-wider text-red-400 dark:text-white bg-red-950/40 dark:bg-white/5 border border-red-800/40 dark:border-white/10 rounded-full mb-3 transition-colors duration-1000">
                         {item.year}
                       </span>
-                      <h3 className="text-base md:text-lg font-bold font-heading text-white group-hover:text-red-400 transition-colors mb-1.5">
+                      <h3 className="text-base md:text-lg font-bold font-heading text-white group-hover:text-red-400 dark:group-hover:text-white transition-colors mb-1.5">
                         {item.title}
                       </h3>
-                      <p className="text-xs md:text-sm text-red-500 font-semibold font-mono mb-3">
+                      <p className="text-xs md:text-sm text-red-500 dark:text-white font-semibold font-mono mb-3 transition-colors duration-1000">
                         {item.institution}
                       </p>
                       <ul className="space-y-2 text-xs md:text-sm text-gray-300 list-disc list-inside">
@@ -752,7 +827,7 @@ const App: React.FC = () => {
       </section>
 
       {/* MARQUEE */}
-      <div className="relative w-full py-4 bg-gradient-to-r from-red-700 via-red-600 to-red-800 text-white z-20 overflow-hidden shadow-[0_0_35px_rgba(239,68,68,0.3)] border-y border-white/5">
+      <div className="relative w-full py-4 bg-gradient-to-r from-red-700 via-red-600 to-red-800 dark:from-neutral-900 dark:via-neutral-800 dark:to-neutral-900 text-white z-20 overflow-hidden shadow-[0_0_35px_rgba(239,68,68,0.3)] dark:shadow-none border-y border-white/5 dark:border-white/10 transition-all duration-1000">
         <motion.div 
           className="flex w-fit will-change-transform"
           animate={{ x: "-50%" }}
@@ -786,14 +861,14 @@ const App: React.FC = () => {
               transition={{ duration: 0.8, ease: "easeOut" }}
               className="text-3xl md:text-5xl font-heading font-black uppercase leading-none tracking-tight text-white"
             >
-              EDUCATION <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-rose-500 font-bold">TIMELINE</span>
+              EDUCATION <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-rose-500 dark:from-white dark:to-gray-400 font-bold">TIMELINE</span>
             </motion.h2>
             <motion.div 
               initial={{ scaleX: 0 }}
               whileInView={{ scaleX: 1 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, delay: 0.2, ease: "circOut" }}
-              className="w-16 h-1 bg-gradient-to-r from-red-600 to-rose-500 mx-auto mt-4 rounded-full origin-center" 
+              className="w-16 h-1 bg-gradient-to-r from-red-600 to-rose-500 dark:from-gray-500 dark:to-gray-300 transition-all duration-1000 mx-auto mt-4 rounded-full origin-center" 
             />
           </div>
  
@@ -802,7 +877,7 @@ const App: React.FC = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-100px' }}
-            className="relative border-l border-red-950 md:border-l-0 md:before:absolute md:before:left-1/2 md:before:top-0 md:before:bottom-0 md:before:w-px md:before:bg-gradient-to-b md:before:from-red-900/45 md:before:via-red-600 md:before:to-red-950/45"
+            className="relative border-l border-red-950 dark:border-white/10 md:border-l-0 md:before:absolute md:before:left-1/2 md:before:top-0 md:before:bottom-0 md:before:w-px md:before:bg-gradient-to-b md:before:from-red-900/45 md:before:via-red-600 md:before:to-red-950/45 dark:md:before:from-white/10 dark:md:before:via-white/30 dark:md:before:to-white/10 transition-colors duration-1000"
           >
             {[
               {
@@ -834,24 +909,24 @@ const App: React.FC = () => {
                 }`}
               >
                 {/* Timeline Junction Graduation Icon */}
-                <div className="absolute -left-[20px] md:left-1/2 md:-translate-x-1/2 top-1 w-8 h-8 rounded-full border border-red-500/40 flex items-center justify-center bg-black hover:border-red-500 transition-all z-20 shadow-[0_0_15px_rgba(239,68,68,0.25)]">
-                  <GraduationCap className="w-4 h-4 text-red-500" />
+                <div className="absolute -left-[20px] md:left-1/2 md:-translate-x-1/2 top-1 w-8 h-8 rounded-full border border-red-500/40 dark:border-white/20 flex items-center justify-center bg-black hover:border-red-500 dark:hover:border-white transition-all z-20 shadow-[0_0_15px_rgba(239,68,68,0.25)] dark:shadow-[0_0_15px_rgba(255,255,255,0.1)]">
+                  <GraduationCap className="w-4 h-4 text-red-500 dark:text-white transition-colors duration-1000" />
                 </div>
  
                 {/* Content Card container with specific alignment */}
                 <div className={`w-full md:w-[45%] pl-8 md:pl-0 ${
                   item.align === 'left' ? 'md:text-left md:pr-10' : 'md:text-left md:pl-10'
                 }`}>
-                  <div className="p-5 md:p-6 rounded-2xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/10 hover:border-red-500/45 transition-all duration-300 shadow-xl group cursor-default">
+                  <div className="p-5 md:p-6 rounded-2xl bg-white/[0.03] hover:bg-white/[0.06] dark:hover:bg-black border border-white/10 hover:border-red-500/45 dark:hover:border-white/30 transition-all duration-300 shadow-xl group cursor-default">
                     <motion.span 
                       variants={textEntranceVariants}
-                      className="inline-block px-3 py-1 text-xs md:text-sm font-mono font-semibold tracking-wider text-red-400 bg-red-950/40 border border-red-800/40 rounded-full mb-3"
+                      className="inline-block px-3 py-1 text-xs md:text-sm font-mono font-semibold tracking-wider text-red-400 dark:text-white bg-red-950/40 dark:bg-white/5 border border-red-800/40 dark:border-white/10 rounded-full mb-3 transition-colors duration-1000"
                     >
                       {item.year}
                     </motion.span>
                     <motion.h3 
                       variants={textEntranceVariants}
-                      className="text-base md:text-lg font-bold font-heading text-white group-hover:text-red-400 transition-colors mb-1.5"
+                      className="text-base md:text-lg font-bold font-heading text-white group-hover:text-red-400 dark:group-hover:text-white transition-colors mb-1.5"
                     >
                       {item.title}
                     </motion.h3>
@@ -864,7 +939,7 @@ const App: React.FC = () => {
                     {item.extra && (
                       <motion.p 
                         variants={textEntranceVariants}
-                        className="text-xs md:text-sm text-red-400 font-mono mt-2.5 font-semibold tracking-wide bg-red-950/30 border border-red-900/30 py-1 px-3 rounded inline-block"
+                        className="text-xs md:text-sm text-red-400 dark:text-white font-mono mt-2.5 font-semibold tracking-wide bg-red-950/30 dark:bg-white/5 border border-red-900/30 dark:border-white/10 py-1 px-3 rounded inline-block transition-colors duration-1000"
                       >
                         {item.extra}
                       </motion.p>
@@ -894,7 +969,7 @@ const App: React.FC = () => {
                 variants={textEntranceVariants}
                 className="text-2xl md:text-3xl font-heading font-black mb-4 leading-tight uppercase text-white"
               >
-                Technical <br/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-rose-500 font-bold">TIMELINE</span>
+                Technical <br/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-rose-500 dark:from-white dark:to-gray-400 font-bold">TIMELINE</span>
               </motion.h2>
               <motion.p 
                 variants={textEntranceVariants}
@@ -914,8 +989,8 @@ const App: React.FC = () => {
                     variants={textEntranceVariants}
                     className="flex items-start gap-4 group"
                   >
-                     <div className="p-3 rounded-xl bg-white/5 backdrop-blur-md border border-white/10 group-hover:border-red-500/50 transition-colors">
-                      <feature.icon className="w-5 h-5 text-red-500" />
+                     <div className="p-3 rounded-xl bg-white/5 backdrop-blur-md border border-white/10 group-hover:border-red-500/50 dark:group-hover:border-white/30 transition-colors">
+                      <feature.icon className="w-5 h-5 text-red-500 dark:text-white transition-colors duration-1000" />
                     </div>
                     <div>
                       <h4 className="text-sm md:text-base font-bold mb-0.5 font-heading text-white">{feature.title}</h4>
@@ -939,7 +1014,7 @@ const App: React.FC = () => {
                >
                   <h3 className="text-lg font-bold text-white mb-2 font-heading">Focus Area</h3>
                   <div>
-                    <p className="text-red-500 font-mono text-[10px] uppercase tracking-wider mb-1">Intelligent Cloud Systems</p>
+                    <p className="text-red-500 dark:text-white/80 font-mono text-[10px] uppercase tracking-wider mb-1 transition-colors duration-1000">Intelligent Cloud Systems</p>
                     <p className="text-xs md:text-sm text-gray-300">Bridging scalable cloud infrastructure with advanced machine learning capabilities.</p>
                   </div>
                </motion.div>
@@ -959,23 +1034,23 @@ const App: React.FC = () => {
                {/* IN Technical Mastery: Summary of Certified Industry Strengths */}
                <motion.div 
                  variants={skillCardVariants}
-                 className="bg-gradient-to-br from-[#0c0c0c] to-[#121212] p-5 md:p-6 rounded-xl border border-white/10 hover:border-red-500/35 transition-all duration-300 flex flex-col justify-between min-h-[130px] shadow-lg shadow-red-500/5 md:col-span-2 cursor-default group"
+                 className="bg-gradient-to-br from-[#0c0c0c] to-[#121212] p-5 md:p-6 rounded-xl border border-white/10 hover:border-red-500/35 dark:hover:border-white/30 transition-all duration-300 flex flex-col justify-between min-h-[130px] shadow-lg shadow-red-500/5 dark:shadow-none md:col-span-2 cursor-default group"
                >
                  <div className="flex justify-between items-start">
                    <div>
-                     <p className="text-red-500 font-mono text-[10px] uppercase tracking-wider mb-1">LinkedIn Verified</p>
+                     <p className="text-red-500 dark:text-white/80 font-mono text-[10px] uppercase tracking-wider mb-1 transition-colors duration-1000">LinkedIn Verified</p>
                      <h3 className="text-lg font-bold text-white mb-2 font-heading">Certified Industry Strengths</h3>
                    </div>
-                   <div className="p-2 rounded-xl bg-red-500/10 border border-red-500/20 group-hover:border-red-500/40 transition-colors">
-                     <Award className="w-5 h-5 text-red-500" />
+                   <div className="p-2 rounded-xl bg-red-500/10 dark:bg-white/5 border border-red-500/20 dark:border-white/10 group-hover:border-red-500/40 dark:group-hover:border-white/30 transition-all duration-1000">
+                     <Award className="w-5 h-5 text-red-500 dark:text-white transition-colors duration-1000" />
                    </div>
                  </div>
                  <div className="flex flex-wrap gap-x-6 gap-y-2.5 mt-4 text-xs md:text-sm text-gray-400 font-medium font-sans">
-                   <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 bg-red-500 rounded-full"></span> Generative AI (Google Cloud)</span>
-                   <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 bg-red-500 rounded-full"></span> Machine Learning (Kaggle)</span>
-                   <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 bg-red-500 rounded-full"></span> AI Foundations (DeepLearning.AI)</span>
-                   <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 bg-red-500 rounded-full"></span> Python Engineering (HackerRank)</span>
-                   <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 bg-red-500 rounded-full"></span> Computer Vision (OpenCV & Mediapipe)</span>
+                   <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 bg-red-500 dark:bg-white rounded-full transition-colors duration-1000"></span> Generative AI (Google Cloud)</span>
+                   <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 bg-red-500 dark:bg-white rounded-full transition-colors duration-1000"></span> Machine Learning (Kaggle)</span>
+                   <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 bg-red-500 dark:bg-white rounded-full transition-colors duration-1000"></span> AI Foundations (DeepLearning.AI)</span>
+                   <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 bg-red-500 dark:bg-white rounded-full transition-colors duration-1000"></span> Python Engineering (HackerRank)</span>
+                   <span className="flex items-center gap-1.5"><span className="w-1.5 h-1.5 bg-red-500 dark:bg-white rounded-full transition-colors duration-1000"></span> Computer Vision (OpenCV & Mediapipe)</span>
                  </div>
                </motion.div>
             </motion.div>
@@ -986,14 +1061,14 @@ const App: React.FC = () => {
             <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
               <div>
                 <h3 className="text-2xl md:text-3xl font-black uppercase font-heading text-white">
-                  PROFESSIONAL <br/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-rose-500 font-bold">CERTIFICATIONS</span>
+                  PROFESSIONAL <br/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-rose-500 dark:from-white dark:to-gray-400 font-bold">CERTIFICATIONS</span>
                 </h3>
               </div>
               <a 
                 href="https://www.linkedin.com/in/mitul-nayakwadi-6a3218319" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="group inline-flex items-center gap-2 text-xs text-gray-400 hover:text-white hover:border-red-500/50 transition-all bg-white/5 border border-white/10 px-4 py-2 rounded-full cursor-pointer hover:bg-white/10"
+                className="group inline-flex items-center gap-2 text-xs text-gray-400 hover:text-white hover:border-red-500/50 dark:hover:border-white/30 transition-all bg-white/5 border border-white/10 px-4 py-2 rounded-full cursor-pointer hover:bg-white/10"
                 data-hover="true"
               >
                 <Linkedin className="w-4 h-4 text-[#0a66c2]" />
@@ -1048,20 +1123,20 @@ const App: React.FC = () => {
                 <motion.div
                   key={cert.title}
                   variants={skillCardVariants}
-                  className="group relative bg-[#0a0a0a] hover:bg-[#121212] p-6 rounded-2xl border border-white/10 hover:border-red-500/40 hover:shadow-lg hover:shadow-red-500/5 transition-all duration-300 flex flex-col justify-between"
+                  className="group relative bg-[#0a0a0a] hover:bg-[#121212] dark:hover:bg-black p-6 rounded-2xl border border-white/10 hover:border-red-500/40 dark:hover:border-white/30 hover:shadow-lg hover:shadow-red-500/5 dark:hover:shadow-none transition-all duration-300 flex flex-col justify-between"
                 >
                   <div>
                     <div className="flex justify-between items-start mb-4 font-sans">
-                      <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 group-hover:border-red-500/30 group-hover:bg-red-500/5 transition-all">
-                        <cert.icon className="w-5 h-5 text-red-500" />
+                      <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 group-hover:border-red-500/30 dark:group-hover:border-white/20 group-hover:bg-red-500/5 dark:group-hover:bg-white/5 transition-all">
+                        <cert.icon className="w-5 h-5 text-red-500 dark:text-white transition-colors duration-1000" />
                       </div>
                       <span className="text-[10px] font-mono text-gray-500 tracking-wider uppercase">{cert.date}</span>
                     </div>
 
-                    <h4 className="text-base font-bold text-white group-hover:text-red-400 transition-colors mb-1 font-heading">
+                    <h4 className="text-base font-bold text-white group-hover:text-red-400 dark:group-hover:text-white transition-colors mb-1 font-heading">
                       {cert.title}
                     </h4>
-                    <p className="text-xs text-red-400 font-mono font-semibold mb-3 tracking-wide">{cert.issuer}</p>
+                    <p className="text-xs text-red-400 dark:text-white font-mono font-semibold mb-3 tracking-wide transition-colors duration-1000">{cert.issuer}</p>
                     
                     <div className="flex flex-wrap gap-1.5 mb-6 font-sans">
                       {cert.skills.map(skill => (
@@ -1076,7 +1151,7 @@ const App: React.FC = () => {
                     href={cert.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full flex items-center justify-center gap-2 py-2 px-4 rounded-xl bg-white/5 hover:bg-red-600/10 border border-white/10 hover:border-red-500/30 text-xs text-gray-300 hover:text-white transition-all cursor-pointer font-medium font-mono uppercase tracking-wider"
+                    className="w-full flex items-center justify-center gap-2 py-2 px-4 rounded-xl bg-white/5 hover:bg-red-650/10 dark:hover:bg-black border border-white/10 hover:border-red-500/30 dark:hover:border-white/30 text-xs text-gray-300 hover:text-white transition-all cursor-pointer font-medium font-mono uppercase tracking-wider"
                     data-hover="true"
                   >
                     <span>View Certificate</span>
@@ -1097,9 +1172,9 @@ const App: React.FC = () => {
         <div className="max-w-6xl mx-auto px-4 md:px-6 relative">
           <div className="text-center mb-10">
             <h2 className="text-3xl md:text-5xl font-heading font-black uppercase leading-none tracking-tight text-white animate-fade-in">
-              Selected <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-rose-500 font-bold">Works</span>
+              Selected <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-rose-500 dark:from-white dark:to-gray-400 font-bold">Works</span>
             </h2>
-            <div className="w-16 h-1 bg-gradient-to-r from-red-600 to-rose-500 mx-auto mt-4 rounded-full" />
+            <div className="w-16 h-1 bg-gradient-to-r from-red-600 to-rose-500 dark:from-gray-500 dark:to-gray-300 transition-all duration-1000 mx-auto mt-4 rounded-full" />
           </div>
 
           <motion.div 
@@ -1107,7 +1182,7 @@ const App: React.FC = () => {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-100px' }}
-            className="relative border-l border-red-950 md:border-l-0 md:before:absolute md:before:left-1/2 md:before:top-0 md:before:bottom-0 md:before:w-px md:before:bg-gradient-to-b md:before:from-red-900/45 md:before:via-red-600 md:before:to-red-950/45"
+            className="relative border-l border-red-950 dark:border-white/10 md:border-l-0 md:before:absolute md:before:left-1/2 md:before:top-0 md:before:bottom-0 md:before:w-px md:before:bg-gradient-to-b md:before:from-red-900/45 md:before:via-red-600 md:before:to-red-950/45 dark:md:before:from-white/10 dark:md:before:via-white/30 dark:md:before:to-white/10 transition-colors duration-1000"
           >
             {PROJECTS.map((project, idx) => {
               const align = idx % 2 === 0 ? 'left' : 'right';
@@ -1122,10 +1197,10 @@ const App: React.FC = () => {
                   {/* Timeline Junction Project Code Icon */}
                   <div 
                     onClick={() => setSelectedProject(project)}
-                    className="absolute -left-[20px] md:left-1/2 md:-translate-x-1/2 top-4 w-8 h-8 rounded-full border border-red-500/40 flex items-center justify-center bg-black hover:border-red-500 hover:scale-110 transition-all z-20 shadow-[0_0_15px_rgba(239,68,68,0.25)] cursor-pointer"
+                    className="absolute -left-[20px] md:left-1/2 md:-translate-x-1/2 top-4 w-8 h-8 rounded-full border border-red-500/40 dark:border-white/20 flex items-center justify-center bg-black hover:border-red-500 dark:hover:border-white hover:scale-110 transition-all z-20 shadow-[0_0_15px_rgba(239,68,68,0.25)] dark:shadow-[0_0_15px_rgba(255,255,255,0.1)] cursor-pointer"
                     data-hover="true"
                   >
-                    <Code className="w-4 h-4 text-red-500" />
+                    <Code className="w-4 h-4 text-red-500 dark:text-white transition-colors duration-1000" />
                   </div>
    
                   {/* Content Card container with specific alignment */}
@@ -1134,7 +1209,7 @@ const App: React.FC = () => {
                   }`}>
                     <div 
                       onClick={() => setSelectedProject(project)}
-                      className="group relative rounded-2xl border border-white/10 hover:border-red-500/45 overflow-hidden bg-white/[0.02] hover:bg-white/[0.05] hover:scale-[1.025] hover-pulse-glow active:scale-[0.99] transition-all duration-300 transform-gpu p-4 md:p-5 cursor-pointer flex flex-col"
+                      className="group relative rounded-2xl border border-white/10 hover:border-red-500/45 dark:hover:border-white/30 overflow-hidden bg-white/[0.02] hover:bg-white/[0.05] dark:hover:bg-black hover:scale-[1.025] hover-pulse-glow active:scale-[0.99] transition-all duration-300 transform-gpu p-4 md:p-5 cursor-pointer flex flex-col"
                       data-hover="true"
                     >
                       {/* Interactive Tooltip indicating demo & repo availability */}
@@ -1164,17 +1239,17 @@ const App: React.FC = () => {
                           className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-500 will-change-transform"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-                        <span className="absolute bottom-3 left-3 text-[9px] font-mono border border-white/20 px-2 py-0.5 rounded-full backdrop-blur-md bg-black/60 text-red-400 font-bold uppercase tracking-wider">
+                        <span className="absolute bottom-3 left-3 text-[9px] font-mono border border-white/20 px-2 py-0.5 rounded-full backdrop-blur-md bg-black/60 text-red-400 dark:text-white font-bold uppercase tracking-wider transition-colors duration-1000">
                           {project.category}
                         </span>
                       </div>
 
                       {/* Title & arrow */}
                       <div className="flex justify-between items-start mb-2">
-                        <h3 className="text-base md:text-lg font-bold font-heading text-white group-hover:text-red-400 transition-colors">
+                        <h3 className="text-base md:text-lg font-bold font-heading text-white group-hover:text-red-400 dark:group-hover:text-white transition-colors">
                           {project.name}
                         </h3>
-                        <ArrowUpRight className="w-4 h-4 text-red-500 shrink-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                        <ArrowUpRight className="w-4 h-4 text-red-500 dark:text-white shrink-0 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform transition-colors duration-1000" />
                       </div>
 
                       <p className="text-xs text-gray-300 mb-4 font-light leading-relaxed line-clamp-3">
@@ -1182,7 +1257,7 @@ const App: React.FC = () => {
                       </p>
 
                       <div className="mt-auto border-t border-white/5 pt-3">
-                        <span className="text-[10px] font-semibold tracking-widest text-red-500 font-mono block">
+                        <span className="text-[10px] font-semibold tracking-widest text-red-500 dark:text-white/80 font-mono block transition-colors duration-1000">
                           {project.techStack}
                         </span>
                       </div>
@@ -1200,13 +1275,13 @@ const App: React.FC = () => {
         <div className="max-w-5xl mx-auto text-center">
           <div className="mb-8">
              <h2 className="text-3xl md:text-5xl font-heading font-black text-white mb-3 uppercase tracking-tight">
-               LET'S BUILD <span className="text-red-500">TOGETHER</span>
+               LET'S BUILD <span className="text-red-500 dark:text-white transition-colors duration-1000">TOGETHER</span>
              </h2>
-             <p className="text-red-500 font-mono uppercase tracking-widest text-xs md:text-sm mb-3">
+             <p className="text-red-500 dark:text-white font-mono uppercase tracking-widest text-xs md:text-sm mb-3 transition-colors duration-1000">
                Ready to collaborate on the next big thing?
              </p>
-             <div className="flex items-center justify-center gap-2 text-gray-300 font-mono text-xs tracking-wide bg-white/5 border border-white/10 px-3 py-1.5 mt-4 rounded-full w-fit mx-auto backdrop-blur-sm hover:border-red-500/30 transition-colors">
-                <MapPin className="w-3.5 h-3.5 text-red-500" />
+             <div className="flex items-center justify-center gap-2 text-gray-300 font-mono text-xs tracking-wide bg-white/5 border border-white/10 px-3 py-1.5 mt-4 rounded-full w-fit mx-auto backdrop-blur-sm hover:border-red-500/30 dark:hover:border-white/30 transition-colors">
+                <MapPin className="w-3.5 h-3.5 text-red-500 dark:text-white transition-colors duration-1000" />
                 <span>Hyderabad, Telangana</span>
              </div>
           </div>
@@ -1214,10 +1289,10 @@ const App: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             <a 
               href="mailto:mitulnayakwadi@gmail.com"
-              className="group p-5 md:p-6 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all flex flex-col items-center gap-4"
+              className="group p-5 md:p-6 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 dark:hover:bg-black transition-all flex flex-col items-center gap-4"
               data-hover="true"
             >
-              <div className="w-14 h-14 rounded-full bg-red-600/20 flex items-center justify-center text-red-500 mb-2 group-hover:scale-110 transition-transform">
+              <div className="w-14 h-14 rounded-full bg-red-600/20 dark:bg-white/5 flex items-center justify-center text-red-500 dark:text-white mb-2 group-hover:scale-110 transition-transform transition-colors duration-1000">
                 <Mail className="w-7 h-7" />
               </div>
               <h3 className="text-lg font-bold">Email Me</h3>
@@ -1228,10 +1303,10 @@ const App: React.FC = () => {
               href="https://github.com/MitulNayakwadi"
               target="_blank"
               rel="noopener noreferrer"
-              className="group p-5 md:p-6 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all flex flex-col items-center gap-4"
+              className="group p-5 md:p-6 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 dark:hover:bg-black transition-all flex flex-col items-center gap-4"
               data-hover="true"
             >
-              <div className="w-14 h-14 rounded-full bg-red-600/10 flex items-center justify-center text-red-500 mb-2 group-hover:scale-110 transition-transform">
+              <div className="w-14 h-14 rounded-full bg-red-600/10 dark:bg-white/5 flex items-center justify-center text-red-500 dark:text-white mb-2 group-hover:scale-110 transition-transform transition-colors duration-1000">
                 <Github className="w-7 h-7" />
               </div>
               <h3 className="text-lg font-bold">GitHub</h3>
@@ -1242,10 +1317,10 @@ const App: React.FC = () => {
               href="https://linkedin.com/in/mitul-nayakwadi-6a3218319"
               target="_blank"
               rel="noopener noreferrer"
-              className="group p-5 md:p-6 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all flex flex-col items-center gap-4"
+              className="group p-5 md:p-6 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 dark:hover:bg-black transition-all flex flex-col items-center gap-4"
               data-hover="true"
             >
-              <div className="w-14 h-14 rounded-full bg-[#0a66c2]/20 flex items-center justify-center text-[#0a66c2] mb-2 group-hover:scale-110 transition-transform">
+              <div className="w-14 h-14 rounded-full bg-[#0a66c2]/20 dark:bg-white/5 flex items-center justify-center text-[#0a66c2] dark:text-white mb-2 group-hover:scale-110 transition-transform transition-colors duration-1000">
                 <Linkedin className="w-7 h-7" />
               </div>
               <h3 className="text-lg font-bold">LinkedIn</h3>

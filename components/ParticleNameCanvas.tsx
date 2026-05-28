@@ -323,7 +323,7 @@ export const ParticleNameCanvas: React.FC<ParticleNameCanvasProps> = ({ classNam
       });
 
       ctx.globalAlpha = 1.0;
-      setAsassembled(allSettled && triggerState === 'combining');
+      setAssembled(allSettled && triggerState === 'combining');
 
       animFrameId = requestAnimationFrame(render);
     };
