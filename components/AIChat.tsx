@@ -4,8 +4,8 @@
 */
 
 
-import React, { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Send, Sparkles } from 'lucide-react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
+import { MessageCircle, X, Send, Sparkles, ArrowUpRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChatMessage } from '../types';
 import scrollToTopImage from '../scroll-to-top.png';
@@ -235,6 +235,16 @@ const GothicTopCrystalSVG: React.FC = () => {
   );
 };
 
+type KnowledgeItem = {
+  title: string;
+  keywords: string[];
+  answer: string;
+  action?: {
+    label: string;
+    path: string;
+  };
+};
+
 const AIChat: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([
@@ -249,6 +259,112 @@ const AIChat: React.FC = () => {
   const [isShooting, setIsShooting] = useState(false);
   const [isMuzzleFlash, setIsMuzzleFlash] = useState(false);
   const [imageError, setImageError] = useState(false);
+
+  const knowledgeBase = useMemo<KnowledgeItem[]>(() => [
+    {
+      title: 'About Mitul',
+      keywords: ['about', 'who is mitul', 'who are you', 'background', 'college', 'education', 'matrusri', 'student'],
+      answer: 'Mitul Nayakwadi is a B.E. Computer Science and Engineering student at Matrusri Engineering College. He focuses on AI, web development, and practical projects that mix creativity with logic.',
+      action: { label: 'Read About Me', path: '#about' }
+    },
+    {
+      title: 'Projects',
+      keywords: ['project', 'projects', 'work', 'portfolio', 'medico', 'collex', 'uppal', 'food', 'demo'],
+      answer: 'The main featured projects are Uppal Street Food Guide, Medico AI, and Collex Pay. They cover AI food discovery, healthcare assistance, and campus fintech workflows.',
+      action: { label: 'View Projects', path: '#projects' }
+    },
+    {
+      title: 'Skills',
+      keywords: ['skill', 'skills', 'tech', 'language', 'code', 'python', 'react', 'typescript', 'javascript', 'node', 'express', 'firebase'],
+      answer: 'Mitul works with Python, C, Java, React, TypeScript, Node.js, Express, Firebase, OpenCV, MediaPipe, and AI/ML tooling.',
+      action: { label: 'See Skills', path: '#skills' }
+    },
+    {
+      title: 'Experience',
+      keywords: ['experience', 'member', 'ambassador', 'google', 'club', 'internship', 'big-oh'],
+      answer: 'His experience highlights include Google Student Ambassador and Big-Oh Club Member, with a strong focus on workshops, collaboration, and problem solving.',
+      action: { label: 'View Experience', path: '#experience' }
+    },
+    {
+      title: 'Education',
+      keywords: ['education', 'school', 'degree', 'college', 'be', 'cse'],
+      answer: 'The education timeline includes B.E. in Computer Science and Engineering, Intermediate, and Secondary School, all shown in the timeline section.',
+      action: { label: 'View Education', path: '#education' }
+    },
+    {
+      title: 'Contact',
+      keywords: ['contact', 'email', 'github', 'linkedin', 'hire', 'connect', 'reach'],
+      answer: 'You can reach Mitul through email, LinkedIn, or GitHub from the contact section at the bottom of the page.',
+      action: { label: 'Open Contact', path: '#contact' }
+    }
+  ], []);
+
+  const normalize = (value: string) => value.toLowerCase().replace(/[^a-z0-9\s]/g, ' ');
+
+  const scoreKnowledgeItem = (query: string, item: KnowledgeItem) => {
+    const normalizedQuery = normalize(query);
+    const tokens = normalizedQuery.split(/\s+/).filter(Boolean);
+    let score = 0;
+
+    item.keywords.forEach((keyword) => {
+      if (normalizedQuery.includes(keyword)) {
+        score += 4;
+      }
+    });
+
+    tokens.forEach((token) => {
+      if (item.title.toLowerCase().includes(token)) {
+        score += 2;
+      }
+      if (item.keywords.some(keyword => keyword.includes(token))) {
+        score += 1;
+      }
+    });
+
+    return score;
+  };
+
+  const getResponse = (query: string) => {
+    const trimmed = query.trim();
+    const lower = trimmed.toLowerCase();
+
+    if (!trimmed) {
+      return {
+        text: 'Ask me about Mitul\'s projects, skills, education, experience, or contact details.',
+        action: { label: 'Open Contact', path: '#contact' }
+      };
+    }
+
+    if (['hi', 'hello', 'hey', 'yo', 'greetings'].some(prefix => lower.startsWith(prefix))) {
+      return {
+        text: 'Hello! I\'m LUMI AI. I can answer questions about Mitul\'s work, skills, projects, education, and contact info.',
+        action: { label: 'View Projects', path: '#projects' }
+      };
+    }
+
+    if (lower.includes('resume') || lower.includes('cv')) {
+      return {
+        text: 'The resume link is available from the hero section buttons and the contact area of the site.',
+        action: { label: 'Go to Home', path: '#hero' }
+      };
+    }
+
+    const bestMatch = knowledgeBase
+      .map((item) => ({ item, score: scoreKnowledgeItem(trimmed, item) }))
+      .sort((a, b) => b.score - a.score)[0];
+
+    if (bestMatch && bestMatch.score > 0) {
+      return {
+        text: bestMatch.item.answer,
+        action: bestMatch.item.action
+      };
+    }
+
+    return {
+      text: 'I can help with the main sections of the portfolio. Try asking about projects, skills, education, experience, or contact.',
+      action: { label: 'Browse Skills', path: '#skills' }
+    };
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -321,98 +437,10 @@ const AIChat: React.FC = () => {
 
     // Slight delay to allow state update to render before scrolling
     setTimeout(scrollToBottom, 50);
-
-    // Match keywords locally to generate answer:
-    const queryLower = userQuery.toLowerCase();
-    let responseText = "";
-
-    if (
-      queryLower.includes("hello") || 
-      queryLower.includes("hi") || 
-      queryLower.includes("hey") || 
-      queryLower.includes("greetings") || 
-      queryLower.includes("lumi")
-    ) {
-      responseText = "Hi there! I'm LUMI, Mitul's personal assistant. Ask me anything about his projects, skills, memberships, or education! 🚀";
-    } else if (
-      queryLower.includes("who is mitul") || 
-      queryLower.includes("mitul") || 
-      queryLower.includes("about") || 
-      queryLower.includes("background") || 
-      queryLower.includes("college") || 
-      queryLower.includes("education") ||
-      queryLower.includes("school") ||
-      queryLower.includes("matrusri")
-    ) {
-      responseText = "Mitul Nayakwadi is a B.E Computer Science & Engineering (CSE) student at Matrusri Engineering College. He is deeply interested in AI, machine learning, and full-stack web development. He enjoys using modern technologies to solve structural challenges. 🎓💻";
-    } else if (
-      queryLower.includes("project") || 
-      queryLower.includes("work") || 
-      queryLower.includes("portfolio") || 
-      queryLower.includes("selected works") || 
-      queryLower.includes("medico") || 
-      queryLower.includes("collex") || 
-      queryLower.includes("pay") || 
-      queryLower.includes("uppal") || 
-      queryLower.includes("food")
-    ) {
-      responseText = "Here are Mitul's featured works:\n\n" +
-                     "• 🍔 **Uppal Street Food Guide**: An AI food discovery platform for Uppal Kalan using Next.js, Google Maps integration, and Gemini AI recommendations. (https://uppallocalfoodguide.vercel.app/)\n\n" +
-                     "• 🩺 **Medico AI**: An healthcare assistant platform designed with Python, Flask, and TensorFlow to deliver smart medical recommendations.\n\n" +
-                     "• 💳 **Collex Pay**: A campus fintech wallet allowing students to transact using \"Collex Coins\" across events & food outlets.";
-    } else if (
-      queryLower.includes("skill") || 
-      queryLower.includes("tech") || 
-      queryLower.includes("language") || 
-      queryLower.includes("code") || 
-      queryLower.includes("python") || 
-      queryLower.includes("react") || 
-      queryLower.includes("typescript") || 
-      queryLower.includes("javascript") ||
-      queryLower.includes("node") ||
-      queryLower.includes("express")
-    ) {
-      responseText = "Mitul's technical toolkit includes:\n\n" +
-                     "• 💪 **Languages**: Python, C, TypeScript, JavaScript\n" +
-                     "• 💻 **Frontend/Backend**: Next.js, React, Node.js, Express, Tailwind CSS, Firebase\n" +
-                     "• 🧠 **AI / ML**: TensorFlow, OpenCV, MediaPipe, Generative AI APIs";
-    } else if (
-      queryLower.includes("member") || 
-      queryLower.includes("experience") || 
-      queryLower.includes("ambassador") || 
-      queryLower.includes("big-oh") || 
-      queryLower.includes("club") || 
-      queryLower.includes("google") || 
-      queryLower.includes("gdsc") || 
-      queryLower.includes("csi") ||
-      queryLower.includes("student branch")
-    ) {
-      responseText = "Mitul's current experiences & roles include:\n\n" +
-                     "• 🌟 **Google Student Ambassador** at Google Student Ambassadors (India) (Internship, May 2026 - Present): Leading development bootcamps and training sessions on campuses.\n\n" +
-                     "• 🏆 **Big-Oh Club Member** at Matrusri Engineering College (Aug 2024 - Present): Engaged in competitive programming and algorithmic optimization.";
-    } else if (
-      queryLower.includes("contact") || 
-      queryLower.includes("email") || 
-      queryLower.includes("github") || 
-      queryLower.includes("linkedin") || 
-      queryLower.includes("hire") || 
-      queryLower.includes("connect")
-    ) {
-      responseText = "You can connect with Mitul anytime via:\n\n" +
-                     "• 📧 **Email**: mitulnayakwadi@gmail.com\n" +
-                     "• 🌐 **LinkedIn**: linkedin.com/in/mitul-nayakwadi-6a3218319\n" +
-                     "• 💻 **GitHub Profile**: github.com/MitulNayakwadi\n" +
-                     "• 🚀 **Portfolio Repo**: github.com/MitulNayakwadi/My_Portfolio";
-    } else {
-      responseText = "I'm not quite sure about that one, but I'd love to tell you about Mitul's:\n" +
-                     "• **Projects** (Medico AI, Uppal Food Guide, Collex Pay)\n" +
-                     "• **Skills** (React, Python, TypeScript, AI/ML)\n" +
-                     "• **Memberships & Experience** (Google Student Ambassador, Big-Oh Club)\n" +
-                     "• **Contact info**\n\nWhat would you like to hear about first? ✨";
-    }
+    const response = getResponse(userQuery);
 
     setTimeout(() => {
-      setMessages(prev => [...prev, { role: 'model', text: responseText }]);
+      setMessages(prev => [...prev, { role: 'model', text: response.text, action: response.action }]);
       setIsLoading(false);
       setTimeout(scrollToBottom, 50);
     }, 600);
@@ -471,6 +499,24 @@ const AIChat: React.FC = () => {
                     }`}
                   >
                     {renderMessageText(msg.text)}
+                    {msg.action && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (msg.action?.path.startsWith('#')) {
+                            const target = document.querySelector(msg.action.path);
+                            if (target) {
+                              target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }
+                          } else {
+                            window.open(msg.action.path, '_blank', 'noopener,noreferrer');
+                          }
+                        }}
+                        className="mt-3 inline-flex items-center justify-center gap-1.5 text-[10px] font-bold uppercase tracking-wider bg-white hover:bg-gray-50 text-red-600 border border-red-200 px-3 py-2 rounded-lg transition-colors w-full"
+                      >
+                        {msg.action.label} <ArrowUpRight className="w-3 h-3" />
+                      </button>
+                    )}
                   </div>
                 </div>
               ))}

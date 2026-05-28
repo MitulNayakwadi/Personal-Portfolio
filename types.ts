@@ -20,6 +20,10 @@ export interface ChatMessage {
   role: 'user' | 'model';
   text: string;
   isError?: boolean;
+  action?: {
+    label: string;
+    path: string;
+  };
 }
 
 export enum Section {
