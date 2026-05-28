@@ -155,8 +155,38 @@ const App: React.FC = () => {
   const [activeSection, setActiveSection] = useState('hero');
   const [hireMeClicked, setHireMeClicked] = useState(false);
   const [introCompleted, setIntroCompleted] = useState(false);
+  const [isTouchLike, setIsTouchLike] = useState(false);
   const [showNameOnImage, setShowNameOnImage] = useState(false);
-  const [portraitImageError, setPortraitImageError] = useState(false);
+
+  const syncActiveSection = () => {
+    const sections = ['hero', 'about', 'experience', 'education', 'skills', 'projects', 'contact'];
+    const scrollPosition = window.scrollY + 250;
+
+    for (const section of sections) {
+      const el = document.getElementById(section);
+      if (el) {
+        const top = el.offsetTop;
+        const height = el.offsetHeight;
+        if (scrollPosition >= top && scrollPosition < top + height) {
+          setActiveSection(section);
+          break;
+        }
+      }
+    }
+  };
+
+  useEffect(() => {
+    const query = window.matchMedia('(hover: none) and (pointer: coarse)');
+
+    const updateTouchLikeState = () => {
+      setIsTouchLike(query.matches || navigator.maxTouchPoints > 0);
+    };
+
+    updateTouchLikeState();
+
+    query.addEventListener('change', updateTouchLikeState);
+    return () => query.removeEventListener('change', updateTouchLikeState);
+  }, []);
   
   // Timer for the page-load glitch intro screen
   useEffect(() => {
@@ -179,6 +209,11 @@ const App: React.FC = () => {
     document.documentElement.style.overflow = '';
     document.body.style.overflow = '';
 
+    if (isTouchLike) {
+      window.lenisInstance = undefined;
+      return;
+    }
+
     const lenis = new Lenis({
       duration: 1.8, // Elegant, luxurious kinetic drag effect
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // standard easeOutExpo easing
@@ -192,9 +227,9 @@ const App: React.FC = () => {
 
     window.lenisInstance = lenis;
 
-    // Handle scroll event for state synchronization of coordinates
+    // Keep section tracking in sync without re-emitting synthetic scroll events.
     const onScroll = () => {
-      window.dispatchEvent(new Event('scroll'));
+      syncActiveSection();
     };
     lenis.on('scroll', onScroll);
 
@@ -211,31 +246,14 @@ const App: React.FC = () => {
       window.lenisInstance = undefined;
       cancelAnimationFrame(rafId);
     };
-  }, [introCompleted]);
+  }, [introCompleted, isTouchLike]);
   
   // Track active section on scroll
   useEffect(() => {
-    const handleScroll = () => {
-      const sections = ['hero', 'about', 'experience', 'education', 'skills', 'projects', 'contact'];
-      const scrollPosition = window.scrollY + 250; // detection offset
-
-      for (const section of sections) {
-        const el = document.getElementById(section);
-        if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveSection(section);
-            break;
-          }
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('scroll', syncActiveSection, { passive: true });
     // Run initial parse
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    syncActiveSection();
+    return () => window.removeEventListener('scroll', syncActiveSection);
   }, []);
 
   // Handle keyboard navigation for project modal
@@ -315,7 +333,7 @@ const App: React.FC = () => {
           <div className="relative z-10 text-center px-4 w-full">
             <ScrambleText
               text="MITUL NAYAKWADI"
-              className="text-[25px] sm:text-6xl md:text-7xl lg:text-8xl leading-none font-black font-heading tracking-tighter uppercase"
+              className="text-[25px] sm:text-5xl md:text-6xl lg:text-8xl leading-none font-black font-heading tracking-tighter uppercase"
             />
             <motion.div
               initial={{ scaleX: 0 }}
@@ -335,7 +353,7 @@ const App: React.FC = () => {
         >
           <CustomCursor />
           <ScrollHUD />
-          <FluidBackground />
+          <FluidBackground reducedMotion={isTouchLike} />
           <AIChat />
       
       {/* Navigation - Fixed at the top with premium glassmorphic background blur that prevents content interruption */}
@@ -464,7 +482,7 @@ const App: React.FC = () => {
           >
             <ScrambleText 
               text="MITUL NAYAKWADI" 
-              className="text-[25px] sm:text-6xl md:text-7xl lg:text-8xl leading-[1.1] font-heading tracking-tight text-white uppercase" 
+              className="text-[25px] sm:text-5xl md:text-6xl lg:text-8xl leading-[1.1] font-heading tracking-tight text-white uppercase" 
             />
           </motion.div>
           
@@ -482,10 +500,10 @@ const App: React.FC = () => {
             transition={{ delay: 0.7, duration: 0.8 }}
             className="mb-6 px-4"
           >
-            <h2 className="text-xl md:text-2xl font-bold font-heading text-red-500 tracking-wide mb-3 uppercase">
+            <h2 className="text-lg md:text-xl lg:text-2xl font-bold font-heading text-red-500 tracking-wide mb-3 uppercase">
               Developer · Problem Solver · Builder
             </h2>
-            <p className="text-base md:text-lg font-normal text-gray-300 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-sm sm:text-base md:text-lg font-normal text-gray-300 max-w-2xl mx-auto leading-relaxed">
               Turning ideas into intelligent real-world projects through code, & creativity
             </p>
           </motion.div>
@@ -537,10 +555,10 @@ const App: React.FC = () => {
         <div className="absolute top-1/2 left-[-15%] w-[50vw] h-[50vw] bg-red-900/10 rounded-full blur-[120px] pointer-events-none" />
         <div className="max-w-7xl mx-auto px-4 md:px-6 relative">
           
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-14 items-start">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-14 items-start">
             {/* Left Column: Portrait Profile Image */}
-            <div className="lg:col-span-5 flex justify-center pt-0">
-              <div className="relative w-full max-w-[400px] lg:max-w-full flex flex-col items-center">
+            <div className="md:col-span-5 flex justify-center pt-0">
+              <div className="relative w-full max-w-[400px] md:max-w-full flex flex-col items-center">
                 
                 {/* Grey Translucent Liquid Glass Speech Bubble Tooltip */}
                 <AnimatePresence>
@@ -580,10 +598,9 @@ const App: React.FC = () => {
 
                   <div className="absolute inset-[13%_11%_16%_11%] z-10 overflow-hidden rounded-[18px] shadow-[0_0_30px_rgba(0,0,0,0.35)]">
                     <img
-                      src={portraitImageError ? FallbackPortrait : "https://lh3.googleusercontent.com/d/183xxd7j9O2q4JyNhMnjGoHJy7C0yPeF6"}
+                      src={FallbackPortrait}
                       alt="Mitul Nayakwadi Profile Portrait"
                       referrerPolicy="no-referrer"
-                      onError={() => setPortraitImageError(true)}
                       className="w-full h-full object-cover grayscale transition-all duration-700 ease-out group-hover:grayscale-0 group-hover:scale-100 saturate-[1.05]"
                     />
                   </div>
@@ -592,7 +609,7 @@ const App: React.FC = () => {
             </div>
 
             {/* Right Column: Bio, Interests, Details */}
-            <div className="lg:col-span-7 flex flex-col justify-start">
+            <div className="md:col-span-7 flex flex-col justify-start">
               <h2 className="text-3xl md:text-5xl font-heading font-black uppercase leading-none tracking-tight text-white mb-4">
                 ABOUT <span className="text-red-500 font-bold">ME</span>
               </h2>
@@ -865,13 +882,13 @@ const App: React.FC = () => {
         <div className="absolute top-1/2 right-[-20%] w-[50vw] h-[50vw] bg-red-600/10 rounded-full blur-[100px] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 md:px-6 relative">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-14 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-14 items-center">
             <motion.div 
               variants={skillsContainerVariants}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: '-100px' }}
-              className="lg:col-span-5"
+              className="md:col-span-5"
             >
               <motion.h2 
                 variants={textEntranceVariants}
@@ -914,7 +931,7 @@ const App: React.FC = () => {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: '-100px' }}
-              className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-4"
+              className="md:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-4"
             >
                <motion.div 
                  variants={skillCardVariants}
