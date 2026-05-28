@@ -8,6 +8,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { MessageCircle, X, Send, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChatMessage } from '../types';
+import scrollToTopImage from '../scroll-to-top.png';
 
 const renderMessageText = (text: string) => {
   if (!text.includes('**')) {
@@ -583,7 +584,7 @@ const AIChat: React.FC = () => {
             >
               {!imageError ? (
                 <img 
-                  src="/scroll-to-top.png" 
+                  src={scrollToTopImage} 
                   alt="Scroll to top"
                   onError={() => setImageError(true)}
                   className="w-11 h-16 md:w-12 md:h-18 object-contain drop-shadow-[0_0_15px_rgba(239,68,68,0.7)] hover:drop-shadow-[0_0_25px_rgba(239,68,68,0.95)] transition-all duration-300 select-none"
