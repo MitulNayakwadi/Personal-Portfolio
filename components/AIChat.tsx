@@ -263,20 +263,32 @@ const AIChat: React.FC = () => {
   const knowledgeBase = useMemo<KnowledgeItem[]>(() => [
     {
       title: 'About Mitul',
-      keywords: ['about', 'who is mitul', 'who are you', 'background', 'college', 'education', 'matrusri', 'student'],
-      answer: 'Mitul Nayakwadi is a B.E. Computer Science and Engineering student at Matrusri Engineering College. He focuses on AI, web development, and practical projects that mix creativity with logic.',
+      keywords: ['about', 'who is mitul', 'who are you', 'background', 'college', 'education', 'matrusri', 'student', 'intro', 'introduction', 'hyderabad'],
+      answer: 'Mitul Nayakwadi is a CSE student at Matrusri Engineering College, based in Hyderabad, Telangana, India. He is passionate about AI, development, cloud computing, and building creative tech products through practical experimentation.',
       action: { label: 'Read About Me', path: '#about' }
     },
     {
+      title: 'Personality & Mindset',
+      keywords: ['personality', 'mindset', 'curious', 'experimental', 'creative', 'futuristic', 'innovation', 'long term', 'impact'],
+      answer: 'Mitul is curious, highly experimental, and focused on long-term impact. He enjoys blending AI with real-world interaction and prefers building practical projects over theory-only learning.',
+      action: { label: 'See Skills', path: '#skills' }
+    },
+    {
       title: 'Projects',
-      keywords: ['project', 'projects', 'work', 'portfolio', 'medico', 'collex', 'uppal', 'food', 'demo'],
-      answer: 'The main featured projects are Uppal Street Food Guide, Medico AI, and Collex Pay. They cover AI food discovery, healthcare assistance, and campus fintech workflows.',
+      keywords: ['project', 'projects', 'work', 'portfolio', 'medico', 'collex', 'uppal', 'food', 'demo', 'fitpack', 'home workout', 'social fitness'],
+      answer: 'Featured work includes Uppal Street Food Guide, Medico AI, and Collex Pay, plus the FitPack concept: a social-style home workout platform with workout sharing, chat/community interaction, and consistency-focused design.',
       action: { label: 'View Projects', path: '#projects' }
     },
     {
       title: 'Skills',
-      keywords: ['skill', 'skills', 'tech', 'language', 'code', 'python', 'react', 'typescript', 'javascript', 'node', 'express', 'firebase'],
-      answer: 'Mitul works with Python, C, Java, React, TypeScript, Node.js, Express, Firebase, OpenCV, MediaPipe, and AI/ML tooling.',
+      keywords: ['skill', 'skills', 'tech', 'language', 'code', 'python', 'react', 'typescript', 'javascript', 'node', 'express', 'firebase', 'java', 'c', 'cloud'],
+      answer: 'Core technical strengths include C, Python, Java, problem solving, DSA, basic AI concepts, cloud computing, web development, UI/UX, automation, and creative coding.',
+      action: { label: 'See Skills', path: '#skills' }
+    },
+    {
+      title: 'Learning Journey',
+      keywords: ['learning', 'journey', 'roadmap', 'practice', 'daily', '2 hours', 'python fundamentals', 'java fundamentals', 'full stack'],
+      answer: 'Mitul is consistently improving Python and Java fundamentals, practicing DSA daily, and investing around two focused hours each day to grow in AI and full-stack development through project-based learning.',
       action: { label: 'See Skills', path: '#skills' }
     },
     {
@@ -292,10 +304,34 @@ const AIChat: React.FC = () => {
       action: { label: 'View Education', path: '#education' }
     },
     {
+      title: 'Academic Topics',
+      keywords: ['dsa topics', 'stack', 'queue', 'circular queue', 'array adt', 'linked list', 'binary search', 'hashing', 'infix', 'postfix', 'math', 'ode', 'matrices', 'electrical'],
+      answer: 'Academic practice includes Stack, Queue, Circular Queue, Array ADT, Linked Lists, Binary Search, Hashing, Infix-to-Postfix, Postfix Evaluation, plus ODEs, Matrices, and Basic Electrical Engineering.',
+      action: { label: 'View Education', path: '#education' }
+    },
+    {
+      title: 'Creative Direction',
+      keywords: ['ui', 'ux', 'design', 'animated', 'cursor', 'dark fantasy', 'futuristic', 'branding', 'logo', 'visual storytelling', 'immersive'],
+      answer: 'Mitul prefers clean modern aesthetics with animated, immersive UI. He actively experiments with futuristic interfaces, dark fantasy styles, custom branding, logo design, and visual storytelling in tech products.',
+      action: { label: 'Read About Me', path: '#about' }
+    },
+    {
+      title: 'Fitness & Lifestyle',
+      keywords: ['fitness', 'diet', 'vegetarian', 'non veg', 'workout', 'body transformation', 'home workouts'],
+      answer: 'Mitul follows a mostly vegetarian diet, includes non-veg meals 2-3 times per week, and focuses on consistency-based home workouts and gradual body transformation.',
+      action: { label: 'Read About Me', path: '#about' }
+    },
+    {
       title: 'Contact',
       keywords: ['contact', 'email', 'github', 'linkedin', 'hire', 'connect', 'reach'],
       answer: 'You can reach Mitul through email, LinkedIn, or GitHub from the contact section at the bottom of the page.',
       action: { label: 'Open Contact', path: '#contact' }
+    },
+    {
+      title: 'Future Goals',
+      keywords: ['future', 'goals', 'aim', 'career', 'startup', 'brand', 'impact', 'ai engineer', 'cloud engineer'],
+      answer: 'Future goals are to become highly skilled in AI and cloud engineering, build impactful real-world products, strengthen full-stack and UI/UX capabilities, and create startup-level projects with a strong personal tech brand.',
+      action: { label: 'View Projects', path: '#projects' }
     }
   ], []);
 
@@ -327,18 +363,33 @@ const AIChat: React.FC = () => {
   const getResponse = (query: string) => {
     const trimmed = query.trim();
     const lower = trimmed.toLowerCase();
+    const wantsDetailed = ['detail', 'detailed', 'explain', 'deep', 'elaborate', 'step by step', 'more info'].some(term => lower.includes(term));
 
     if (!trimmed) {
       return {
-        text: 'Ask me about Mitul\'s projects, skills, education, experience, or contact details.',
+        text: 'Ask me about Mitul\'s projects, skills, personality, learning journey, goals, or contact details.',
         action: { label: 'Open Contact', path: '#contact' }
       };
     }
 
     if (['hi', 'hello', 'hey', 'yo', 'greetings'].some(prefix => lower.startsWith(prefix))) {
       return {
-        text: 'Hello! I\'m LUMI AI. I can answer questions about Mitul\'s work, skills, projects, education, and contact info.',
+        text: 'Hello! I\'m LUMI AI. I can help with Mitul\'s projects, AI/cloud interests, creative tech direction, learning journey, and contact details.',
         action: { label: 'View Projects', path: '#projects' }
+      };
+    }
+
+    if (lower.includes('date of birth') || lower.includes('dob') || lower.includes('birthday')) {
+      return {
+        text: 'Mitul\'s date of birth is 23/08/2006.',
+        action: { label: 'View Education', path: '#education' }
+      };
+    }
+
+    if (lower.includes('where') && lower.includes('from')) {
+      return {
+        text: 'Mitul is based in Hyderabad, Telangana, India.',
+        action: { label: 'Open Contact', path: '#contact' }
       };
     }
 
@@ -354,15 +405,17 @@ const AIChat: React.FC = () => {
       .sort((a, b) => b.score - a.score)[0];
 
     if (bestMatch && bestMatch.score > 0) {
+      const conciseAnswer = bestMatch.item.answer;
+      const detailedTail = ' If you want, I can break this down with a focused roadmap and practical next steps.';
       return {
-        text: bestMatch.item.answer,
+        text: wantsDetailed ? `${conciseAnswer}${detailedTail}` : conciseAnswer,
         action: bestMatch.item.action
       };
     }
 
     return {
-      text: 'I can help with the main sections of the portfolio. Try asking about projects, skills, education, experience, or contact.',
-      action: { label: 'Browse Skills', path: '#skills' }
+      text: 'I can help with projects, AI/cloud strengths, DSA practice, creative UI work, learning goals, and contact details. Ask anything specific and I\'ll keep it clear and practical.',
+      action: { label: 'Read About Me', path: '#about' }
     };
   };
 
