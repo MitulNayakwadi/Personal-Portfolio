@@ -33,8 +33,6 @@ I am a Computer Science & Engineering student passionate about Artificial Intell
 * **FluidBackground:** Animated starfield and glowing blob background layer.
 * **ScrambleText:** Cyberpunk-style text scramble animation for the hero name.
 * **GlitchText (GradientText):** Gradient/glitch text styling used across headings and labels.
-* **ParticleNameCanvas:** Canvas-driven particle text effect for the hero name.
-* **FramedImage:** Ornate frame overlay with hover‑fit image behavior (About Me portrait).
 
 ---
 
