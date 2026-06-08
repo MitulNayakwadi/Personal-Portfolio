@@ -12,7 +12,7 @@ I am a Computer Science & Engineering student passionate about Artificial Intell
 * 🚀 **Current Initiatives:** Serving as a **Google Student Ambassador** representing student-led tech initiatives and driving local digital bootcamps across India.
 * 🧠 **Algorithmic Playground:** Active member of the **Big-Oh Club**, focused on computational logic, optimization, and high-performance system designs.
 * 🗣️ **Languages:** Fluent in English, Hindi, and Telugu.
-* 🎨 **Leisure & Hobbies:** Competitive Table Tennis, Creative Drawing, Music, and Cinema.
+* 🎨 **Leisure & Hobbies:** Table Tennis, Creative Drawing, Music, and Cinema.
 
 ---
 

@@ -1,0 +1,121 @@
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Menu, X } from 'lucide-react';
+import ThemeToggle from '../ThemeToggle';
+
+interface Props {
+  activeSection: string;
+  scrollToSection: (id: string) => void;
+}
+
+const NAV_ITEMS = [
+  { label: 'About', id: 'about' },
+  { label: 'Skills', id: 'skills' },
+  { label: 'Projects', id: 'projects' },
+  { label: 'Experience', id: 'experience' },
+  { label: 'Contact', id: 'contact' },
+];
+
+export default function Navbar({ activeSection, scrollToSection }: Props) {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 85);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const handleMobileClick = (id: string) => {
+    setMobileMenuOpen(false);
+    scrollToSection(id);
+  };
+
+  return (
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${
+        isScrolled
+          ? 'bg-[#FAFAF8]/95 backdrop-blur-md border-slate-200/80 py-3.5 shadow-[0_1px_3px_rgba(0,0,0,0.02)]'
+          : 'bg-transparent border-transparent py-5'
+      }`}
+    >
+      <div className="max-w-[900px] mx-auto px-6 flex items-center justify-between">
+        {/* Logo / Name */}
+        <button
+          onClick={() => scrollToSection('hero')}
+          className="font-display text-lg font-bold text-[#1A1A2E] tracking-tight hover:opacity-80 transition-opacity bg-transparent border-none cursor-pointer"
+        >
+          Mitul Nayakwadi
+        </button>
+
+        {/* Right side: Nav + Toggle + Hamburger */}
+        <div className="flex items-center gap-6">
+          <div className="hidden sm:flex items-center gap-6 text-sm font-body font-medium text-slate-650">
+            {NAV_ITEMS.map((item) => {
+              const isActive = activeSection === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className={`relative py-1 hover:text-[#1A1A2E] transition-colors bg-transparent border-none cursor-pointer ${
+                    isActive ? 'text-[#1A1A2E] font-semibold' : ''
+                  }`}
+                  data-hover="true"
+                >
+                  {item.label}
+                  {isActive && (
+                    <motion.span
+                      layoutId="activeUnderline"
+                      className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#2563EB] rounded-full"
+                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+
+          <ThemeToggle />
+
+          {/* Hamburger button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="sm:hidden p-1.5 rounded-lg border border-slate-200 bg-white text-slate-700 hover:text-navy cursor-pointer flex items-center justify-center shadow-sm"
+            aria-label="Toggle Menu"
+          >
+            {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.25, ease: 'easeInOut' }}
+            className="sm:hidden bg-[#FAFAF8] border-b border-slate-200 overflow-hidden"
+          >
+            <div className="flex flex-col px-6 py-4 gap-4">
+              {NAV_ITEMS.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => handleMobileClick(item.id)}
+                  className={`text-left py-2 text-md font-body font-medium transition-colors bg-transparent border-none cursor-pointer ${
+                    activeSection === item.id ? 'text-[#2563EB] font-semibold' : 'text-slate-650'
+                  }`}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </nav>
+  );
+}

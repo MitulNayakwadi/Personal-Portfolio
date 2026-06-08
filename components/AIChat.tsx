@@ -8,7 +8,6 @@ import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { MessageCircle, X, Send, Sparkles, ArrowUpRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChatMessage } from '../types';
-import scrollToTopImage from '../scroll-to-top.png';
 
 const renderMessageText = (text: string) => {
   if (!text.includes('**')) {
@@ -258,7 +257,6 @@ const AIChat: React.FC = () => {
   const [bullets, setBullets] = useState<{ id: number }[]>([]);
   const [isShooting, setIsShooting] = useState(false);
   const [isMuzzleFlash, setIsMuzzleFlash] = useState(false);
-  const [imageError, setImageError] = useState(false);
 
   const knowledgeBase = useMemo<KnowledgeItem[]>(() => [
     {
@@ -680,22 +678,12 @@ const AIChat: React.FC = () => {
               )}
             </AnimatePresence>
 
-            {/* Glowing crystal image / SVG fallback */}
+            {/* Glowing crystal SVG */}
             <motion.div
               animate={isShooting ? { scale: [1, 0.85, 1.05, 1], rotate: [0, -3, 3, 0] } : {}}
               transition={{ duration: 0.25 }}
             >
-              {!imageError ? (
-                <img 
-                  src={scrollToTopImage} 
-                  alt="Scroll to top"
-                  onError={() => setImageError(true)}
-                  className="w-11 h-16 md:w-12 md:h-18 object-contain drop-shadow-[0_0_15px_rgba(239,68,68,0.7)] hover:drop-shadow-[0_0_25px_rgba(239,68,68,0.95)] transition-all duration-300 select-none"
-                  referrerPolicy="no-referrer"
-                />
-              ) : (
-                <GothicTopCrystalSVG />
-              )}
+              <GothicTopCrystalSVG />
             </motion.div>
           </motion.button>
         )}
