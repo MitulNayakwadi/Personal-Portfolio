@@ -54,32 +54,28 @@ export const ABOUT_DATA = {
 
 export const SKILLS_DATA: SkillCategory[] = [
   {
-    category: "Languages",
+    category: "Programming Languages",
     skills: ["Python", "Java", "C", "JavaScript", "TypeScript"]
   },
   {
-    category: "Web Dev",
-    skills: ["HTML", "CSS", "Flask", "React"]
+    category: "Web Development",
+    skills: ["React", "Flask", "HTML", "CSS"]
   },
   {
-    category: "Cloud",
-    skills: ["AWS", "Google Cloud"]
+    category: "AI & Machine Learning",
+    skills: ["Machine Learning", "Deep Learning", "Generative AI", "TensorFlow"]
   },
   {
-    category: "AI/ML",
-    skills: ["Generative AI", "Machine Learning", "TensorFlow", "Deep Learning"]
+    category: "Databases & Cloud",
+    skills: ["SQL", "Database Design", "Firebase", "AWS", "Google Cloud"]
   },
   {
-    category: "Databases",
-    skills: ["SQL", "Database Design", "Firebase"]
-  },
-  {
-    category: "Tools",
+    category: "Developer Tools",
     skills: ["Git", "GitHub", "VS Code", "Vite"]
   },
   {
-    category: "CS Fundamentals",
-    skills: ["Data Structures", "Algorithms", "OOP", "Problem Solving"]
+    category: "Core Concepts",
+    skills: ["Data Structures & Algorithms", "Object-Oriented Programming (OOP)", "Problem Solving"]
   }
 ];
 

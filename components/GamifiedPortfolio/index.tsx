@@ -952,9 +952,9 @@ const GamifiedPortfolio: React.FC = () => {
 
                   <div className="space-y-4">
                     {[
-                      { icon: Code, title: 'Languages', desc: 'Python, C, Java' },
-                      { icon: Brain, title: 'Core Areas', desc: 'Intelligent Cloud Systems, Artificial Intelligence, Machine Learning, Web Development' },
-                      { icon: Globe, title: 'Frameworks & Tools', desc: 'OpenCV, Mediapipe, Flask, React, Node.js, Firebase' },
+                      { icon: Code, title: 'Programming Languages', desc: 'Python, Java, C, JavaScript, TypeScript' },
+                      { icon: Brain, title: 'Core Concepts & AI', desc: 'Data Structures & Algorithms, OOP, Machine Learning, Deep Learning' },
+                      { icon: Globe, title: 'Web & Infrastructure', desc: 'React, Flask, Firebase, SQL, AWS, Google Cloud' },
                     ].map((feature, i) => (
                       <motion.div
                         key={i}
