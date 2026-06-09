@@ -9,10 +9,9 @@ I am a Computer Science & Engineering student passionate about Artificial Intell
 
 * 🎓 **Education:** Pursuing a **B.E. in Computer Science and Engineering** at Matrusri Engineering College (2024–2028).
 * 📍 **Location:** Hyderabad, Telangana, India.
-* 🚀 **Current Initiatives:** Serving as a **Google Student Ambassador** representing student-led tech initiatives and driving local digital bootcamps across India.
-* 🧠 **Algorithmic Playground:** Active member of the **Big-Oh Club**, focused on computational logic, optimization, and high-performance system designs.
+* 🧠 **Algorithmic Playground:** Active member of the **Big-Oh Club(on campus)**, focused on computational logic, optimization, and high-performance system designs.
 * 🗣️ **Languages:** Fluent in English, Hindi, and Telugu.
-* 🎨 **Leisure & Hobbies:** Table Tennis, Creative Drawing, Music, and Cinema.
+* 🎨 **Leisure & Hobbies:** Creative Drawing, Music, and Cinema.
 
 ---
 
@@ -34,8 +33,6 @@ I am a Computer Science & Engineering student passionate about Artificial Intell
 * **FluidBackground:** Animated starfield and glowing blob background layer.
 * **ScrambleText:** Cyberpunk-style text scramble animation for the hero name.
 * **GlitchText (GradientText):** Gradient/glitch text styling used across headings and labels.
-* **ParticleNameCanvas:** Canvas-driven particle text effect for the hero name.
-* **FramedImage:** Ornate frame overlay with hover‑fit image behavior (About Me portrait).
 
 ---
 
