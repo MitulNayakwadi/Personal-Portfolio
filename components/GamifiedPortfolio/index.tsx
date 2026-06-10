@@ -711,7 +711,7 @@ const GamifiedPortfolio: React.FC = () => {
                       </div>
                       <div>
                         <span className="text-xs font-mono text-gray-400 tracking-wider block mb-1">LANGUAGES SPOKEN</span>
-                        <span className="text-white font-semibold text-lg">English, Hindi, Telugu</span>
+                        <span className="text-white font-semibold text-lg">English, Hindi, Telugu, Khatri</span>
                       </div>
                     </div>
                   </div>
