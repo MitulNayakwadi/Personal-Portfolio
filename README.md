@@ -10,7 +10,7 @@ I am a Computer Science & Engineering student passionate about Artificial Intell
 * 🎓 **Education:** Pursuing a **B.E. in Computer Science and Engineering** at Matrusri Engineering College (2024–2028).
 * 📍 **Location:** Hyderabad, Telangana, India.
 * 🧠 **Algorithmic Playground:** Active member of the **Big-Oh Club(on campus)**, focused on computational logic, optimization, and high-performance system designs.
-* 🗣️ **Languages:** Fluent in English, Hindi, and Telugu.
+* 🗣️ **Languages:** Fluent in English, Hindi, Telugu and Khatri.
 * 🎨 **Leisure & Hobbies:** Creative Drawing, Music, and Cinema.
 
 ---
