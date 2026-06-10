@@ -7,16 +7,41 @@ export default function Contact() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
-  const [status, setStatus] = useState<'idle' | 'success'>('idle');
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !email || !message) return;
-    setStatus('success');
-    setName('');
-    setEmail('');
-    setMessage('');
-    setTimeout(() => setStatus('idle'), 5000);
+    setStatus('submitting');
+
+    try {
+      const response = await fetch('https://formspree.io/f/xjgdozva', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          message
+        })
+      });
+
+      if (response.ok) {
+        setStatus('success');
+        setName('');
+        setEmail('');
+        setMessage('');
+        setTimeout(() => setStatus('idle'), 5000);
+      } else {
+        setStatus('error');
+        setTimeout(() => setStatus('idle'), 5000);
+      }
+    } catch (error) {
+      setStatus('error');
+      setTimeout(() => setStatus('idle'), 5000);
+    }
   };
 
   return (
@@ -100,10 +125,11 @@ export default function Contact() {
                   id="form-name"
                   type="text"
                   required
+                  disabled={status === 'submitting'}
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Your Name"
-                  className="w-full font-body text-[13px] sm:text-sm p-3 rounded-lg border border-slate-200 focus:outline-none focus:border-[#2563EB] transition-colors"
+                  className="w-full font-body text-[13px] sm:text-sm p-3 rounded-lg border border-slate-200 focus:outline-none focus:border-[#2563EB] transition-colors disabled:bg-slate-50 disabled:text-slate-400"
                 />
               </div>
 
@@ -115,10 +141,11 @@ export default function Contact() {
                   id="form-email"
                   type="email"
                   required
+                  disabled={status === 'submitting'}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="name@example.com"
-                  className="w-full font-body text-[13px] sm:text-sm p-3 rounded-lg border border-slate-200 focus:outline-none focus:border-[#2563EB] transition-colors"
+                  className="w-full font-body text-[13px] sm:text-sm p-3 rounded-lg border border-slate-200 focus:outline-none focus:border-[#2563EB] transition-colors disabled:bg-slate-50 disabled:text-slate-400"
                 />
               </div>
 
@@ -130,24 +157,41 @@ export default function Contact() {
                   id="form-message"
                   required
                   rows={4}
+                  disabled={status === 'submitting'}
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   placeholder="Hi Mitul, let's collaborate..."
-                  className="w-full font-body text-[13px] sm:text-sm p-3 rounded-lg border border-slate-200 focus:outline-none focus:border-[#2563EB] transition-colors resize-none"
+                  className="w-full font-body text-[13px] sm:text-sm p-3 rounded-lg border border-slate-200 focus:outline-none focus:border-[#2563EB] transition-colors resize-none disabled:bg-slate-50 disabled:text-slate-400"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full flex items-center justify-center gap-2 bg-[#2563EB] hover:bg-[#1d4ed8] text-white font-body font-semibold text-xs uppercase tracking-widest py-3.5 px-6 rounded-lg transition-all shadow-[0_2px_8px_rgba(37,99,235,0.12)] hover:scale-[1.01] active:scale-[0.99] cursor-pointer border-none"
+                disabled={status === 'submitting'}
+                className="w-full flex items-center justify-center gap-2 bg-[#2563EB] hover:bg-[#1d4ed8] text-white font-body font-semibold text-xs uppercase tracking-widest py-3.5 px-6 rounded-lg transition-all shadow-[0_2px_8px_rgba(37,99,235,0.12)] hover:scale-[1.01] active:scale-[0.99] cursor-pointer border-none disabled:bg-blue-300 disabled:cursor-not-allowed"
               >
-                <Send size={12} />
-                <span>Send Message</span>
+                {status === 'submitting' ? (
+                  <>
+                    <span className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                    <span>Sending...</span>
+                  </>
+                ) : (
+                  <>
+                    <Send size={12} />
+                    <span>Send Message</span>
+                  </>
+                )}
               </button>
 
               {status === 'success' && (
                 <div className="text-center font-body text-[12px] text-emerald-600 font-semibold bg-emerald-50 py-2.5 rounded-lg border border-emerald-100 animate-fade-in mt-3">
-                  Thank you! Your message was sent successfully.
+                  Success! Your message was sent successfully.
+                </div>
+              )}
+
+              {status === 'error' && (
+                <div className="text-center font-body text-[12px] text-rose-600 font-semibold bg-rose-50 py-2.5 rounded-lg border border-rose-100 animate-fade-in mt-3">
+                  Oops! Something went wrong. Please try again.
                 </div>
               )}
             </form>
