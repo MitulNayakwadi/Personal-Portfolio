@@ -1116,6 +1116,14 @@ const GamifiedPortfolio: React.FC = () => {
                       icon: Code,
                       link: '/Certificates/Certificate python training.pdf'
                     },
+                    {
+                      title: 'Java Training Certificate',
+                      issuer: 'EduPyramids, SINE, IIT Bombay',
+                      date: 'Issued 2026',
+                      skills: ['Java Programming'],
+                      icon: Code,
+                      link: '/Certificates/Certificate Java training.pdf'
+                    },
 
                   ].map((cert, index) => (
                     <motion.div
