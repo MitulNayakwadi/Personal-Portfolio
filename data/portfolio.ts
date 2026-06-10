@@ -185,7 +185,8 @@ export const CERTIFICATIONS_DATA = [
   "Python Full Stack Internship — EduSkills (AICTE)",
   "Python Training Certificate — EduPyramids, SINE, IIT Bombay",
   "Generative AI Fundamentals — Google Cloud Training",
-  "Intro to Machine Learning — Kaggle"
+  "Intro to Machine Learning — Kaggle",
+  "Java Training Certificate — EduPyramids, SINE, IIT Bombay"
 ];
 
 export const ACHIEVEMENTS_DATA = [
