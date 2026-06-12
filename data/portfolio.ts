@@ -28,6 +28,11 @@ export interface EducationItem {
   prominent?: boolean;
 }
 
+export interface CertificationItem {
+  title: string;
+  href?: string;
+}
+
 export const HERO_DATA = {
   greeting: "Hi, I'm",
   name: "Mitul Nayakwadi",
@@ -175,18 +180,53 @@ export const EDUCATION_DATA: EducationItem[] = [
   }
 ];
 
-export const CERTIFICATIONS_DATA = [
-  "Prompt Design in Vertex — Google Cloud",
-  "Implement CI/CD Pipelines on Google Cloud — Google Cloud",
-  "Python Essentials 1 — Cisco Networking Academy",
-  "Software Engineering Job Simulation — JPMorgan Chase & Co.",
-  "Technology Job Simulation — Deloitte",
-  "Database Design — Infosys Springboard",
-  "Python Full Stack Internship — EduSkills (AICTE)",
-  "Python Training Certificate — EduPyramids, SINE, IIT Bombay",
-  "Generative AI Fundamentals — Google Cloud Training",
-  "Intro to Machine Learning — Kaggle",
-  "Java Training Certificate — EduPyramids, SINE, IIT Bombay"
+export const CERTIFICATIONS_DATA: CertificationItem[] = [
+  {
+    title: "Prompt Design in Vertex AI — Google Cloud",
+    href: "https://www.credly.com/badges/3f831e89-2778-401f-a060-7f99cfa8a781/public_url"
+  },
+  {
+    title: "Implement CI/CD Pipelines on Google Cloud — Google Cloud",
+    href: "https://www.credly.com/badges/f0a49ce7-04f5-4b5c-8170-081ffd21a25a/public_url"
+  },
+  {
+    title: "Python Essentials 1 — Cisco Networking Academy",
+    href: "/Certificates/Cisco Python Essential 1 Certificate-Mitul.pdf"
+  },
+  {
+    title: "Software Engineering Job Simulation — JPMorgan Chase & Co.",
+    href: "/Certificates/JP Morgan software Engineer_completion_certificate.pdf"
+  },
+  {
+    title: "Technology Job Simulation — Deloitte",
+    href: "/Certificates/Delloite virtual internship(Technology simulation).pdf"
+  },
+  {
+    title: "Database Design — Infosys Springboard",
+    href: "/Certificates/Infosys (Database Design).pdf"
+  },
+  {
+    title: "Python Full Stack Internship — EduSkills (AICTE)",
+    href: "/Certificates/Mitul Nayakwadi python fullstack, eduskills.pdf"
+  },
+  {
+    title: "Python Training Certificate — EduPyramids, SINE, IIT Bombay",
+    href: "/Certificates/Certificate python training.pdf"
+  },
+  {
+    title: "Java Training Certificate — EduPyramids, SINE, IIT Bombay",
+    href: "/Certificates/Certificate Java training.pdf"
+  },
+  {
+    title: "Generative AI Fundamentals — Google Cloud Training"
+  },
+  {
+    title: "Intro to Machine Learning — Kaggle"
+  },
+  {
+    title: "Build Your Own Chatbot — Cognitive Class(CB0101EN, provided by IBM)",
+    href: "/Certificates/IBM CB0101EN Certificate _ Cognitive Class.pdf"
+  }
 ];
 
 export const ACHIEVEMENTS_DATA = [

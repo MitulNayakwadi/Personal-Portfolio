@@ -1125,6 +1125,24 @@ const GamifiedPortfolio: React.FC = () => {
                       link: '/Certificates/Certificate Java training.pdf'
                     },
 
+                    {
+                      title: 'Java Training Certificate',
+                      issuer: 'EduPyramids, SINE, IIT Bombay',
+                      date: 'Issued 2026',
+                      skills: ['Java Programming'],
+                      icon: Code,
+                      link: '/Certificates/Certificate Java training.pdf'
+                    },
+
+                    {
+                      title: 'Build Your Own Chatbot',
+                      issuer: 'Cognitive Class(CB0101EN, provided by IBM)',
+                      date: 'Issued 2026',
+                      skills: ['Chatbot Development', 'NLP', 'AI Integration'],
+                      icon: Code,
+                      link: '/Certificates/IBM CB0101EN Certificate _ Cognitive Class.pdf'
+                    },
+
                   ].map((cert, index) => (
                     <motion.div
                       key={cert.title}

@@ -24,7 +24,18 @@ export default function Certifications() {
               <AnimateOnScroll key={idx} delay={idx * 0.05} direction="up">
                 <li className="flex items-start gap-3 text-slate-600 font-body text-[13px] sm:text-sm">
                   <Check className="w-4 h-4 text-[#2563EB] shrink-0 mt-0.5" />
-                  <span className="leading-snug font-medium">{cert}</span>
+                  {cert.href ? (
+                    <a
+                      href={cert.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="leading-snug font-medium hover:text-[#2563EB] hover:underline underline-offset-4 transition-colors"
+                    >
+                      {cert.title}
+                    </a>
+                  ) : (
+                    <span className="leading-snug font-medium">{cert.title}</span>
+                  )}
                 </li>
               </AnimateOnScroll>
             ))}
