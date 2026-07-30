@@ -22,7 +22,7 @@ export default function ProfessionalPortfolio() {
 
   // Sync active section based on scroll position
   const syncActiveSection = () => {
-    const sections = ['hero', 'about', 'skills', 'projects', 'experience', 'contact'];
+    const sections = ['hero', 'about', 'experience', 'education', 'skills', 'certifications', 'projects', 'contact'];
     const scrollPosition = window.scrollY + 220; // Trigger threshold
 
     for (const section of sections) {
@@ -48,10 +48,11 @@ export default function ProfessionalPortfolio() {
   // Initialize Lenis for premium smooth momentum scrolling
   useEffect(() => {
     const query = window.matchMedia('(hover: none) and (pointer: coarse)');
+    const reduceMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
     const isTouchLike = query.matches || navigator.maxTouchPoints > 0;
 
-    // Use native momentum scrolling on touch/mobile devices
-    if (isTouchLike) {
+    // Use native scrolling for touch/mobile and reduced-motion users
+    if (isTouchLike || reduceMotionQuery.matches) {
       return;
     }
 
@@ -102,9 +103,10 @@ export default function ProfessionalPortfolio() {
           easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         });
       } else {
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         window.scrollTo({
           top: targetScroll,
-          behavior: 'smooth',
+          behavior: prefersReducedMotion ? 'auto' : 'smooth',
         });
       }
     }
@@ -116,11 +118,11 @@ export default function ProfessionalPortfolio() {
       <main className="pt-16">
         <Hero scrollToSection={scrollToSection} />
         <About />
-        <Skills />
-        <Projects />
         <Experience />
         <Education />
+        <Skills />
         <Certifications />
+        <Projects />
         <Contact />
       </main>
       <Footer />

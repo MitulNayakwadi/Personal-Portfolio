@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, MotionConfig, motion, useReducedMotion } from 'framer-motion';
 import { ThemeProvider, useTheme } from './context/ThemeContext';
 import ProfessionalPortfolio from './components/ProfessionalPortfolio';
 import GamifiedPortfolio from './components/GamifiedPortfolio';
@@ -7,15 +7,29 @@ import ScrambleText from './components/ScrambleText';
 
 function MainAppContent() {
   const { theme } = useTheme();
-  const [introCompleted, setIntroCompleted] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
+  const [introCompleted, setIntroCompleted] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return window.localStorage.getItem('hasSeenIntro') === 'true';
+  });
 
-  // Timer for the page-load glitch intro screen
+  // Timer for the page-load glitch intro screen (first visit only)
   useEffect(() => {
+    if (introCompleted) return;
+
+    if (prefersReducedMotion) {
+      window.localStorage.setItem('hasSeenIntro', 'true');
+      setIntroCompleted(true);
+      return;
+    }
+
     const timer = setTimeout(() => {
+      window.localStorage.setItem('hasSeenIntro', 'true');
       setIntroCompleted(true);
     }, 2800);
+
     return () => clearTimeout(timer);
-  }, []);
+  }, [introCompleted, prefersReducedMotion]);
 
   // Reset scroll position to top when theme changes
   useEffect(() => {
@@ -29,13 +43,14 @@ function MainAppContent() {
   }, [theme, introCompleted]);
 
   return (
-    <AnimatePresence mode="wait">
+    <MotionConfig reducedMotion={prefersReducedMotion ? 'always' : 'never'}>
+      <AnimatePresence mode="wait">
       {!introCompleted ? (
         <motion.div
           key="intro-screen"
           initial={{ opacity: 1 }}
-          exit={{ opacity: 0, scale: 0.98, filter: "blur(8px)" }}
-          transition={{ duration: 0.6, ease: "easeInOut" }}
+          exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, scale: 0.98, filter: "blur(8px)" }}
+          transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.6, ease: "easeInOut" }}
           className="fixed inset-0 z-[2000] flex flex-col items-center justify-center bg-[#050505] text-white font-sans overflow-hidden select-none"
         >
           {/* Grid Background */}
@@ -43,14 +58,20 @@ function MainAppContent() {
           <div className="absolute top-[35%] left-1/2 -translate-x-1/2 w-[350px] h-[350px] bg-red-650/10 rounded-full blur-[90px] pointer-events-none" />
 
           <div className="relative z-10 text-center px-4 w-full">
-            <ScrambleText
-              text="MITUL NAYAKWADI"
-              className="text-[25px] sm:text-5xl md:text-6xl lg:text-8xl leading-none font-black font-heading tracking-tighter uppercase"
-            />
+            {prefersReducedMotion ? (
+              <h1 className="text-[25px] sm:text-5xl md:text-6xl lg:text-8xl leading-none font-black font-heading tracking-tighter uppercase">
+                MITUL NAYAKWADI
+              </h1>
+            ) : (
+              <ScrambleText
+                text="MITUL NAYAKWADI"
+                className="text-[25px] sm:text-5xl md:text-6xl lg:text-8xl leading-none font-black font-heading tracking-tighter uppercase"
+              />
+            )}
             <motion.div
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              transition={{ duration: 1.8, ease: "circOut", delay: 0.15 }}
+              initial={prefersReducedMotion ? false : { scaleX: 0 }}
+              animate={prefersReducedMotion ? false : { scaleX: 1 }}
+              transition={prefersReducedMotion ? { duration: 0 } : { duration: 1.8, ease: "circOut", delay: 0.15 }}
               className="w-32 h-0.5 bg-gradient-to-r from-red-600 to-rose-500 mx-auto mt-6"
             />
           </div>
@@ -58,10 +79,10 @@ function MainAppContent() {
       ) : (
         <motion.div
           key={theme}
-          initial={{ opacity: 0, scale: 0.99 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.99 }}
-          transition={{ duration: 0.3 }}
+          initial={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, scale: 0.99 }}
+          animate={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
+          exit={prefersReducedMotion ? { opacity: 1 } : { opacity: 0, scale: 0.99 }}
+          transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.3 }}
           className="w-full h-full"
         >
           {theme === 'light' ? (
@@ -71,7 +92,8 @@ function MainAppContent() {
           )}
         </motion.div>
       )}
-    </AnimatePresence>
+      </AnimatePresence>
+    </MotionConfig>
   );
 }
 

@@ -10,9 +10,11 @@ interface Props {
 
 const NAV_ITEMS = [
   { label: 'About', id: 'about' },
-  { label: 'Skills', id: 'skills' },
-  { label: 'Projects', id: 'projects' },
   { label: 'Experience', id: 'experience' },
+  { label: 'Education', id: 'education' },
+  { label: 'Skills', id: 'skills' },
+  { label: 'Certifications', id: 'certifications' },
+  { label: 'Projects', id: 'projects' },
   { label: 'Contact', id: 'contact' },
 ];
 

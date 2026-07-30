@@ -5,8 +5,8 @@
 
 
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { Globe, Menu, X, Code, Layout, Brain, ChevronLeft, ChevronRight, Github, Linkedin, Mail, ExternalLink, GraduationCap, MapPin, Music, Tv, Palette, Trophy, Award, ArrowUpRight, Download, Briefcase, Sun, Moon } from 'lucide-react';
+import { motion, useScroll, useTransform, AnimatePresence, MotionConfig, useReducedMotion } from 'framer-motion';
+import { Globe, Menu, X, Code, Layout, Brain, ChevronLeft, ChevronRight, Github, Linkedin, Mail, ExternalLink, GraduationCap, MapPin, Music, Tv, Palette, Trophy, Award, ArrowUpRight, Download, Briefcase, Sun, Moon, Send } from 'lucide-react';
 import Lenis from 'lenis';
 import FluidBackground from '../FluidBackground';
 import GradientText from '../GlitchText';
@@ -18,6 +18,7 @@ import AIChat from '../AIChat';
 import { Project } from '../../types';
 import FallbackPortrait from '../../mee.jpeg';
 import ThemeToggle from '../ThemeToggle';
+import { PROJECTS_DATA, CONTACT_DATA } from '../../data/portfolio';
 
 declare global {
   interface Window {
@@ -26,37 +27,27 @@ declare global {
 }
 
 // Portfolio Data
-const NAVIGATION_ITEMS = ['About', 'Experience', 'Education', 'Skills', 'Projects', 'Contact'];
+const NAVIGATION_ITEMS = ['About', 'Experience', 'Education', 'Skills', 'Certifications', 'Projects', 'Contact'];
 
-const PROJECTS: Project[] = [
-  {
-    id: '5',
-    name: 'Uppal Street Food Guide',
-    techStack: 'Next.js • React • Express • Gemini AI',
-    category: 'AI Food Discovery',
-    image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1000&auto=format&fit=crop',
-    description: 'AI-powered local food discovery platform for Uppal Kalan, Hyderabad. Features smart search, location intelligence (Google Maps), and AI recommendations.',
-    githubUrl: 'https://github.com/MitulNayakwadi/uppallocalguide.git',
-    liveUrl: 'https://uppallocalfoodguide.vercel.app/'
-  },
-  {
-    id: '3',
-    name: 'Medico AI',
-    techStack: 'Python • Flask • TensorFlow',
-    category: 'AI Healthcare',
-    image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=1000&auto=format&fit=crop',
-    description: 'Built an AI-powered medical assistance platform delivering initial diagnostics & recommendations, with emphasis on UX and real-world scalability.',
-    githubUrl: 'https://github.com/MitulNayakwadi/Medico-AI.git'
-  },
-  {
-    id: '4',
-    name: 'Collex Pay',
-    techStack: 'React • Node.js • Firebase',
-    category: 'Fintech',
-    image: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?q=80&w=1000&auto=format&fit=crop',
-    description: 'Developed a campus-centric digital wallet where students transact using "Collex Coins" for food, events, and shops. Includes an admin-dashboard for merchants & analytics.'
-  },
-];
+const PROJECT_IMAGES: Record<string, string> = {
+  'medico-ai': 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=1000&auto=format&fit=crop',
+  'groundwater-dwlr': 'https://images.unsplash.com/photo-1473773508845-188df298d2d1?q=80&w=1000&auto=format&fit=crop',
+  'securesphere': 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?q=80&w=1000&auto=format&fit=crop',
+  'uppal-guide': 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=1000&auto=format&fit=crop',
+};
+
+const PROJECTS: Project[] = PROJECTS_DATA.map((project) => ({
+  id: project.id,
+  name: project.name,
+  techStack: project.techStack.join(' | '),
+  category: project.category,
+  image: PROJECT_IMAGES[project.id] ?? 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1000&auto=format&fit=crop',
+  description: project.githubUrl || project.liveUrl
+    ? project.bullets.join(' ')
+    : `${project.bullets.join(' ')} Private repo - case study on request.`,
+  githubUrl: project.githubUrl,
+  liveUrl: project.liveUrl,
+}));
 
 const projectsContainerVariants = {
   hidden: { opacity: 0 },
@@ -157,9 +148,14 @@ const GamifiedPortfolio: React.FC = () => {
   const [introCompleted, setIntroCompleted] = useState(true);
   const [isTouchLike, setIsTouchLike] = useState(false);
   const [showNameOnImage, setShowNameOnImage] = useState(false);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+  const [contactStatus, setContactStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
   const [isDarkMode, setIsDarkMode] = useState(() => {
     return localStorage.getItem('theme') === 'dark';
   });
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
     if (isDarkMode) {
@@ -172,7 +168,7 @@ const GamifiedPortfolio: React.FC = () => {
   }, [isDarkMode]);
 
   const syncActiveSection = () => {
-    const sections = ['hero', 'about', 'experience', 'education', 'skills', 'projects', 'contact'];
+    const sections = ['hero', 'about', 'experience', 'education', 'skills', 'certifications', 'projects', 'contact'];
     const scrollPosition = window.scrollY + 250;
 
     for (const section of sections) {
@@ -222,7 +218,7 @@ const GamifiedPortfolio: React.FC = () => {
     document.documentElement.style.overflow = '';
     document.body.style.overflow = '';
 
-    if (isTouchLike) {
+    if (isTouchLike || prefersReducedMotion) {
       window.lenisInstance = undefined;
       return;
     }
@@ -259,7 +255,7 @@ const GamifiedPortfolio: React.FC = () => {
       window.lenisInstance = undefined;
       cancelAnimationFrame(rafId);
     };
-  }, [introCompleted, isTouchLike]);
+  }, [introCompleted, isTouchLike, prefersReducedMotion]);
 
   // Track active section on scroll
   useEffect(() => {
@@ -300,7 +296,7 @@ const GamifiedPortfolio: React.FC = () => {
       } else {
         window.scrollTo({
           top: targetScroll,
-          behavior: 'smooth'
+          behavior: prefersReducedMotion ? 'auto' : 'smooth'
         });
       }
     }
@@ -319,6 +315,41 @@ const GamifiedPortfolio: React.FC = () => {
     }, 600);
   };
 
+  const handleContactSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name || !email || !message) return;
+    setContactStatus('submitting');
+
+    try {
+      const response = await fetch('https://formspree.io/f/xjgdozva', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          message
+        })
+      });
+
+      if (response.ok) {
+        setContactStatus('success');
+        setName('');
+        setEmail('');
+        setMessage('');
+      } else {
+        setContactStatus('error');
+      }
+
+      setTimeout(() => setContactStatus('idle'), 5000);
+    } catch (error) {
+      setContactStatus('error');
+      setTimeout(() => setContactStatus('idle'), 5000);
+    }
+  };
+
   const navigateProject = (direction: 'next' | 'prev') => {
     if (!selectedProject) return;
     const currentIndex = PROJECTS.findIndex(p => p.id === selectedProject.id);
@@ -332,7 +363,8 @@ const GamifiedPortfolio: React.FC = () => {
   };
 
   return (
-    <AnimatePresence mode="wait">
+    <MotionConfig reducedMotion={prefersReducedMotion ? 'always' : 'never'}>
+      <AnimatePresence mode="wait">
       {!introCompleted ? (
         <motion.div
           key="intro-screen"
@@ -368,7 +400,7 @@ const GamifiedPortfolio: React.FC = () => {
         >
           <CustomCursor />
           <ScrollHUD />
-          <FluidBackground reducedMotion={isTouchLike} isDarkMode={isDarkMode} />
+          <FluidBackground reducedMotion={isTouchLike || prefersReducedMotion} isDarkMode={isDarkMode} />
           <AIChat />
 
           {/* Navigation - Fixed at the top with premium glassmorphic background blur that prevents content interruption */}
@@ -500,7 +532,7 @@ const GamifiedPortfolio: React.FC = () => {
           {/* HERO SECTION */}
           <header id="hero" className="relative h-[95svh] min-h-[500px] md:min-h-[620px] flex flex-col items-center justify-center overflow-hidden px-4 pt-24 md:pt-28">
             <motion.div
-              style={{ y, opacity }}
+              style={prefersReducedMotion ? undefined : { y, opacity }}
               className="z-10 text-center flex flex-col items-center w-full max-w-6xl pb-10 md:pb-16"
             >
               {/* Main Title - Animated Popup */}
@@ -513,10 +545,16 @@ const GamifiedPortfolio: React.FC = () => {
                 }}
                 className="relative w-full flex justify-center items-center mb-4"
               >
-                <ScrambleText
-                  text="MITUL NAYAKWADI"
-                  className="text-[25px] sm:text-5xl md:text-6xl lg:text-8xl leading-[1.1] font-heading tracking-tight text-white uppercase"
-                />
+                {prefersReducedMotion ? (
+                  <h1 className="text-[25px] sm:text-5xl md:text-6xl lg:text-8xl leading-[1.1] font-heading tracking-tight text-white uppercase">
+                    MITUL NAYAKWADI
+                  </h1>
+                ) : (
+                  <ScrambleText
+                    text="MITUL NAYAKWADI"
+                    className="text-[25px] sm:text-5xl md:text-6xl lg:text-8xl leading-[1.1] font-heading tracking-tight text-white uppercase"
+                  />
+                )}
               </motion.div>
 
               <motion.div
@@ -554,7 +592,7 @@ const GamifiedPortfolio: React.FC = () => {
                   data-hover="true"
                 >
                   <Briefcase className="w-4 h-4" />
-                  <span>View My Work</span>
+                  <span>View Projects</span>
                 </button>
                 <a
                   href="https://drive.google.com/file/d/1MLD7Z5xuwqBRELUfXhxPv2SgIGFKE8rE/view?usp=sharing"
@@ -564,7 +602,7 @@ const GamifiedPortfolio: React.FC = () => {
                   data-hover="true"
                 >
                   <Download className="w-4 h-4 text-red-500 dark:text-white transition-colors duration-1000" />
-                  <span>Download CV</span>
+                  <span>Download Resume</span>
                 </a>
               </motion.div>
 
@@ -702,8 +740,8 @@ const GamifiedPortfolio: React.FC = () => {
                         <span className="text-white font-semibold text-lg">Mitul Nayakwadi</span>
                       </div>
                       <div>
-                        <span className="text-xs font-mono text-gray-400 tracking-wider block mb-1">DATE OF BIRTH</span>
-                        <span className="text-white font-semibold text-lg">23/08/2006</span>
+                        <span className="text-xs font-mono text-gray-400 tracking-wider block mb-1">AGE</span>
+                        <span className="text-white font-semibold text-lg">19</span>
                       </div>
                       <div>
                         <span className="text-xs font-mono text-gray-400 tracking-wider block mb-1">BASED IN</span>
@@ -1029,7 +1067,7 @@ const GamifiedPortfolio: React.FC = () => {
               </div>
 
               {/* BELOW Technical Mastery: Detailed Certifications Showcase */}
-              <div className="mt-10 pt-10 border-t border-white/10 relative z-20">
+              <div id="certifications" className="mt-10 pt-10 border-t border-white/10 relative z-20">
                 <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
                   <div>
                     <h3 className="text-2xl md:text-3xl font-black uppercase font-heading text-white">
@@ -1309,60 +1347,76 @@ const GamifiedPortfolio: React.FC = () => {
 
           {/* CONTACT SECTION */}
           <section id="contact" className="relative z-10 min-h-[80svh] flex flex-col justify-center py-20 md:py-24 bg-gradient-to-b from-transparent via-[#050505]/35 to-transparent backdrop-blur-lg">
-            <div className="max-w-6xl mx-auto px-4 md:px-6 relative text-center">
-              <div className="mb-8">
+            <div className="max-w-6xl mx-auto px-4 md:px-6">
+              <div className="text-center mb-12">
                 <h2 className="text-3xl md:text-5xl font-heading font-black text-white mb-3 uppercase tracking-tight">
                   LET'S BUILD <span className="text-red-500 dark:text-white transition-colors duration-1000">TOGETHER</span>
                 </h2>
-                <p className="text-red-500 dark:text-white font-mono uppercase tracking-widest text-xs md:text-sm mb-3 transition-colors duration-1000">
-                  Ready to collaborate on the next big thing?
-                </p>
-                <div className="flex items-center justify-center gap-2 text-gray-300 font-mono text-xs tracking-wide bg-white/5 border border-white/10 px-3 py-1.5 mt-4 rounded-full w-fit mx-auto backdrop-blur-sm hover:border-red-500/30 dark:hover:border-white/30 transition-colors">
-                  <MapPin className="w-3.5 h-3.5 text-red-500 dark:text-white transition-colors duration-1000" />
-                  <span>Hyderabad, Telangana</span>
-                </div>
+                <p className="text-gray-300 max-w-2xl mx-auto text-sm md:text-base">{CONTACT_DATA.tagline}</p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                <a
-                  href="mailto:mitulnayakwadi@gmail.com"
-                  className="group p-5 md:p-6 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 dark:hover:bg-black transition-all flex flex-col items-center gap-4"
-                  data-hover="true"
-                >
-                  <div className="w-14 h-14 rounded-full bg-red-600/20 dark:bg-white/5 flex items-center justify-center text-red-500 dark:text-white mb-2 group-hover:scale-110 transition-transform transition-colors duration-1000">
-                    <Mail className="w-7 h-7" />
-                  </div>
-                  <h3 className="text-lg font-bold">Email Me</h3>
-                  <p className="text-xs text-gray-400">mitulnayakwadi@gmail.com</p>
-                </a>
+              <div className="grid grid-cols-1 md:grid-cols-10 gap-8 items-stretch">
+                <div className="md:col-span-4 space-y-4">
+                  <a href={`mailto:${CONTACT_DATA.email}`} className="flex items-center gap-4 p-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all" data-hover="true">
+                    <div className="p-2.5 rounded-lg bg-red-600/20 text-red-400 dark:text-white"><Mail size={16} /></div>
+                    <div className="overflow-hidden">
+                      <span className="block text-[10px] uppercase tracking-widest font-mono text-gray-500">Email</span>
+                      <span className="block text-sm font-semibold text-gray-100 truncate">{CONTACT_DATA.email}</span>
+                    </div>
+                  </a>
+                  <a href={CONTACT_DATA.linkedinUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 p-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all" data-hover="true">
+                    <div className="p-2.5 rounded-lg bg-red-600/10 text-red-400 dark:text-white"><Linkedin size={16} /></div>
+                    <div className="overflow-hidden">
+                      <span className="block text-[10px] uppercase tracking-widest font-mono text-gray-500">LinkedIn</span>
+                      <span className="block text-sm font-semibold text-gray-100 truncate">{CONTACT_DATA.linkedin}</span>
+                    </div>
+                  </a>
+                  <a href={CONTACT_DATA.githubUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 p-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 transition-all" data-hover="true">
+                    <div className="p-2.5 rounded-lg bg-red-600/10 text-red-400 dark:text-white"><Github size={16} /></div>
+                    <div className="overflow-hidden">
+                      <span className="block text-[10px] uppercase tracking-widest font-mono text-gray-500">GitHub</span>
+                      <span className="block text-sm font-semibold text-gray-100 truncate">{CONTACT_DATA.github}</span>
+                    </div>
+                  </a>
+                </div>
 
-                <a
-                  href="https://github.com/MitulNayakwadi"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group p-5 md:p-6 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 dark:hover:bg-black transition-all flex flex-col items-center gap-4"
-                  data-hover="true"
-                >
-                  <div className="w-14 h-14 rounded-full bg-red-600/10 dark:bg-white/5 flex items-center justify-center text-red-500 dark:text-white mb-2 group-hover:scale-110 transition-transform transition-colors duration-1000">
-                    <Github className="w-7 h-7" />
-                  </div>
-                  <h3 className="text-lg font-bold">GitHub</h3>
-                  <p className="text-xs text-gray-400">@MitulNayakwadi</p>
-                </a>
+                <div className="md:col-span-6">
+                  <form onSubmit={handleContactSubmit} className="rounded-xl border border-white/10 bg-white/5 p-6 space-y-4">
+                    <div className="space-y-1.5">
+                      <label htmlFor="dark-form-name" className="block text-[10px] uppercase tracking-widest font-mono text-gray-400">Name</label>
+                      <input id="dark-form-name" type="text" required disabled={contactStatus === 'submitting'} value={name} onChange={(e) => setName(e.target.value)} placeholder="Your Name" className="w-full text-sm px-3 py-3 rounded-lg bg-black/30 border border-white/10 text-white placeholder:text-gray-500 focus:outline-none focus:border-red-500 disabled:opacity-60" />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label htmlFor="dark-form-email" className="block text-[10px] uppercase tracking-widest font-mono text-gray-400">Email</label>
+                      <input id="dark-form-email" type="email" required disabled={contactStatus === 'submitting'} value={email} onChange={(e) => setEmail(e.target.value)} placeholder="name@example.com" className="w-full text-sm px-3 py-3 rounded-lg bg-black/30 border border-white/10 text-white placeholder:text-gray-500 focus:outline-none focus:border-red-500 disabled:opacity-60" />
+                    </div>
+                    <div className="space-y-1.5">
+                      <label htmlFor="dark-form-message" className="block text-[10px] uppercase tracking-widest font-mono text-gray-400">Message</label>
+                      <textarea id="dark-form-message" required rows={4} disabled={contactStatus === 'submitting'} value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Hi Mitul, let's collaborate..." className="w-full text-sm px-3 py-3 rounded-lg bg-black/30 border border-white/10 text-white placeholder:text-gray-500 focus:outline-none focus:border-red-500 resize-none disabled:opacity-60" />
+                    </div>
 
-                <a
-                  href="https://linkedin.com/in/mitul-nayakwadi-6a3218319"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group p-5 md:p-6 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 dark:hover:bg-black transition-all flex flex-col items-center gap-4"
-                  data-hover="true"
-                >
-                  <div className="w-14 h-14 rounded-full bg-[#0a66c2]/20 dark:bg-white/5 flex items-center justify-center text-[#0a66c2] dark:text-white mb-2 group-hover:scale-110 transition-transform transition-colors duration-1000">
-                    <Linkedin className="w-7 h-7" />
-                  </div>
-                  <h3 className="text-lg font-bold">LinkedIn</h3>
-                  <p className="text-xs text-gray-400">Connect Professionally</p>
-                </a>
+                    <button type="submit" disabled={contactStatus === 'submitting'} className="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white font-heading font-bold text-xs uppercase tracking-widest py-3.5 px-6 rounded-lg transition-all disabled:bg-red-800/60 disabled:cursor-not-allowed" data-hover="true">
+                      {contactStatus === 'submitting' ? (
+                        <>
+                          <span className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                          <span>Sending...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Send size={12} />
+                          <span>Send Message</span>
+                        </>
+                      )}
+                    </button>
+
+                    {contactStatus === 'success' && (
+                      <div className="text-center text-[12px] text-emerald-300 font-semibold bg-emerald-950/40 py-2.5 rounded-lg border border-emerald-700/30">Success! Your message was sent successfully.</div>
+                    )}
+                    {contactStatus === 'error' && (
+                      <div className="text-center text-[12px] text-rose-300 font-semibold bg-rose-950/40 py-2.5 rounded-lg border border-rose-700/30">Oops! Something went wrong. Please try again.</div>
+                    )}
+                  </form>
+                </div>
               </div>
             </div>
           </section>
@@ -1505,7 +1559,8 @@ const GamifiedPortfolio: React.FC = () => {
           </AnimatePresence>
         </motion.div>
       )}
-    </AnimatePresence>
+      </AnimatePresence>
+    </MotionConfig>
   );
 };
 
