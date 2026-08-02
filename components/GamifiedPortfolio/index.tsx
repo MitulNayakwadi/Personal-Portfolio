@@ -741,7 +741,7 @@ const GamifiedPortfolio: React.FC = () => {
                       </div>
                       <div>
                         <span className="text-xs font-mono text-gray-400 tracking-wider block mb-1">AGE</span>
-                        <span className="text-white font-semibold text-lg">19</span>
+                        <span className="text-white font-semibold text-lg">20</span>
                       </div>
                       <div>
                         <span className="text-xs font-mono text-gray-400 tracking-wider block mb-1">BASED IN</span>
@@ -1163,14 +1163,6 @@ const GamifiedPortfolio: React.FC = () => {
                       link: '/Certificates/Certificate Java training.pdf'
                     },
 
-                    {
-                      title: 'Java Training Certificate',
-                      issuer: 'EduPyramids, SINE, IIT Bombay',
-                      date: 'Issued 2026',
-                      skills: ['Java Programming'],
-                      icon: Code,
-                      link: '/Certificates/Certificate Java training.pdf'
-                    },
 
                     {
                       title: 'Build Your Own Chatbot',

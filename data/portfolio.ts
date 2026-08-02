@@ -194,14 +194,6 @@ export const CERTIFICATIONS_DATA: CertificationItem[] = [
     href: "/Certificates/Cisco Python Essential 1 Certificate-Mitul.pdf"
   },
   {
-    title: "Software Engineering Job Simulation — JPMorgan Chase & Co.",
-    href: "/Certificates/JP Morgan software Engineer_completion_certificate.pdf"
-  },
-  {
-    title: "Technology Job Simulation — Deloitte",
-    href: "/Certificates/Delloite virtual internship(Technology simulation).pdf"
-  },
-  {
     title: "Database Design — Infosys Springboard",
     href: "/Certificates/Infosys (Database Design).pdf"
   },
@@ -226,6 +218,17 @@ export const CERTIFICATIONS_DATA: CertificationItem[] = [
   {
     title: "Build Your Own Chatbot — Cognitive Class(CB0101EN, provided by IBM)",
     href: "/Certificates/IBM CB0101EN Certificate _ Cognitive Class.pdf"
+  }
+];
+
+export const JOB_SIMULATIONS_DATA: CertificationItem[] = [
+  {
+    title: "Software Engineering Job Simulation — JPMorgan Chase & Co.",
+    href: "/Certificates/JP Morgan software Engineer_completion_certificate.pdf"
+  },
+  {
+    title: "Technology Job Simulation — Deloitte",
+    href: "/Certificates/Delloite virtual internship(Technology simulation).pdf"
   }
 ];
 

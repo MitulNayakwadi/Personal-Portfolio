@@ -1,4 +1,4 @@
-import { CERTIFICATIONS_DATA, ACHIEVEMENTS_DATA } from '../../data/portfolio';
+import { CERTIFICATIONS_DATA, ACHIEVEMENTS_DATA, JOB_SIMULATIONS_DATA } from '../../data/portfolio';
 import AnimateOnScroll from '../AnimateOnScroll';
 import { Trophy, ArrowUpRight } from 'lucide-react';
 
@@ -41,6 +41,39 @@ export default function Certifications() {
             </article>
           </AnimateOnScroll>
         ))}
+      </div>
+
+      <div className="mt-8">
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {JOB_SIMULATIONS_DATA.map((sim, idx) => (
+            <AnimateOnScroll key={sim.title} delay={idx * 0.04} direction="up">
+              <article className="h-full bg-white border border-slate-200 rounded-xl p-5 shadow-[0_1px_3px_rgba(0,0,0,0.05)] hover:shadow-[0_6px_20px_rgba(37,99,235,0.12)] transition-all duration-300 flex flex-col">
+                <p className="text-[10px] uppercase tracking-widest font-mono text-slate-400 font-bold mb-2">Job Simulation</p>
+                <h3 className="font-body text-[14px] sm:text-[15px] font-bold text-[#1A1A2E] leading-snug mb-4">{sim.title}</h3>
+
+                <div className="mt-auto">
+                  {sim.href ? (
+                    <a
+                      href={sim.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex w-full items-center justify-center gap-2 bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-[#2563EB] border border-slate-200 hover:border-blue-200 text-[11px] font-mono uppercase tracking-widest font-semibold py-2.5 px-3 rounded-lg transition-colors"
+                      data-hover="true"
+                    >
+                      <span>View</span>
+                      <ArrowUpRight className="w-3.5 h-3.5" />
+                    </a>
+                  ) : (
+                    <div className="inline-flex w-full items-center justify-center text-[11px] font-mono uppercase tracking-widest font-semibold py-2.5 px-3 rounded-lg bg-slate-50 border border-slate-200 text-slate-500">
+                      View
+                    </div>
+                  )}
+                </div>
+              </article>
+            </AnimateOnScroll>
+          ))}
+        </div>
       </div>
 
       <div className="mt-10">
