@@ -1,8 +1,19 @@
+import { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { CERTIFICATIONS_DATA, ACHIEVEMENTS_DATA, JOB_SIMULATIONS_DATA } from '../../data/portfolio';
 import AnimateOnScroll from '../AnimateOnScroll';
 import { Trophy, ArrowUpRight } from 'lucide-react';
 
 export default function Certifications() {
+  const [showAllCertifications, setShowAllCertifications] = useState(false);
+
+  const allCertifications = [...CERTIFICATIONS_DATA, ...JOB_SIMULATIONS_DATA];
+  const featuredCertifications = [
+    ...JOB_SIMULATIONS_DATA.filter((cert) => cert.featured),
+    ...CERTIFICATIONS_DATA.filter((cert) => cert.featured),
+  ];
+  const remainingCertifications = allCertifications.filter((cert) => !cert.featured);
+
   return (
     <section id="certifications" className="py-24 px-6 max-w-[900px] mx-auto border-b border-slate-100">
       <AnimateOnScroll direction="left">
@@ -14,10 +25,10 @@ export default function Certifications() {
       </AnimateOnScroll>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {CERTIFICATIONS_DATA.map((cert, idx) => (
+        {featuredCertifications.map((cert, idx) => (
           <AnimateOnScroll key={cert.title} delay={idx * 0.04} direction="up">
             <article className="h-full bg-white border border-slate-200 rounded-xl p-5 shadow-[0_1px_3px_rgba(0,0,0,0.05)] hover:shadow-[0_6px_20px_rgba(37,99,235,0.12)] transition-all duration-300 flex flex-col">
-              <p className="text-[10px] uppercase tracking-widest font-mono text-slate-400 font-bold mb-2">Certification</p>
+              <p className="text-[10px] uppercase tracking-widest font-mono text-slate-400 font-bold mb-2">{cert.kind ?? 'Certification'}</p>
               <h3 className="font-body text-[14px] sm:text-[15px] font-bold text-[#1A1A2E] leading-snug mb-4">{cert.title}</h3>
 
               <div className="mt-auto">
@@ -44,36 +55,63 @@ export default function Certifications() {
       </div>
 
       <div className="mt-8">
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          {JOB_SIMULATIONS_DATA.map((sim, idx) => (
-            <AnimateOnScroll key={sim.title} delay={idx * 0.04} direction="up">
-              <article className="h-full bg-white border border-slate-200 rounded-xl p-5 shadow-[0_1px_3px_rgba(0,0,0,0.05)] hover:shadow-[0_6px_20px_rgba(37,99,235,0.12)] transition-all duration-300 flex flex-col">
-                <p className="text-[10px] uppercase tracking-widest font-mono text-slate-400 font-bold mb-2">Job Simulation</p>
-                <h3 className="font-body text-[14px] sm:text-[15px] font-bold text-[#1A1A2E] leading-snug mb-4">{sim.title}</h3>
+        <button
+          type="button"
+          onClick={() => setShowAllCertifications((current) => !current)}
+          className="inline-flex items-center gap-2 text-[11px] font-mono uppercase tracking-widest font-semibold text-[#2563EB] hover:text-blue-700 transition-colors"
+        >
+          <span>{showAllCertifications ? 'Show Less' : 'View All Certifications'}</span>
+          <motion.span
+            animate={{ rotate: showAllCertifications ? 180 : 0 }}
+            transition={{ duration: 0.2 }}
+            aria-hidden="true"
+          >
+            <ArrowUpRight className="w-3.5 h-3.5" />
+          </motion.span>
+        </button>
 
-                <div className="mt-auto">
-                  {sim.href ? (
-                    <a
-                      href={sim.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex w-full items-center justify-center gap-2 bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-[#2563EB] border border-slate-200 hover:border-blue-200 text-[11px] font-mono uppercase tracking-widest font-semibold py-2.5 px-3 rounded-lg transition-colors"
-                      data-hover="true"
-                    >
-                      <span>View</span>
-                      <ArrowUpRight className="w-3.5 h-3.5" />
-                    </a>
-                  ) : (
-                    <div className="inline-flex w-full items-center justify-center text-[11px] font-mono uppercase tracking-widest font-semibold py-2.5 px-3 rounded-lg bg-slate-50 border border-slate-200 text-slate-500">
-                      View
-                    </div>
-                  )}
-                </div>
-              </article>
-            </AnimateOnScroll>
-          ))}
-        </div>
+        <AnimatePresence initial={false}>
+          {showAllCertifications && remainingCertifications.length > 0 && (
+            <motion.div
+              key="all-certifications"
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.35, ease: 'easeInOut' }}
+              className="overflow-hidden"
+            >
+              <div className="mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                {remainingCertifications.map((cert, idx) => (
+                  <AnimateOnScroll key={cert.title} delay={idx * 0.04} direction="up">
+                    <article className="h-full bg-white border border-slate-200 rounded-xl p-5 shadow-[0_1px_3px_rgba(0,0,0,0.05)] hover:shadow-[0_6px_20px_rgba(37,99,235,0.12)] transition-all duration-300 flex flex-col">
+                      <p className="text-[10px] uppercase tracking-widest font-mono text-slate-400 font-bold mb-2">{cert.kind ?? 'Certification'}</p>
+                      <h3 className="font-body text-[14px] sm:text-[15px] font-bold text-[#1A1A2E] leading-snug mb-4">{cert.title}</h3>
+
+                      <div className="mt-auto">
+                        {cert.href ? (
+                          <a
+                            href={cert.href}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex w-full items-center justify-center gap-2 bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-[#2563EB] border border-slate-200 hover:border-blue-200 text-[11px] font-mono uppercase tracking-widest font-semibold py-2.5 px-3 rounded-lg transition-colors"
+                            data-hover="true"
+                          >
+                            <span>View</span>
+                            <ArrowUpRight className="w-3.5 h-3.5" />
+                          </a>
+                        ) : (
+                          <div className="inline-flex w-full items-center justify-center text-[11px] font-mono uppercase tracking-widest font-semibold py-2.5 px-3 rounded-lg bg-slate-50 border border-slate-200 text-slate-500">
+                            View
+                          </div>
+                        )}
+                      </div>
+                    </article>
+                  </AnimateOnScroll>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       <div className="mt-10">

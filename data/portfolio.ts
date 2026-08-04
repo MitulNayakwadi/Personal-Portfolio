@@ -31,6 +31,8 @@ export interface EducationItem {
 export interface CertificationItem {
   title: string;
   href?: string;
+  kind?: 'Certification' | 'Job Simulation';
+  featured?: boolean;
 }
 
 export const HERO_DATA = {
@@ -183,11 +185,22 @@ export const EDUCATION_DATA: EducationItem[] = [
 export const CERTIFICATIONS_DATA: CertificationItem[] = [
   {
     title: "Prompt Design in Vertex AI — Google Cloud",
-    href: "https://www.credly.com/badges/3f831e89-2778-401f-a060-7f99cfa8a781/public_url"
+    href: "https://www.credly.com/badges/3f831e89-2778-401f-a060-7f99cfa8a781/public_url",
+    featured: true
   },
   {
     title: "Implement CI/CD Pipelines on Google Cloud — Google Cloud",
-    href: "https://www.credly.com/badges/f0a49ce7-04f5-4b5c-8170-081ffd21a25a/public_url"
+    href: "https://www.credly.com/badges/f0a49ce7-04f5-4b5c-8170-081ffd21a25a/public_url",
+    featured: true
+  },
+  {
+    title: "Generative AI Fundamentals — Google Cloud Training",
+    featured: true
+  },
+  {
+    title: "Build Your Own Chatbot — Cognitive Class(CB0101EN, provided by IBM)",
+    href: "/Certificates/IBM CB0101EN Certificate _ Cognitive Class.pdf",
+    featured: true
   },
   {
     title: "Python Essentials 1 — Cisco Networking Academy",
@@ -210,25 +223,22 @@ export const CERTIFICATIONS_DATA: CertificationItem[] = [
     href: "/Certificates/Certificate Java training.pdf"
   },
   {
-    title: "Generative AI Fundamentals — Google Cloud Training"
-  },
-  {
     title: "Intro to Machine Learning — Kaggle"
-  },
-  {
-    title: "Build Your Own Chatbot — Cognitive Class(CB0101EN, provided by IBM)",
-    href: "/Certificates/IBM CB0101EN Certificate _ Cognitive Class.pdf"
   }
 ];
 
 export const JOB_SIMULATIONS_DATA: CertificationItem[] = [
   {
     title: "Software Engineering Job Simulation — JPMorgan Chase & Co.",
-    href: "/Certificates/JP Morgan software Engineer_completion_certificate.pdf"
+    href: "/Certificates/JP Morgan software Engineer_completion_certificate.pdf",
+    kind: "Job Simulation",
+    featured: true
   },
   {
     title: "Technology Job Simulation — Deloitte",
-    href: "/Certificates/Delloite virtual internship(Technology simulation).pdf"
+    href: "/Certificates/Delloite virtual internship(Technology simulation).pdf",
+    kind: "Job Simulation",
+    featured: true
   }
 ];
 

@@ -1090,32 +1090,12 @@ const GamifiedPortfolio: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {[
                     {
-                      title: 'Java Training Certificate',
-                      issuer: 'EduPyramids, SINE, IIT Bombay',
-                      date: 'Issued 2026',
-                      skills: ['Java Programming'],
-                      icon: Code,
-                      link: '/Certificates/Certificate Java training.pdf'
-                    },
-
-
-                    {
                       title: 'Build Your Own Chatbot',
                       issuer: 'Cognitive Class(CB0101EN, provided by IBM)',
                       date: 'Issued 2026',
                       skills: ['Chatbot Development', 'NLP', 'AI Integration'],
                       icon: Code,
                       link: '/Certificates/IBM CB0101EN Certificate _ Cognitive Class.pdf'
-                    },
-
-
-                    {
-                      title: 'Prompt Design in Vertex AI',
-                      issuer: 'Google Cloud',
-                      date: 'Issued 2026',
-                      skills: ['Generative AI', 'Vertex AI', 'Prompt Engineering'],
-                      icon: Globe,
-                      link: 'https://www.credly.com/badges/3f831e89-2778-401f-a060-7f99cfa8a781/public_url'
                     },
                     {
                       title: 'Implement CI/CD Pipelines',
@@ -1124,6 +1104,22 @@ const GamifiedPortfolio: React.FC = () => {
                       skills: ['CI/CD Pipelines', 'Google Cloud Build', 'DevOps'],
                       icon: Globe,
                       link: 'https://www.credly.com/badges/f0a49ce7-04f5-4b5c-8170-081ffd21a25a/public_url'
+                    },
+                    {
+                      title: 'Java Training Certificate',
+                      issuer: 'EduPyramids, SINE, IIT Bombay',
+                      date: 'Issued 2026',
+                      skills: ['Java Programming'],
+                      icon: Code,
+                      link: '/Certificates/Certificate Java training.pdf'
+                    },
+                    {
+                      title: 'Prompt Design in Vertex AI',
+                      issuer: 'Google Cloud',
+                      date: 'Issued 2026',
+                      skills: ['Generative AI', 'Vertex AI', 'Prompt Engineering'],
+                      icon: Globe,
+                      link: 'https://www.credly.com/badges/3f831e89-2778-401f-a060-7f99cfa8a781/public_url'
                     },
                     {
                       title: 'Python Essentials 1',
