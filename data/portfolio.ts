@@ -99,7 +99,7 @@ export const PROJECTS_DATA: ProjectData[] = [
   },
   {
     id: "groundwater-dwlr",
-    name: "Groundwater DWLR Management System — [SIH Project]",
+    name: "Groundwater DWLR Management System — [SIH Project -2025]",
     category: "GovTech / Environment",
     techStack: ["JavaScript", "Flask", "SQL"],
     bullets: [

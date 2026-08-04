@@ -1071,7 +1071,7 @@ const GamifiedPortfolio: React.FC = () => {
                 <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
                   <div>
                     <h3 className="text-2xl md:text-3xl font-black uppercase font-heading text-white">
-                      PROFESSIONAL <br /> <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-rose-500 dark:from-white dark:to-gray-400 font-bold">CERTIFICATIONS</span>
+                      Certifications <br /> <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-rose-500 dark:from-white dark:to-gray-400 font-bold">& Achivements</span>
                     </h3>
                   </div>
                   <a
@@ -1089,6 +1089,26 @@ const GamifiedPortfolio: React.FC = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {[
+                    {
+                      title: 'Java Training Certificate',
+                      issuer: 'EduPyramids, SINE, IIT Bombay',
+                      date: 'Issued 2026',
+                      skills: ['Java Programming'],
+                      icon: Code,
+                      link: '/Certificates/Certificate Java training.pdf'
+                    },
+
+
+                    {
+                      title: 'Build Your Own Chatbot',
+                      issuer: 'Cognitive Class(CB0101EN, provided by IBM)',
+                      date: 'Issued 2026',
+                      skills: ['Chatbot Development', 'NLP', 'AI Integration'],
+                      icon: Code,
+                      link: '/Certificates/IBM CB0101EN Certificate _ Cognitive Class.pdf'
+                    },
+
+
                     {
                       title: 'Prompt Design in Vertex AI',
                       issuer: 'Google Cloud',
@@ -1114,12 +1134,22 @@ const GamifiedPortfolio: React.FC = () => {
                       link: 'https://www.credly.com/badges/0e51f13c-7ee6-4272-9a48-0d8cdd251530/public_url',
                       pdfLink: '/Certificates/Cisco Python Essential 1 Certificate-Mitul.pdf'
                     },
+
+                    {
+                      title: 'Database Design',
+                      issuer: 'Infosys Springboard',
+                      date: 'Issued 2025',
+                      skills: ['Database Design', 'SQL', 'Data Modeling'],
+                      icon: Globe,
+                      link: '/Certificates/Infosys (Database Design).pdf'
+                    },
+                    
                     {
                       title: 'Software Engineering Job Simulation',
                       issuer: 'JPMorgan Chase & Co.',
                       date: 'Issued 2025',
                       skills: ['React', 'Data Visualization', 'Perspective'],
-                      icon: Code,
+                      icon: Trophy,
                       link: '/Certificates/JP Morgan software Engineer_completion_certificate.pdf'
                     },
                     {
@@ -1130,14 +1160,7 @@ const GamifiedPortfolio: React.FC = () => {
                       icon: Trophy,
                       link: '/Certificates/Delloite virtual internship(Technology simulation).pdf'
                     },
-                    {
-                      title: 'Database Design',
-                      issuer: 'Infosys Springboard',
-                      date: 'Issued 2025',
-                      skills: ['Database Design', 'SQL', 'Data Modeling'],
-                      icon: Globe,
-                      link: '/Certificates/Infosys (Database Design).pdf'
-                    },
+                    
                     {
                       title: 'Python Full Stack Internship',
                       issuer: 'EduSkills (AICTE)',
@@ -1154,24 +1177,7 @@ const GamifiedPortfolio: React.FC = () => {
                       icon: Code,
                       link: '/Certificates/Certificate python training.pdf'
                     },
-                    {
-                      title: 'Java Training Certificate',
-                      issuer: 'EduPyramids, SINE, IIT Bombay',
-                      date: 'Issued 2026',
-                      skills: ['Java Programming'],
-                      icon: Code,
-                      link: '/Certificates/Certificate Java training.pdf'
-                    },
-
-
-                    {
-                      title: 'Build Your Own Chatbot',
-                      issuer: 'Cognitive Class(CB0101EN, provided by IBM)',
-                      date: 'Issued 2026',
-                      skills: ['Chatbot Development', 'NLP', 'AI Integration'],
-                      icon: Code,
-                      link: '/Certificates/IBM CB0101EN Certificate _ Cognitive Class.pdf'
-                    },
+                    
 
                   ].map((cert, index) => (
                     <motion.div
