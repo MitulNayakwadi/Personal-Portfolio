@@ -7,9 +7,9 @@ interface FluidBackgroundProps {
   isDarkMode?: boolean;
 }
 
-const AmbientBlobs: React.FC<{ reducedMotion?: boolean; isDarkMode?: boolean; isScrolled?: boolean }> = ({ reducedMotion, isDarkMode, isScrolled }) => {
+const AmbientBlobs: React.FC<{ reducedMotion?: boolean; isDarkMode?: boolean; isPastProfile?: boolean }> = ({ reducedMotion, isDarkMode, isPastProfile }) => {
   return (
-    <div className={`transition-opacity duration-700 ${isScrolled ? 'opacity-0' : 'opacity-100'}`}>
+    <div className={`transition-opacity duration-700 ${isPastProfile ? 'opacity-0' : 'opacity-100'}`}>
       {/* Blob 1: Deep Crimson Red */}
       <motion.div
         className={`absolute top-[-10%] left-[-10%] rounded-full mix-blend-screen filter will-change-transform transition-opacity duration-1000 pointer-events-none ${reducedMotion ? 'w-[70vw] h-[70vw] bg-[#bd0306] blur-[72px] opacity-22' : 'w-[90vw] h-[90vw] bg-[#bd0306] blur-[110px] opacity-35'}`}
@@ -59,31 +59,38 @@ const AmbientBlobs: React.FC<{ reducedMotion?: boolean; isDarkMode?: boolean; is
 };
 
 const FluidBackground: React.FC<FluidBackgroundProps> = ({ reducedMotion = false, isDarkMode = false }) => {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isPastProfile, setIsPastProfile] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 60) {
-        setIsScrolled(true);
+      const aboutElem = document.getElementById('about');
+      if (aboutElem) {
+        // Trigger solid black transition after Hero + About (Profile) section
+        const aboutBottom = aboutElem.offsetTop + aboutElem.offsetHeight - 120;
+        setIsPastProfile(window.scrollY > aboutBottom);
       } else {
-        setIsScrolled(false);
+        setIsPastProfile(window.scrollY > window.innerHeight * 1.2);
       }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
   }, []);
 
   return (
-    <div className={`fixed inset-0 -z-10 overflow-hidden transition-colors duration-700 ${isScrolled ? 'bg-black' : (isDarkMode ? 'bg-[#020204]' : 'bg-[#050507]')}`}>
+    <div className={`fixed inset-0 -z-10 overflow-hidden transition-colors duration-700 ${isPastProfile ? 'bg-black' : (isDarkMode ? 'bg-[#020204]' : 'bg-[#050507]')}`}>
       
       {/* Ambient Red Glow Blobs */}
-      <AmbientBlobs reducedMotion={reducedMotion} isDarkMode={isDarkMode} isScrolled={isScrolled} />
+      <AmbientBlobs reducedMotion={reducedMotion} isDarkMode={isDarkMode} isPastProfile={isPastProfile} />
 
       {/* GlitterWrap Starfield Warp Tunnel Canvas */}
       {!reducedMotion && (
-        <div className={`absolute inset-0 pointer-events-none z-0 transition-opacity duration-700 ${isScrolled ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+        <div className={`absolute inset-0 pointer-events-none z-0 transition-opacity duration-700 ${isPastProfile ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
           <GlitterWrap
             particleCount={reducedMotion ? 250 : 550}
             color1="#ff1e27"
@@ -103,10 +110,10 @@ const FluidBackground: React.FC<FluidBackgroundProps> = ({ reducedMotion = false
       )}
 
       {/* Grain & Noise Overlay */}
-      <div className={`absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay pointer-events-none z-10 transition-opacity duration-700 ${isScrolled ? 'opacity-0' : 'opacity-[0.08]'}`} />
+      <div className={`absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay pointer-events-none z-10 transition-opacity duration-700 ${isPastProfile ? 'opacity-0' : 'opacity-[0.08]'}`} />
 
       {/* Dark Vignette Frame */}
-      <div className={`absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(0,0,0,0.85)_100%)] pointer-events-none z-20 transition-opacity duration-700 ${isScrolled ? 'opacity-0' : 'opacity-100'}`} />
+      <div className={`absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(0,0,0,0.85)_100%)] pointer-events-none z-20 transition-opacity duration-700 ${isPastProfile ? 'opacity-0' : 'opacity-100'}`} />
     </div>
   );
 };
