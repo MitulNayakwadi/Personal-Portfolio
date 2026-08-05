@@ -16,9 +16,9 @@ interface CharStatus {
 export const ScrambleText: React.FC<ScrambleTextProps> = ({ text, className, splitColors = true }) => {
   const spaceIndex = text.indexOf(' ');
   const [displayText, setDisplayText] = useState<CharStatus[]>(() =>
-    text.split('').map((char, index) => ({
-      char: index === 0 ? char : ' ',
-      isResolved: index === 0,
+    text.split('').map((char) => ({
+      char: char,
+      isResolved: true,
     }))
   );
   const [trigger, setTrigger] = useState(0);
@@ -38,10 +38,9 @@ export const ScrambleText: React.FC<ScrambleTextProps> = ({ text, className, spl
   useEffect(() => {
     const chars = text.split('');
     
-    // Start with only the first character visible (e.g. 'M'), and all other characters blank/empty
-    const initialState = chars.map((char, index) => ({
-      char: index === 0 ? char : ' ',
-      isResolved: index === 0,
+    const initialState = chars.map((char) => ({
+      char: char,
+      isResolved: true,
       colorType: 'white' as const,
     }));
     setDisplayText(initialState);
@@ -130,18 +129,18 @@ export const ScrambleText: React.FC<ScrambleTextProps> = ({ text, className, spl
 
   return (
     <motion.span 
-      className={`inline-block font-heading font-black select-none tracking-tighter cursor-pointer relative ${className}`}
+      className={`inline-flex flex-col items-center justify-center text-center font-heading font-black select-none tracking-tighter cursor-pointer relative mx-auto ${className}`}
       onClick={() => setTrigger(p => p + 1)}
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
     >
       {/* Absolute Shadow effect */}
-      <span className="absolute inset-0 -z-10 text-transparent font-heading select-none pointer-events-none translate-y-[3px] opacity-10 flex justify-center">
+      <span className="absolute inset-0 -z-10 text-transparent font-heading select-none pointer-events-none translate-y-[3px] opacity-10 flex justify-center text-center">
         {displayText.map(item => item.char).join('')}
       </span>
       
       {/* Main text container with glitch & red/white split rendering */}
-      <span className="relative z-10 flex flex-row items-center justify-center select-none whitespace-nowrap">
+      <span className="relative z-10 flex flex-row items-center justify-center text-center select-none whitespace-nowrap mx-auto">
         {displayText.map((item, idx) => {
           let charColorClass = "";
           let shadowStyle: React.CSSProperties = {};

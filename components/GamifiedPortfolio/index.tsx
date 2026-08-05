@@ -543,16 +543,16 @@ const GamifiedPortfolio: React.FC = () => {
                   duration: 0.8,
                   delay: 0.4
                 }}
-                className="relative w-full flex justify-center items-center mb-4"
+                className="relative w-full flex justify-center items-center text-center mx-auto mb-4"
               >
                 {prefersReducedMotion ? (
-                  <h1 className="text-[25px] sm:text-5xl md:text-6xl lg:text-8xl leading-[1.1] font-heading tracking-tight text-white uppercase">
+                  <h1 className="text-[25px] sm:text-5xl md:text-6xl lg:text-8xl leading-[1.1] font-heading tracking-tight text-white uppercase text-center mx-auto">
                     MITUL NAYAKWADI
                   </h1>
                 ) : (
                   <ScrambleText
                     text="MITUL NAYAKWADI"
-                    className="text-[25px] sm:text-5xl md:text-6xl lg:text-8xl leading-[1.1] font-heading tracking-tight text-white uppercase"
+                    className="text-[25px] sm:text-5xl md:text-6xl lg:text-8xl leading-[1.1] font-heading tracking-tight text-white uppercase text-center mx-auto"
                   />
                 )}
               </motion.div>
