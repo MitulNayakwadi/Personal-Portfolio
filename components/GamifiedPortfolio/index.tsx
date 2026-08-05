@@ -6,7 +6,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence, MotionConfig, useReducedMotion } from 'framer-motion';
-import { Globe, Menu, X, Code, Layout, Brain, ChevronLeft, ChevronRight, Github, Linkedin, Mail, ExternalLink, GraduationCap, MapPin, Music, Tv, Palette, Trophy, Award, ArrowUpRight, Download, Briefcase, Sun, Moon, Send } from 'lucide-react';
+import { Globe, Menu, X, Code, Layout, Brain, ChevronLeft, ChevronRight, Github, Linkedin, Mail, ExternalLink, GraduationCap, MapPin, Music, Tv, Palette, Trophy, Award, ArrowUpRight, ArrowDown, Download, Briefcase, Sun, Moon, Send } from 'lucide-react';
 import Lenis from 'lenis';
 import FluidBackground from '../FluidBackground';
 import GradientText from '../GlitchText';
@@ -645,6 +645,26 @@ const GamifiedPortfolio: React.FC = () => {
                   <Mail className="w-5 h-5" />
                 </a>
               </motion.div>
+
+              {/* Scroll Down Action Indicator */}
+              <motion.button
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.1, duration: 0.8 }}
+                onClick={() => scrollToSection('about')}
+                className="mt-10 flex flex-col items-center gap-2 text-gray-400 hover:text-white transition-colors cursor-pointer bg-transparent border-none group"
+                title="Scroll down to About section"
+                data-hover="true"
+              >
+                <span className="text-[10px] font-mono tracking-widest uppercase text-gray-400 group-hover:text-red-500 transition-colors">Scroll Down</span>
+                <motion.div
+                  animate={{ y: [0, 8, 0] }}
+                  transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
+                  className="p-2 rounded-full border border-white/10 group-hover:border-red-500/50 bg-white/5 transition-colors"
+                >
+                  <ArrowDown className="w-4 h-4 text-red-500 dark:text-white" />
+                </motion.div>
+              </motion.button>
             </motion.div>
           </header>
 
