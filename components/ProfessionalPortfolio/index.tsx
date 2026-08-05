@@ -112,6 +112,16 @@ export default function ProfessionalPortfolio() {
     }
   };
 
+  const [showBackToTop, setShowBackToTop] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowBackToTop(window.scrollY > 400);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <div className="relative min-h-screen text-slate-800 selection:bg-blue-100 selection:text-blue-900 bg-[#FAFAF8] font-body overflow-x-hidden antialiased">
       <Navbar activeSection={activeSection} scrollToSection={scrollToSection} />
@@ -125,6 +135,22 @@ export default function ProfessionalPortfolio() {
         <Projects />
         <Contact />
       </main>
+
+      {/* Floating Back to Top Action */}
+      {showBackToTop && (
+        <button
+          onClick={() => scrollToSection('hero')}
+          className="fixed bottom-6 right-6 z-40 p-3 rounded-full bg-[#2563EB] hover:bg-blue-700 text-white shadow-lg hover:shadow-xl hover:scale-110 active:scale-95 transition-all duration-300 border-none cursor-pointer flex items-center justify-center"
+          title="Back to Top"
+          aria-label="Back to Top"
+          data-hover="true"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+          </svg>
+        </button>
+      )}
+
       <Footer />
     </div>
   );

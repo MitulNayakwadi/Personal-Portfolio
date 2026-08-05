@@ -36,7 +36,7 @@ export default function Hero({ scrollToSection }: Props) {
   const STATS = [
     { label: 'Certifications', value: '10+', icon: Award, desc: 'Google Cloud, Cisco, IBM' },
     { label: 'Projects', value: '4+', icon: Code, desc: 'AI, GovTech, Web Apps' },
-    { label: 'Ambassador', value: 'Google', icon: Globe, desc: 'Student Ambassador' },
+    { label: 'Domain', value: 'AI & Web', icon: Sparkles, desc: 'Intelligent App Systems' },
     { label: 'Education', value: 'B.E. CSE', icon: GraduationCap, desc: 'Matrusri Eng. College' },
   ];
 

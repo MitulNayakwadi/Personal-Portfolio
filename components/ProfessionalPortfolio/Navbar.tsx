@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import ThemeToggle from '../ThemeToggle';
 
@@ -21,6 +21,7 @@ const NAV_ITEMS = [
 export default function Navbar({ activeSection, scrollToSection }: Props) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { scrollYProgress } = useScroll();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -43,13 +44,20 @@ export default function Navbar({ activeSection, scrollToSection }: Props) {
           : 'bg-transparent border-transparent py-5'
       }`}
     >
+      {/* Top Reading Scroll Progress Bar */}
+      <motion.div
+        className="absolute top-0 left-0 right-0 h-[2.5px] bg-[#2563EB] origin-left z-50 shadow-[0_0_8px_rgba(37,99,235,0.6)]"
+        style={{ scaleX: scrollYProgress }}
+      />
+
       <div className="max-w-[900px] mx-auto px-6 flex items-center justify-between">
         {/* Logo / Name */}
         <button
           onClick={() => scrollToSection('hero')}
-          className="font-display text-lg font-bold text-[#1A1A2E] tracking-tight hover:opacity-80 transition-opacity bg-transparent border-none cursor-pointer"
+          className="font-display text-lg font-extrabold text-[#1A1A2E] tracking-tight hover:text-[#2563EB] transition-colors bg-transparent border-none cursor-pointer flex items-center gap-2"
         >
-          Mitul Nayakwadi
+          <span className="w-2.5 h-2.5 rounded-full bg-[#2563EB]"></span>
+          <span>Mitul Nayakwadi</span>
         </button>
 
         {/* Right side: Nav + Toggle + Hamburger */}
@@ -62,7 +70,7 @@ export default function Navbar({ activeSection, scrollToSection }: Props) {
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
                   className={`relative py-1 hover:text-[#1A1A2E] transition-colors bg-transparent border-none cursor-pointer ${
-                    isActive ? 'text-[#1A1A2E] font-semibold' : ''
+                    isActive ? 'text-[#1A1A2E] font-bold' : ''
                   }`}
                   data-hover="true"
                 >
@@ -70,7 +78,7 @@ export default function Navbar({ activeSection, scrollToSection }: Props) {
                   {isActive && (
                     <motion.span
                       layoutId="activeUnderline"
-                      className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#2563EB] rounded-full"
+                      className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#2563EB] rounded-full shadow-[0_0_6px_rgba(37,99,235,0.4)]"
                       transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                     />
                   )}
@@ -108,7 +116,7 @@ export default function Navbar({ activeSection, scrollToSection }: Props) {
                   key={item.id}
                   onClick={() => handleMobileClick(item.id)}
                   className={`text-left py-2 text-md font-body font-medium transition-colors bg-transparent border-none cursor-pointer ${
-                    activeSection === item.id ? 'text-[#2563EB] font-semibold' : 'text-slate-650'
+                    activeSection === item.id ? 'text-[#2563EB] font-bold' : 'text-slate-650'
                   }`}
                 >
                   {item.label}
@@ -121,3 +129,4 @@ export default function Navbar({ activeSection, scrollToSection }: Props) {
     </nav>
   );
 }
+
