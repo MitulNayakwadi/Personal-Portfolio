@@ -18,6 +18,7 @@ import AIChat from '../AIChat';
 import { Project } from '../../types';
 import FallbackPortrait from '../../mee.jpeg';
 import ThemeToggle from '../ThemeToggle';
+import LEDTicker from '../LEDTicker';
 import { PROJECTS_DATA, CONTACT_DATA } from '../../data/portfolio';
 
 declare global {
@@ -152,6 +153,7 @@ const GamifiedPortfolio: React.FC = () => {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [contactStatus, setContactStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+  const [showAllCertifications, setShowAllCertifications] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(() => {
     return localStorage.getItem('theme') === 'dark';
   });
@@ -279,6 +281,7 @@ const GamifiedPortfolio: React.FC = () => {
 
   const scrollToSection = (id: string) => {
     setMobileMenuOpen(false);
+    setActiveSection(id);
     const element = document.getElementById(id);
     if (element) {
       const elementPosition = element.getBoundingClientRect().top + window.scrollY;
@@ -442,7 +445,7 @@ const GamifiedPortfolio: React.FC = () => {
                     key={item}
                     onClick={() => scrollToSection(item.toLowerCase())}
                     className={`relative py-2 px-1 transition-all duration-300 ${isActive
-                      ? (isDarkMode ? 'text-white font-extrabold scale-105' : 'text-red-500 font-extrabold scale-105')
+                      ? 'text-red-500 font-extrabold scale-105 drop-shadow-[0_0_12px_rgba(239,68,68,0.7)]'
                       : 'text-white/80 hover:text-white hover:scale-105'
                       } cursor-pointer bg-transparent border-none`}
                     data-hover="true"
@@ -451,10 +454,7 @@ const GamifiedPortfolio: React.FC = () => {
                     {isActive && (
                       <motion.span
                         layoutId="navTabIndicator"
-                        className={`absolute bottom-0 left-0 right-0 h-[3px] rounded-full ${isDarkMode
-                          ? 'bg-white shadow-[0_0_12px_rgba(255,255,255,0.8)]'
-                          : 'bg-red-500 shadow-[0_0_12px_#ef4444]'
-                          }`}
+                        className="absolute bottom-0 left-0 right-0 h-[3px] rounded-full bg-red-500 shadow-[0_0_14px_#ef4444]"
                         transition={{ type: "spring", stiffness: 350, damping: 25 }}
                       />
                     )}
@@ -838,25 +838,23 @@ const GamifiedPortfolio: React.FC = () => {
             </div>
           </section>
 
-          {/* MARQUEE */}
-          <div className="relative w-full py-4 bg-[#e60026] text-white z-20 overflow-hidden shadow-[0_0_35px_rgba(230,0,38,0.6)] border-y border-white/20">
-            <motion.div
-              className="flex w-fit will-change-transform"
-              animate={{ x: "-50%" }}
-              transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
-            >
-              {[0, 1].map((key) => (
-                <div key={key} className="flex whitespace-nowrap shrink-0">
-                  {[...Array(4)].map((_, i) => (
-                    <span key={i} className="text-lg md:text-2xl font-heading font-black px-6 md:px-12 flex items-center gap-4 uppercase tracking-wider text-white">
-                      AI INNOVATION <span className="text-white font-extrabold text-xl">●</span>
-                      WEB DEVELOPMENT <span className="text-white font-extrabold text-xl">●</span>
-                      CREATIVE TECH <span className="text-white font-extrabold text-xl">●</span>
-                    </span>
-                  ))}
-                </div>
-              ))}
-            </motion.div>
+          {/* PIXEL LED DISPLAY MARQUEE */}
+          <div className="relative w-full h-16 bg-[#e60026] text-white z-20 overflow-hidden shadow-[0_0_35px_rgba(230,0,38,0.7)] border-y border-white/20 flex items-center justify-center">
+            <LEDTicker
+              items={["AI INNOVATION", "WEB DEVELOPMENT", "CREATIVE TECH"]}
+              separator="●"
+              speed={10}
+              direction="left"
+              textSize={36}
+              dotSize={4.5}
+              dotQuantity={9}
+              spread={1}
+              dotShape="round"
+              onColor="#FFFFFF"
+              offColor="rgba(255, 255, 255, 0.12)"
+              glow={true}
+              glowOptions={{ strength: 70, size: 12 }}
+            />
           </div>
 
           {/* EDUCATION TIMELINE SECTION (3rd section) */}
@@ -1065,10 +1063,13 @@ const GamifiedPortfolio: React.FC = () => {
                   </motion.div>
                 </motion.div>
               </div>
+            </div>
+          </section>
 
-              {/* BELOW Technical Mastery: Detailed Certifications Showcase */}
-              <div id="certifications" className="mt-10 pt-10 border-t border-white/10 relative z-20">
-                <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+          {/* DETAILED CERTIFICATIONS SHOWCASE SECTION */}
+          <section id="certifications" className="relative z-10 min-h-[80svh] flex flex-col justify-center py-20 md:py-24 bg-gradient-to-b from-transparent via-[#050505]/45 to-transparent overflow-hidden">
+            <div className="max-w-6xl mx-auto px-4 md:px-6 relative">
+              <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
                   <div>
                     <h3 className="text-2xl md:text-3xl font-black uppercase font-heading">
                       <span className="text-white">CERTIFICATIONS </span><br /> <span className="text-red-500 font-extrabold drop-shadow-[0_0_20px_rgba(239,68,68,0.7)]">& ACHIEVEMENTS</span>
@@ -1087,6 +1088,7 @@ const GamifiedPortfolio: React.FC = () => {
                   </a>
                 </div>
 
+                {/* Featured 6 Certifications */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                   {[
                     {
@@ -1106,14 +1108,6 @@ const GamifiedPortfolio: React.FC = () => {
                       link: 'https://www.credly.com/badges/f0a49ce7-04f5-4b5c-8170-081ffd21a25a/public_url'
                     },
                     {
-                      title: 'Java Training Certificate',
-                      issuer: 'EduPyramids, SINE, IIT Bombay',
-                      date: 'Issued 2026',
-                      skills: ['Java Programming'],
-                      icon: Code,
-                      link: '/Certificates/Certificate Java training.pdf'
-                    },
-                    {
                       title: 'Prompt Design in Vertex AI',
                       issuer: 'Google Cloud',
                       date: 'Issued 2026',
@@ -1121,25 +1115,6 @@ const GamifiedPortfolio: React.FC = () => {
                       icon: Globe,
                       link: 'https://www.credly.com/badges/3f831e89-2778-401f-a060-7f99cfa8a781/public_url'
                     },
-                    {
-                      title: 'Python Essentials 1',
-                      issuer: 'Cisco Networking Academy',
-                      date: 'Issued 2025',
-                      skills: ['Python', 'Basic Programming', 'Algorithms'],
-                      icon: Code,
-                      link: 'https://www.credly.com/badges/0e51f13c-7ee6-4272-9a48-0d8cdd251530/public_url',
-                      pdfLink: '/Certificates/Cisco Python Essential 1 Certificate-Mitul.pdf'
-                    },
-
-                    {
-                      title: 'Database Design',
-                      issuer: 'Infosys Springboard',
-                      date: 'Issued 2025',
-                      skills: ['Database Design', 'SQL', 'Data Modeling'],
-                      icon: Globe,
-                      link: '/Certificates/Infosys (Database Design).pdf'
-                    },
-                    
                     {
                       title: 'Software Engineering Job Simulation',
                       issuer: 'JPMorgan Chase & Co.',
@@ -1156,26 +1131,14 @@ const GamifiedPortfolio: React.FC = () => {
                       icon: Trophy,
                       link: '/Certificates/Delloite virtual internship(Technology simulation).pdf'
                     },
-                    
                     {
-                      title: 'Python Full Stack Internship',
-                      issuer: 'EduSkills (AICTE)',
-                      date: 'Issued 2025',
-                      skills: ['Python Full Stack', 'Web Dev', 'Flask/Django'],
-                      icon: Award,
-                      link: '/Certificates/Mitul Nayakwadi python fullstack, eduskills.pdf'
-                    },
-                    {
-                      title: 'Python Training Certificate',
-                      issuer: 'EduPyramids, SINE, IIT Bombay',
-                      date: 'Issued 2025',
-                      skills: ['Python Coding', 'Data Structures', 'OOP'],
-                      icon: Code,
-                      link: '/Certificates/Certificate python training.pdf'
-                    },
-                    
-
-                  ].map((cert, index) => (
+                      title: 'Generative AI Fundamentals',
+                      issuer: 'Google Cloud Training',
+                      date: 'Issued 2026',
+                      skills: ['Generative AI', 'LLMs', 'Cloud AI'],
+                      icon: Globe
+                    }
+                  ].map((cert) => (
                     <motion.div
                       key={cert.title}
                       variants={skillCardVariants}
@@ -1204,36 +1167,160 @@ const GamifiedPortfolio: React.FC = () => {
                       </div>
 
                       <div className="flex gap-2.5 w-full mt-auto">
-                        <a
-                          href={cert.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={`flex items-center justify-center gap-2 py-2 px-4 rounded-xl bg-white/5 hover:bg-red-650/10 dark:hover:bg-black border border-white/10 hover:border-red-500/30 dark:hover:border-white/30 text-xs text-gray-300 hover:text-white transition-all cursor-pointer font-medium font-mono uppercase tracking-wider ${cert.pdfLink ? 'w-1/2' : 'w-full'
-                            }`}
-                          data-hover="true"
-                        >
-                          <span>{cert.pdfLink ? 'Verify' : 'View'}</span>
-                          <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                        </a>
-                        {cert.pdfLink && (
+                        {cert.link ? (
                           <a
-                            href={cert.pdfLink}
+                            href={cert.link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="w-1/2 flex items-center justify-center gap-2 py-2 px-4 rounded-xl bg-red-650/10 hover:bg-red-650/20 border border-red-500/20 hover:border-red-500/40 text-xs text-red-400 hover:text-white transition-all cursor-pointer font-medium font-mono uppercase tracking-wider"
+                            className="flex items-center justify-center gap-2 py-2 px-4 rounded-xl bg-white/5 hover:bg-red-650/10 dark:hover:bg-black border border-white/10 hover:border-red-500/30 dark:hover:border-white/30 text-xs text-gray-300 hover:text-white transition-all cursor-pointer font-medium font-mono uppercase tracking-wider w-full"
                             data-hover="true"
                           >
-                            <span>PDF</span>
-                            <Download className="w-3.5 h-3.5" />
+                            <span>View</span>
+                            <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                           </a>
+                        ) : (
+                          <div className="flex items-center justify-center gap-2 py-2 px-4 rounded-xl bg-white/5 border border-white/10 text-xs text-gray-500 font-medium font-mono uppercase tracking-wider w-full">
+                            <span>Verified</span>
+                          </div>
                         )}
                       </div>
                     </motion.div>
                   ))}
                 </div>
+
+                {/* View All Certifications Action Toggle */}
+                <div className="mt-8 flex justify-center">
+                  <button
+                    type="button"
+                    onClick={() => setShowAllCertifications((prev) => !prev)}
+                    className="group inline-flex items-center gap-2.5 text-xs font-mono font-bold uppercase tracking-wider text-white bg-white/5 border border-white/10 hover:border-red-500/50 hover:bg-red-950/40 px-6 py-3 rounded-full transition-all duration-300 shadow-lg cursor-pointer"
+                    data-hover="true"
+                  >
+                    <span>{showAllCertifications ? 'Show Less' : 'View All Certifications'}</span>
+                    <motion.span
+                      animate={{ rotate: showAllCertifications ? 180 : 0 }}
+                      transition={{ duration: 0.25 }}
+                    >
+                      <ChevronRight className="w-4 h-4 text-red-500 rotate-90" />
+                    </motion.span>
+                  </button>
+                </div>
+
+                {/* Expandable Remaining Certifications */}
+                <AnimatePresence initial={false}>
+                  {showAllCertifications && (
+                    <motion.div
+                      key="all-gamified-certs"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.4, ease: 'easeInOut' }}
+                      className="overflow-hidden"
+                    >
+                      <div className="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {[
+                          {
+                            title: 'Python Essentials 1',
+                            issuer: 'Cisco Networking Academy',
+                            date: 'Issued 2025',
+                            skills: ['Python', 'Basic Programming', 'Algorithms'],
+                            icon: Code,
+                            link: 'https://www.credly.com/badges/0e51f13c-7ee6-4272-9a48-0d8cdd251530/public_url',
+                            pdfLink: '/Certificates/Cisco Python Essential 1 Certificate-Mitul.pdf'
+                          },
+                          {
+                            title: 'Database Design',
+                            issuer: 'Infosys Springboard',
+                            date: 'Issued 2025',
+                            skills: ['Database Design', 'SQL', 'Data Modeling'],
+                            icon: Globe,
+                            link: '/Certificates/Infosys (Database Design).pdf'
+                          },
+                          {
+                            title: 'Python Full Stack Internship',
+                            issuer: 'EduSkills (AICTE)',
+                            date: 'Issued 2025',
+                            skills: ['Python Full Stack', 'Web Dev', 'Flask/Django'],
+                            icon: Award,
+                            link: '/Certificates/Mitul Nayakwadi python fullstack, eduskills.pdf'
+                          },
+                          {
+                            title: 'Python Training Certificate',
+                            issuer: 'EduPyramids, SINE, IIT Bombay',
+                            date: 'Issued 2025',
+                            skills: ['Python Coding', 'Data Structures', 'OOP'],
+                            icon: Code,
+                            link: '/Certificates/Certificate python training.pdf'
+                          },
+                          {
+                            title: 'Java Training Certificate',
+                            issuer: 'EduPyramids, SINE, IIT Bombay',
+                            date: 'Issued 2026',
+                            skills: ['Java Programming'],
+                            icon: Code,
+                            link: '/Certificates/Certificate Java training.pdf'
+                          }
+                        ].map((cert) => (
+                          <motion.div
+                            key={cert.title}
+                            variants={skillCardVariants}
+                            className="group relative bg-[#0a0a0a] hover:bg-[#121212] dark:hover:bg-black p-6 rounded-2xl border border-white/10 hover:border-red-500/40 dark:hover:border-white/30 hover:shadow-lg hover:shadow-red-500/5 dark:hover:shadow-none transition-all duration-300 flex flex-col justify-between"
+                          >
+                            <div>
+                              <div className="flex justify-between items-start mb-4 font-sans">
+                                <div className="p-2.5 rounded-xl bg-white/5 border border-white/10 group-hover:border-red-500/30 dark:group-hover:border-white/20 group-hover:bg-red-500/5 dark:group-hover:bg-white/5 transition-all">
+                                  <cert.icon className="w-5 h-5 text-red-500 dark:text-white transition-colors duration-1000" />
+                                </div>
+                                <span className="text-[10px] font-mono text-gray-500 tracking-wider uppercase">{cert.date}</span>
+                              </div>
+
+                              <h4 className="text-base font-bold text-white group-hover:text-red-400 dark:group-hover:text-white transition-colors mb-1 font-heading">
+                                {cert.title}
+                              </h4>
+                              <p className="text-xs text-red-400 dark:text-white font-mono font-semibold mb-3 tracking-wide transition-colors duration-1000">{cert.issuer}</p>
+
+                              <div className="flex flex-wrap gap-1.5 mb-6 font-sans">
+                                {cert.skills.map(skill => (
+                                  <span key={skill} className="px-2 py-0.5 bg-white/5 rounded text-[10px] text-gray-400 border border-white/5">
+                                    {skill}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+
+                            <div className="flex gap-2.5 w-full mt-auto">
+                              <a
+                                href={cert.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={`flex items-center justify-center gap-2 py-2 px-4 rounded-xl bg-white/5 hover:bg-red-650/10 dark:hover:bg-black border border-white/10 hover:border-red-500/30 dark:hover:border-white/30 text-xs text-gray-300 hover:text-white transition-all cursor-pointer font-medium font-mono uppercase tracking-wider ${cert.pdfLink ? 'w-1/2' : 'w-full'
+                                  }`}
+                                data-hover="true"
+                              >
+                                <span>{cert.pdfLink ? 'Verify' : 'View'}</span>
+                                <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                              </a>
+                              {cert.pdfLink && (
+                                <a
+                                  href={cert.pdfLink}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="w-1/2 flex items-center justify-center gap-2 py-2 px-4 rounded-xl bg-red-650/10 hover:bg-red-650/20 border border-red-500/20 hover:border-red-500/40 text-xs text-red-400 hover:text-white transition-all cursor-pointer font-medium font-mono uppercase tracking-wider"
+                                  data-hover="true"
+                                >
+                                  <span>PDF</span>
+                                  <Download className="w-3.5 h-3.5" />
+                                </a>
+                              )}
+                            </div>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
-            </div>
-          </section>
+            </section>
 
           {/* SELECTED WORKS SECTION (Timeline-Based for high visibility) */}
           <section id="projects" className="relative z-10 min-h-[80svh] flex flex-col justify-center py-20 md:py-24 bg-gradient-to-b from-transparent via-[#050505]/45 to-transparent overflow-hidden">
