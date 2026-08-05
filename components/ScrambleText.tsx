@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 interface ScrambleTextProps {
   text: string;
   className?: string;
+  splitColors?: boolean;
 }
 
 interface CharStatus {
@@ -12,7 +13,8 @@ interface CharStatus {
   colorType?: 'white' | 'red';
 }
 
-export const ScrambleText: React.FC<ScrambleTextProps> = ({ text, className }) => {
+export const ScrambleText: React.FC<ScrambleTextProps> = ({ text, className, splitColors = true }) => {
+  const spaceIndex = text.indexOf(' ');
   const [displayText, setDisplayText] = useState<CharStatus[]>(() =>
     text.split('').map((char, index) => ({
       char: index === 0 ? char : ' ',
@@ -35,7 +37,6 @@ export const ScrambleText: React.FC<ScrambleTextProps> = ({ text, className }) =
 
   useEffect(() => {
     const chars = text.split('');
-    const length = chars.length;
     
     // Start with only the first character visible (e.g. 'M'), and all other characters blank/empty
     const initialState = chars.map((char, index) => ({
@@ -48,7 +49,6 @@ export const ScrambleText: React.FC<ScrambleTextProps> = ({ text, className }) =
     const activeIntervals: NodeJS.Timeout[] = [];
 
     chars.forEach((char, index) => {
-      // Index 0 immediately resolves, or does a tiny rapid flicker
       if (index === 0) {
         let flickerCount = 0;
         const firstCharInterval = setInterval(() => {
@@ -78,7 +78,6 @@ export const ScrambleText: React.FC<ScrambleTextProps> = ({ text, className }) =
       }
 
       if (char === ' ') {
-        // Spaces stay spaces
         setTimeout(() => {
           setDisplayText((prev) => {
             const next = [...prev];
@@ -89,23 +88,19 @@ export const ScrambleText: React.FC<ScrambleTextProps> = ({ text, className }) =
         return;
       }
 
-      // Progressive cascade from single character outwards to the rest of the name
-      // Progressive delay based on character index
-      const delay = index * 45; // Start showing as random glitch-glyph at this MS
-      const scrambleDuration = 180 + Math.random() * 150; // High-intensity glitching duration
+      const delay = index * 45;
+      const scrambleDuration = 180 + Math.random() * 150;
       const startTime = Date.now() + delay;
 
       const intervalId = setInterval(() => {
         const now = Date.now();
         if (now < startTime) {
-          // Still in hidden state (part of the clean single-character start)
           setDisplayText((prev) => {
             const next = [...prev];
             next[index] = { char: ' ', isResolved: false };
             return next;
           });
         } else if (now >= startTime && now < startTime + scrambleDuration) {
-          // Glitching state: show random character with alternating red or white theme
           setDisplayText((prev) => {
             const next = [...prev];
             next[index] = {
@@ -116,7 +111,6 @@ export const ScrambleText: React.FC<ScrambleTextProps> = ({ text, className }) =
             return next;
           });
         } else {
-          // Fully resolved state: turns crisp white
           setDisplayText((prev) => {
             const next = [...prev];
             next[index] = { char: char, isResolved: true };
@@ -141,16 +135,16 @@ export const ScrambleText: React.FC<ScrambleTextProps> = ({ text, className }) =
       whileHover={{ scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
     >
-      {/* Absolute Shadow effect (for spacing placeholder / layout sync) */}
+      {/* Absolute Shadow effect */}
       <span className="absolute inset-0 -z-10 text-transparent font-heading select-none pointer-events-none translate-y-[3px] opacity-10 flex justify-center">
         {displayText.map(item => item.char).join('')}
       </span>
       
-      {/* Main text container with glitch rendering */}
+      {/* Main text container with glitch & red/white split rendering */}
       <span className="relative z-10 flex flex-row items-center justify-center select-none whitespace-nowrap">
         {displayText.map((item, idx) => {
           let charColorClass = "";
-          let shadowStyle = {};
+          let shadowStyle: React.CSSProperties = {};
 
           if (!item.isResolved && item.char !== ' ') {
             if (item.colorType === 'red') {
@@ -161,7 +155,7 @@ export const ScrambleText: React.FC<ScrambleTextProps> = ({ text, className }) =
               shadowStyle = { textShadow: '0 0 8px rgba(255, 255, 255, 0.9), 0 0 16px rgba(255, 255, 255, 0.5)' };
             }
           } else {
-            // Settled state: MUST be perfectly crisp solid white without shadows
+            // Settled state: MUST be solid pure white
             charColorClass = "text-white";
           }
 

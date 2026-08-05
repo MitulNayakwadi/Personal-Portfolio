@@ -571,9 +571,9 @@ const GamifiedPortfolio: React.FC = () => {
                 transition={{ delay: 0.7, duration: 0.8 }}
                 className="mb-6 px-4"
               >
-                <h2 className="text-lg md:text-xl lg:text-2xl font-bold font-heading text-red-500 dark:text-white transition-colors duration-1000 tracking-wide mb-3 uppercase">
-                  Developer · Problem Solver · Builder
-                </h2>
+                  <h2 className="text-[#ef4444] font-heading tracking-wide mb-3 uppercase font-black text-lg md:text-xl lg:text-2xl">
+                    <span className="text-white">DEVELOPER</span> <span className="text-red-500">·</span> <span className="text-red-500 drop-shadow-[0_0_15px_rgba(239,68,68,0.8)]">PROBLEM SOLVER</span> <span className="text-red-500">·</span> <span className="text-white">BUILDER</span>
+                  </h2>
                 <p className="text-sm sm:text-base md:text-lg font-normal text-gray-300 max-w-2xl mx-auto leading-relaxed">
                   Turning ideas into intelligent real-world projects through code, & creativity
                 </p>
@@ -699,8 +699,8 @@ const GamifiedPortfolio: React.FC = () => {
 
                 {/* Right Column: Bio, Interests, Details */}
                 <div className="md:col-span-7 flex flex-col justify-start">
-                  <h2 className="text-3xl md:text-5xl font-heading font-black uppercase leading-none tracking-tight text-white mb-4">
-                    ABOUT <span className="text-red-500 dark:text-white transition-colors duration-1000 font-bold">ME</span>
+                  <h2 className="text-3xl md:text-5xl font-heading font-black uppercase leading-none tracking-tight mb-4">
+                    <span className="text-white">ABOUT </span><span className="text-red-500 font-extrabold drop-shadow-[0_0_20px_rgba(239,68,68,0.7)]">ME</span>
                   </h2>
                   <div className="w-16 h-1 bg-gradient-to-r from-red-600 to-rose-500 dark:from-gray-500 dark:to-gray-300 transition-all duration-1000 mb-6 rounded-full" />
 
@@ -764,8 +764,8 @@ const GamifiedPortfolio: React.FC = () => {
             <div className="absolute top-1/2 right-[-15%] w-[50vw] h-[50vw] bg-red-900/5 rounded-full blur-[120px] pointer-events-none" />
             <div className="max-w-6xl mx-auto px-4 md:px-6 relative">
               <div className="text-center mb-10">
-                <h2 className="text-3xl md:text-5xl font-heading font-black uppercase leading-none tracking-tight text-white animate-fade-in">
-                  Experience & <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-rose-500 dark:from-white dark:to-gray-400 font-bold">Memberships</span>
+                <h2 className="text-3xl md:text-5xl font-heading font-black uppercase leading-none tracking-tight animate-fade-in">
+                  <span className="text-white">EXPERIENCE & </span><span className="text-red-500 font-extrabold drop-shadow-[0_0_20px_rgba(239,68,68,0.7)]">MEMBERSHIPS</span>
                 </h2>
                 <div className="w-16 h-1 bg-gradient-to-r from-red-600 to-rose-500 dark:from-gray-500 dark:to-gray-300 transition-all duration-1000 mx-auto mt-4 rounded-full" />
               </div>
@@ -839,19 +839,19 @@ const GamifiedPortfolio: React.FC = () => {
           </section>
 
           {/* MARQUEE */}
-          <div className="relative w-full py-4 bg-gradient-to-r from-red-700 via-red-600 to-red-800 dark:from-neutral-900 dark:via-neutral-800 dark:to-neutral-900 text-white z-20 overflow-hidden shadow-[0_0_35px_rgba(239,68,68,0.3)] dark:shadow-none border-y border-white/5 dark:border-white/10 transition-all duration-1000">
+          <div className="relative w-full py-4 bg-[#e60026] text-white z-20 overflow-hidden shadow-[0_0_35px_rgba(230,0,38,0.6)] border-y border-white/20">
             <motion.div
               className="flex w-fit will-change-transform"
               animate={{ x: "-50%" }}
-              transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
+              transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
             >
               {[0, 1].map((key) => (
                 <div key={key} className="flex whitespace-nowrap shrink-0">
                   {[...Array(4)].map((_, i) => (
-                    <span key={i} className="text-lg md:text-2xl font-heading font-black px-6 md:px-12 flex items-center gap-4 uppercase tracking-wider">
-                      AI INNOVATION <span className="text-white/20 font-light">●</span>
-                      WEB DEVELOPMENT <span className="text-white/20 font-light">●</span>
-                      CREATIVE TECH <span className="text-white/20 font-light">●</span>
+                    <span key={i} className="text-lg md:text-2xl font-heading font-black px-6 md:px-12 flex items-center gap-4 uppercase tracking-wider text-white">
+                      AI INNOVATION <span className="text-white font-extrabold text-xl">●</span>
+                      WEB DEVELOPMENT <span className="text-white font-extrabold text-xl">●</span>
+                      CREATIVE TECH <span className="text-white font-extrabold text-xl">●</span>
                     </span>
                   ))}
                 </div>
@@ -871,9 +871,9 @@ const GamifiedPortfolio: React.FC = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-100px" }}
                   transition={{ duration: 0.8, ease: "easeOut" }}
-                  className="text-3xl md:text-5xl font-heading font-black uppercase leading-none tracking-tight text-white"
+                  className="text-3xl md:text-5xl font-heading font-black uppercase leading-none tracking-tight"
                 >
-                  EDUCATION <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-rose-500 dark:from-white dark:to-gray-400 font-bold">TIMELINE</span>
+                  <span className="text-white">EDUCATION </span><span className="text-red-500 font-extrabold drop-shadow-[0_0_20px_rgba(239,68,68,0.7)]">TIMELINE</span>
                 </motion.h2>
                 <motion.div
                   initial={{ scaleX: 0 }}
@@ -977,9 +977,9 @@ const GamifiedPortfolio: React.FC = () => {
                 >
                   <motion.h2
                     variants={textEntranceVariants}
-                    className="text-2xl md:text-3xl font-heading font-black mb-4 leading-tight uppercase text-white"
+                    className="text-2xl md:text-3xl font-heading font-black mb-4 leading-tight uppercase"
                   >
-                    Technical <br /> <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-rose-500 dark:from-white dark:to-gray-400 font-bold">TIMELINE</span>
+                    <span className="text-white">TECHNICAL </span><br /> <span className="text-red-500 font-extrabold drop-shadow-[0_0_20px_rgba(239,68,68,0.7)]">STACK</span>
                   </motion.h2>
                   <motion.p
                     variants={textEntranceVariants}
@@ -1070,8 +1070,8 @@ const GamifiedPortfolio: React.FC = () => {
               <div id="certifications" className="mt-10 pt-10 border-t border-white/10 relative z-20">
                 <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
                   <div>
-                    <h3 className="text-2xl md:text-3xl font-black uppercase font-heading text-white">
-                      Certifications <br /> <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-rose-500 dark:from-white dark:to-gray-400 font-bold">& Achivements</span>
+                    <h3 className="text-2xl md:text-3xl font-black uppercase font-heading">
+                      <span className="text-white">CERTIFICATIONS </span><br /> <span className="text-red-500 font-extrabold drop-shadow-[0_0_20px_rgba(239,68,68,0.7)]">& ACHIEVEMENTS</span>
                     </h3>
                   </div>
                   <a
@@ -1242,8 +1242,8 @@ const GamifiedPortfolio: React.FC = () => {
 
             <div className="max-w-6xl mx-auto px-4 md:px-6 relative">
               <div className="text-center mb-10">
-                <h2 className="text-3xl md:text-5xl font-heading font-black uppercase leading-none tracking-tight text-white animate-fade-in">
-                  Selected <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-rose-500 dark:from-white dark:to-gray-400 font-bold">Works</span>
+                <h2 className="text-3xl md:text-5xl font-heading font-black uppercase leading-none tracking-tight animate-fade-in">
+                  <span className="text-white">SELECTED </span><span className="text-red-500 font-extrabold drop-shadow-[0_0_20px_rgba(239,68,68,0.7)]">WORKS</span>
                 </h2>
                 <div className="w-16 h-1 bg-gradient-to-r from-red-600 to-rose-500 dark:from-gray-500 dark:to-gray-300 transition-all duration-1000 mx-auto mt-4 rounded-full" />
               </div>
@@ -1343,8 +1343,8 @@ const GamifiedPortfolio: React.FC = () => {
           <section id="contact" className="relative z-10 min-h-[80svh] flex flex-col justify-center py-20 md:py-24 bg-gradient-to-b from-transparent via-[#050505]/35 to-transparent backdrop-blur-lg">
             <div className="max-w-6xl mx-auto px-4 md:px-6">
               <div className="text-center mb-12">
-                <h2 className="text-3xl md:text-5xl font-heading font-black text-white mb-3 uppercase tracking-tight">
-                  LET'S BUILD <span className="text-red-500 dark:text-white transition-colors duration-1000">TOGETHER</span>
+                <h2 className="text-3xl md:text-5xl font-heading font-black mb-3 uppercase tracking-tight">
+                  <span className="text-white">LET'S BUILD </span><span className="text-red-500 font-extrabold drop-shadow-[0_0_20px_rgba(239,68,68,0.7)]">TOGETHER</span>
                 </h2>
                 <p className="text-gray-300 max-w-2xl mx-auto text-sm md:text-base">{CONTACT_DATA.tagline}</p>
               </div>
