@@ -74,9 +74,8 @@ export default function Hero({ scrollToSection }: Props) {
         {/* Monospace Greeting Tag */}
         <motion.div
           variants={item}
-          className="inline-flex items-center gap-2 font-mono text-xs sm:text-sm font-semibold tracking-widest text-[#2563EB] uppercase mb-3 bg-blue-50/80 border border-blue-200/60 px-3.5 py-1.5 rounded-full shadow-xs"
+          className="inline-flex items-center font-mono text-xs sm:text-sm font-semibold tracking-widest text-[#2563EB] uppercase mb-3 bg-blue-50/80 border border-blue-200/60 px-4 py-1.5 rounded-full shadow-xs"
         >
-          <Sparkles className="w-3.5 h-3.5 text-[#2563EB]" />
           <span>{HERO_DATA.greeting}</span>
         </motion.div>
 
