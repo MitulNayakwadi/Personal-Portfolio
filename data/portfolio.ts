@@ -54,7 +54,7 @@ export const ABOUT_DATA = {
     location: "Hyderabad, Telangana, India",
     education: "B.E. CSE — Matrusri Engineering College (2024–2028)",
     email: "mitulnayakwadi@gmail.com",
-    linkedin: "https://linkedin.com/in/mitul-nayakwadi-6a3218319",
+    linkedin: "https://www.linkedin.com/in/mitul-nayakwadi/",
     github: "https://github.com/MitulNayakwadi"
   }
 };
@@ -251,8 +251,8 @@ export const ACHIEVEMENTS_DATA = [
 export const CONTACT_DATA = {
   tagline: "I'm always open to new opportunities, collaborations, or just a great tech conversation.",
   email: "mitulnayakwadi@gmail.com",
-  linkedin: "linkedin.com/in/mitul-nayakwadi-6a3218319",
-  linkedinUrl: "https://linkedin.com/in/mitul-nayakwadi-6a3218319",
+  linkedin: "linkedin.com/in/mitul-nayakwadi",
+  linkedinUrl: "https://www.linkedin.com/in/mitul-nayakwadi/",
   github: "github.com/MitulNayakwadi",
   githubUrl: "https://github.com/MitulNayakwadi"
 };

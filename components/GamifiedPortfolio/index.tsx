@@ -466,16 +466,16 @@ const GamifiedPortfolio: React.FC = () => {
             <div className="hidden md:flex items-center gap-4">
               <ThemeToggle />
 
-              <button
-                onClick={handleHireMeClick}
-                className={`border px-8 py-3 text-xs font-bold tracking-widest uppercase transition-all duration-300 cursor-pointer bg-transparent shadow-[0_0_15px_rgba(255,255,255,0.03)] ${hireMeClicked
-                  ? 'border-emerald-500 text-emerald-400 bg-emerald-500/10 shadow-[0_0_20px_rgba(16,185,129,0.3)] scale-105'
-                  : 'border-white/25 hover:border-red-500 hover:bg-red-600/10 hover:text-red-500 dark:hover:border-white dark:hover:bg-black dark:hover:text-white text-white'
-                  }`}
+              <a
+                href="https://www.linkedin.com/in/mitul-nayakwadi/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Connect on LinkedIn"
+                className="border border-white/25 hover:border-red-500 hover:bg-red-600/10 hover:text-red-500 dark:hover:border-white dark:hover:bg-black dark:hover:text-white text-white px-8 py-3 text-xs font-bold tracking-widest uppercase transition-all duration-300 cursor-pointer shadow-[0_0_15px_rgba(255,255,255,0.03)] hover:scale-105 active:scale-95 inline-flex items-center justify-center gap-2 text-decoration-none"
                 data-hover="true"
               >
-                {hireMeClicked ? "Great!" : "Connect!"}
-              </button>
+                <span>CONNECT!</span>
+              </a>
             </div>
 
             {/* Mobile Menu Toggle & Theme Switch */}
@@ -516,24 +516,24 @@ const GamifiedPortfolio: React.FC = () => {
                   );
                 })}
 
-                <button
-                  onClick={handleHireMeClick}
-                  className={`mt-4 px-10 py-3 text-sm font-bold tracking-widest uppercase border transition-all duration-300 bg-transparent shrink-0 ${hireMeClicked
-                    ? 'border-emerald-500 text-emerald-400 bg-emerald-500/10 shadow-[0_0_20px_rgba(16,185,129,0.3)] scale-105'
-                    : 'border-white/20 text-white hover:border-red-500 hover:text-red-500 dark:hover:border-white dark:hover:bg-black dark:hover:text-white'
-                    }`}
+                <a
+                  href="https://www.linkedin.com/in/mitul-nayakwadi/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="mt-4 px-10 py-3 text-sm font-bold tracking-widest uppercase border border-white/20 text-white hover:border-red-500 hover:text-red-500 dark:hover:border-white dark:hover:bg-black dark:hover:text-white transition-all duration-300 shrink-0 inline-flex items-center justify-center text-decoration-none"
                 >
-                  {hireMeClicked ? "Great!" : "Connect!"}
-                </button>
+                  <span>CONNECT!</span>
+                </a>
               </motion.div>
             )}
           </AnimatePresence>
 
           {/* HERO SECTION */}
-          <header id="hero" className="relative h-[95svh] min-h-[500px] md:min-h-[620px] flex flex-col items-center justify-center overflow-hidden px-4 pt-24 md:pt-28">
+          <header id="hero" className="relative min-h-[95vh] flex flex-col items-center justify-center text-center overflow-hidden px-4 pt-28 md:pt-36 pb-12">
             <motion.div
               style={prefersReducedMotion ? undefined : { y, opacity }}
-              className="z-10 text-center flex flex-col items-center w-full max-w-6xl pb-10 md:pb-16"
+              className="z-10 text-center flex flex-col items-center justify-center w-full max-w-5xl mx-auto mt-4 md:mt-8 pb-4"
             >
               {/* Main Title - Animated Popup */}
               <motion.div
@@ -561,20 +561,20 @@ const GamifiedPortfolio: React.FC = () => {
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
                 transition={{ duration: 1.5, delay: 0.5, ease: "circOut" }}
-                className="w-24 h-0.5 bg-gradient-to-r from-red-600 to-rose-500 dark:from-gray-500 dark:to-gray-300 transition-all duration-1000 mb-6"
+                className="w-24 h-0.5 bg-gradient-to-r from-red-600 to-rose-500 dark:from-gray-500 dark:to-gray-300 transition-all duration-1000 mb-6 mx-auto"
               />
 
-              {/* New Subtitles */}
+              {/* Subtitles */}
               <motion.div
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.7, duration: 0.8 }}
-                className="mb-6 px-4"
+                className="mb-6 px-4 text-center flex flex-col items-center justify-center mx-auto"
               >
-                  <h2 className="text-[#ef4444] font-heading tracking-wide mb-3 uppercase font-black text-lg md:text-xl lg:text-2xl">
-                    <span className="text-white">DEVELOPER</span> <span className="text-red-500">·</span> <span className="text-red-500 drop-shadow-[0_0_15px_rgba(239,68,68,0.8)]">PROBLEM SOLVER</span> <span className="text-red-500">·</span> <span className="text-white">BUILDER</span>
-                  </h2>
-                <p className="text-sm sm:text-base md:text-lg font-normal text-gray-300 max-w-2xl mx-auto leading-relaxed">
+                <h2 className="text-[#ef4444] font-heading tracking-wide mb-3 uppercase font-black text-lg md:text-xl lg:text-2xl text-center mx-auto">
+                  <span className="text-white">DEVELOPER</span> <span className="text-red-500">·</span> <span className="text-red-500 drop-shadow-[0_0_15px_rgba(239,68,68,0.8)]">PROBLEM SOLVER</span> <span className="text-red-500">·</span> <span className="text-white">BUILDER</span>
+                </h2>
+                <p className="text-sm sm:text-base md:text-lg font-normal text-gray-300 max-w-2xl mx-auto leading-relaxed text-center">
                   Turning ideas into intelligent real-world projects through code, & creativity
                 </p>
               </motion.div>
@@ -584,7 +584,7 @@ const GamifiedPortfolio: React.FC = () => {
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.85, duration: 0.8 }}
-                className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 w-full max-w-lg px-4"
+                className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8 w-full max-w-lg px-4 mx-auto"
               >
                 <button
                   onClick={() => scrollToSection('projects')}
@@ -611,7 +611,7 @@ const GamifiedPortfolio: React.FC = () => {
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 1.0, duration: 0.8 }}
-                className="flex items-center gap-6"
+                className="flex items-center justify-center gap-6 mx-auto"
               >
                 <a
                   href="https://github.com/MitulNayakwadi"
@@ -625,7 +625,7 @@ const GamifiedPortfolio: React.FC = () => {
                   <Github className="w-5 h-5" />
                 </a>
                 <a
-                  href="https://linkedin.com/in/mitul-nayakwadi-6a3218319"
+                  href="https://www.linkedin.com/in/mitul-nayakwadi/"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Open LinkedIn profile"
@@ -645,26 +645,6 @@ const GamifiedPortfolio: React.FC = () => {
                   <Mail className="w-5 h-5" />
                 </a>
               </motion.div>
-
-              {/* Scroll Down Action Indicator */}
-              <motion.button
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.1, duration: 0.8 }}
-                onClick={() => scrollToSection('about')}
-                className="mt-10 flex flex-col items-center gap-2 text-gray-400 hover:text-white transition-colors cursor-pointer bg-transparent border-none group"
-                title="Scroll down to About section"
-                data-hover="true"
-              >
-                <span className="text-[10px] font-mono tracking-widest uppercase text-gray-400 group-hover:text-red-500 transition-colors">Scroll Down</span>
-                <motion.div
-                  animate={{ y: [0, 8, 0] }}
-                  transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
-                  className="p-2 rounded-full border border-white/10 group-hover:border-red-500/50 bg-white/5 transition-colors"
-                >
-                  <ArrowDown className="w-4 h-4 text-red-500 dark:text-white" />
-                </motion.div>
-              </motion.button>
             </motion.div>
           </header>
 

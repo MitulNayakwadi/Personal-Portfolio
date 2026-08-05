@@ -76,7 +76,7 @@ I am a Computer Science & Engineering student passionate about Artificial Intell
 ### 📫 Connect and Collaborate
 
 * **Email:** [mitulnayakwadi@gmail.com](mailto:mitulnayakwadi@gmail.com)
-* **LinkedIn:** [Mitul Nayakwadi](https://linkedin.com/in/mitul-nayakwadi-6a3218319)
+* **LinkedIn:** [Mitul Nayakwadi](https://www.linkedin.com/in/mitul-nayakwadi/)
 * **GitHub Profile:** [@MitulNayakwadi](https://github.com/MitulNayakwadi)
 * **Portfolio Repository:** [My_Portfolio](https://github.com/MitulNayakwadi/My_Portfolio)
 
