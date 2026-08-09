@@ -50,14 +50,14 @@ export default function Navbar({ activeSection, scrollToSection }: Props) {
         style={{ scaleX: scrollYProgress }}
       />
 
-      <div className="max-w-[900px] mx-auto px-6 flex items-center justify-between">
+      <div className="max-w-[1100px] mx-auto px-4 sm:px-6 flex items-center justify-between">
         {/* Logo / Name */}
         <button
           onClick={() => scrollToSection('hero')}
-          className="font-display text-lg font-extrabold text-[#1A1A2E] tracking-tight hover:text-[#2563EB] transition-colors bg-transparent border-none cursor-pointer flex items-center gap-2"
+          className="font-display text-base sm:text-lg font-extrabold text-[#1A1A2E] tracking-tight hover:text-[#2563EB] transition-colors bg-transparent border-none cursor-pointer flex items-center gap-2 whitespace-nowrap shrink-0"
         >
-          <span className="w-2.5 h-2.5 rounded-full bg-[#2563EB]"></span>
-          <span>Mitul Nayakwadi</span>
+          <span className="w-2.5 h-2.5 rounded-full bg-[#2563EB] shrink-0"></span>
+          <span className="whitespace-nowrap">Mitul Nayakwadi</span>
         </button>
 
         {/* Right side: Nav + Toggle + Hamburger */}
