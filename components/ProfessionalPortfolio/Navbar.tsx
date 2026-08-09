@@ -39,11 +39,10 @@ export default function Navbar({ activeSection, scrollToSection }: Props) {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${
-        isScrolled
-          ? 'bg-[#FAFAF8]/95 backdrop-blur-md border-slate-200/80 py-3.5 shadow-[0_1px_3px_rgba(0,0,0,0.02)]'
-          : 'bg-transparent border-transparent py-5'
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${isScrolled
+        ? 'bg-[#FAFAF8]/95 backdrop-blur-md border-slate-200/80 py-3.5 shadow-[0_1px_3px_rgba(0,0,0,0.02)]'
+        : 'bg-transparent border-transparent py-5'
+        }`}
     >
       {/* Top Reading Scroll Progress Bar */}
       <motion.div
@@ -70,9 +69,8 @@ export default function Navbar({ activeSection, scrollToSection }: Props) {
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className={`relative py-1 hover:text-[#1A1A2E] transition-colors bg-transparent border-none cursor-pointer ${
-                    isActive ? 'text-[#1A1A2E] font-bold' : ''
-                  }`}
+                  className={`relative py-1 hover:text-[#1A1A2E] transition-colors bg-transparent border-none cursor-pointer ${isActive ? 'text-[#1A1A2E] font-bold' : ''
+                    }`}
                   data-hover="true"
                 >
                   {item.label}
@@ -137,9 +135,8 @@ export default function Navbar({ activeSection, scrollToSection }: Props) {
                 <button
                   key={item.id}
                   onClick={() => handleMobileClick(item.id)}
-                  className={`text-left py-2 text-md font-body font-medium transition-colors bg-transparent border-none cursor-pointer ${
-                    activeSection === item.id ? 'text-[#2563EB] font-bold' : 'text-slate-650'
-                  }`}
+                  className={`text-left py-2 text-md font-body font-medium transition-colors bg-transparent border-none cursor-pointer ${activeSection === item.id ? 'text-[#2563EB] font-bold' : 'text-slate-650'
+                    }`}
                 >
                   {item.label}
                 </button>
