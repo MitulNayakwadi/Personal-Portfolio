@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useScroll } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import ThemeToggle from '../ThemeToggle';
+import MagneticButton from '../MagneticButton';
 
 interface Props {
   activeSection: string;
@@ -88,6 +89,27 @@ export default function Navbar({ activeSection, scrollToSection }: Props) {
           </div>
 
           <ThemeToggle />
+
+          <div className="hidden sm:block">
+            <MagneticButton
+              label="CONNECT"
+              link="https://www.linkedin.com/in/mitul-nayakwadi/"
+              newTab={true}
+              paddingX={18}
+              paddingY={7}
+              font={{
+                fontFamily: "Inter, sans-serif",
+                fontSize: 12,
+                fontWeight: 700,
+                letterSpacing: "-0.01em",
+              }}
+              fill="#2563EB"
+              textColor="#FFFFFF"
+              sweepColor="#AB0101"
+              sweepTextColor="#FFFFFF"
+              border={false}
+            />
+          </div>
 
           {/* Hamburger button */}
           <button

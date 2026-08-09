@@ -19,6 +19,8 @@ import { Project } from '../../types';
 import FallbackPortrait from '../../mee.jpeg';
 import ThemeToggle from '../ThemeToggle';
 import LEDTicker from '../LEDTicker';
+import WaterButton from '../WaterButton';
+import MagneticButton from '../MagneticButton';
 import { PROJECTS_DATA, CONTACT_DATA } from '../../data/portfolio';
 
 declare global {
@@ -466,16 +468,25 @@ const GamifiedPortfolio: React.FC = () => {
             <div className="hidden md:flex items-center gap-4">
               <ThemeToggle />
 
-              <a
-                href="https://www.linkedin.com/in/mitul-nayakwadi/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Connect on LinkedIn"
-                className="border border-white/25 hover:border-red-500 hover:bg-red-600/10 hover:text-red-500 dark:hover:border-white dark:hover:bg-black dark:hover:text-white text-white px-8 py-3 text-xs font-bold tracking-widest uppercase transition-all duration-300 cursor-pointer shadow-[0_0_15px_rgba(255,255,255,0.03)] hover:scale-105 active:scale-95 inline-flex items-center justify-center gap-2 text-decoration-none"
-                data-hover="true"
-              >
-                <span>CONNECT!</span>
-              </a>
+              <MagneticButton
+                label="CONNECT"
+                link="https://www.linkedin.com/in/mitul-nayakwadi/"
+                newTab={true}
+                paddingX={22}
+                paddingY={10}
+                font={{
+                  fontSize: 13,
+                  fontWeight: 700,
+                  fontFamily: "Inter, sans-serif",
+                  letterSpacing: "-0.01em",
+                }}
+                fill={isDarkMode ? "#000000" : "#111827"}
+                textColor="#ffffff"
+                sweepColor="#AB0101"
+                sweepTextColor="#ffffff"
+                border={true}
+                borderOptions={{ color: isDarkMode ? "rgba(255,255,255,0.2)" : "rgba(239,68,68,0.5)", width: 1 }}
+              />
             </div>
 
             {/* Mobile Menu Toggle & Theme Switch */}
@@ -516,15 +527,26 @@ const GamifiedPortfolio: React.FC = () => {
                   );
                 })}
 
-                <a
-                  href="https://www.linkedin.com/in/mitul-nayakwadi/"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <MagneticButton
+                  label="CONNECT"
+                  link="https://www.linkedin.com/in/mitul-nayakwadi/"
+                  newTab={true}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="mt-4 px-10 py-3 text-sm font-bold tracking-widest uppercase border border-white/20 text-white hover:border-red-500 hover:text-red-500 dark:hover:border-white dark:hover:bg-black dark:hover:text-white transition-all duration-300 shrink-0 inline-flex items-center justify-center text-decoration-none"
-                >
-                  <span>CONNECT!</span>
-                </a>
+                  paddingX={32}
+                  paddingY={14}
+                  font={{
+                    fontSize: 14,
+                    fontWeight: 700,
+                    fontFamily: "Inter, sans-serif",
+                    letterSpacing: "-0.01em",
+                  }}
+                  fill={isDarkMode ? "#000000" : "#111827"}
+                  textColor="#ffffff"
+                  sweepColor="#AB0101"
+                  sweepTextColor="#ffffff"
+                  border={true}
+                  borderOptions={{ color: "rgba(255,255,255,0.2)", width: 1 }}
+                />
               </motion.div>
             )}
           </AnimatePresence>
