@@ -50,7 +50,7 @@ export default function Navbar({ activeSection, scrollToSection }: Props) {
         style={{ scaleX: scrollYProgress }}
       />
 
-      <div className="max-w-[1100px] mx-auto px-4 sm:px-6 flex items-center justify-between">
+      <div className="max-w-[950px] mx-auto px-4 sm:px-6 flex items-center justify-between">
         {/* Logo / Name */}
         <button
           onClick={() => scrollToSection('hero')}
