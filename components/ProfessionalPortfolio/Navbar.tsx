@@ -103,7 +103,7 @@ export default function Navbar({ activeSection, scrollToSection }: Props) {
               }}
               fill="#2563EB"
               textColor="#FFFFFF"
-              sweepColor="#AB0101"
+              sweepColor="#043db9ff"
               sweepTextColor="#FFFFFF"
               border={false}
             />
