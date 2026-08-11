@@ -9,7 +9,7 @@ const ThemeContext = createContext<{
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>(() => {
-    return (localStorage.getItem('portfolio-theme') as Theme) || 'light';
+    return (localStorage.getItem('portfolio-theme') as Theme) || 'dark';
   });
 
   useEffect(() => {

@@ -15,7 +15,7 @@ export default function ThemeToggle() {
                  hover:bg-slate-50 dark:hover:bg-white/10 hover:text-slate-900 dark:hover:text-white
                  transition-colors duration-200 cursor-pointer flex items-center justify-center shadow-sm"
       aria-label="Toggle portfolio mode"
-      title={theme === 'light' ? 'Switch to Dark Mode' : 'Switch to Simple Mode'}
+      title={theme === 'light' ? 'Switch to Gamified Portfolio' : 'Switch to Professional Portfolio'}
       data-hover="true"
     >
       <motion.div

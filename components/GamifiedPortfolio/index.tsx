@@ -44,6 +44,7 @@ const PROJECTS: Project[] = PROJECTS_DATA.map((project) => ({
   name: project.name,
   techStack: project.techStack.join(' | '),
   category: project.category,
+  bullets: project.bullets,
   image: PROJECT_IMAGES[project.id] ?? 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1000&auto=format&fit=crop',
   description: project.githubUrl || project.liveUrl
     ? project.bullets.join(' ')
@@ -1611,24 +1612,41 @@ const GamifiedPortfolio: React.FC = () => {
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.4, delay: 0.1 }}
                       >
-                        <div className="flex items-center gap-3 text-red-500 mb-4 font-semibold">
-                          <Layout className="w-4 h-4" />
-                          <span className="font-mono text-sm tracking-widest uppercase">{selectedProject.category}</span>
+                        <div className="flex items-center gap-2 mb-4">
+                          <Layout className="w-4 h-4 text-red-500" />
+                          <span className="font-mono text-xs uppercase tracking-widest text-red-400 font-bold bg-red-950/60 border border-red-800/50 px-3 py-1 rounded-full shadow-[0_0_12px_rgba(239,68,68,0.3)]">
+                            {selectedProject.category}
+                          </span>
                         </div>
 
-                        <h3 className="text-3xl md:text-5xl font-heading font-bold uppercase leading-none mb-2 text-white">
+                        <h3 className="text-2xl sm:text-3xl md:text-4xl font-heading font-extrabold uppercase leading-tight mb-4 text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]">
                           {selectedProject.name}
                         </h3>
 
-                        <p className="text-lg text-rose-500 font-medium tracking-widest uppercase mb-6 font-mono text-xs md:text-sm">
-                          {selectedProject.techStack}
-                        </p>
+                        <div className="flex flex-wrap gap-2 mb-6 font-mono">
+                          {selectedProject.techStack.split(' | ').map((tech, i) => (
+                            <span key={i} className="px-3 py-1 text-xs font-semibold text-red-300 bg-red-950/50 border border-red-800/50 rounded-lg shadow-[0_0_10px_rgba(239,68,68,0.2)]">
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
 
-                        <div className="h-px w-20 bg-white/20 mb-6" />
+                        <div className="h-px w-full bg-gradient-to-r from-red-600/50 via-white/20 to-transparent mb-6" />
 
-                        <p className="text-gray-300 leading-relaxed text-lg font-light mb-8">
-                          {selectedProject.description}
-                        </p>
+                        {selectedProject.bullets && selectedProject.bullets.length > 0 ? (
+                          <ul className="space-y-3 mb-8">
+                            {selectedProject.bullets.map((bullet, i) => (
+                              <li key={i} className="flex items-start gap-3 text-gray-200 text-sm md:text-base font-normal leading-relaxed">
+                                <span className="w-2 h-2 rounded-full bg-red-500 mt-2 shrink-0 shadow-[0_0_8px_#ef4444]" />
+                                <span>{bullet}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : (
+                          <p className="text-gray-200 text-sm md:text-base font-normal leading-relaxed mb-8">
+                            {selectedProject.description}
+                          </p>
+                        )}
 
                         <div className="flex flex-wrap gap-4">
                           {selectedProject.liveUrl && (
